@@ -162,42 +162,96 @@ function exitSlide(p,sd,L,accent){
 }
 
 // ---- PLAN + SHAPE (teacher + student agenda) ----
+// Suggested 80-min split across N teaching steps (first=warm-up, last=exit are shorter).
+function timeSplit(n){
+  if(n<=1) return [80];
+  const exit=Math.max(5,Math.round(80*0.08));
+  const warm=10;
+  const mid=80-warm-exit;
+  const midN=n-2;
+  const per=midN>0?Math.round(mid/midN):0;
+  const arr=[warm];
+  for(let i=0;i<midN;i++) arr.push(per);
+  arr.push(exit);
+  // fix rounding drift to sum 80
+  let d=80-arr.reduce((a,x)=>a+x,0);
+  arr[1]=(arr[1]||arr[0])+d;
+  return arr;
+}
 function planSlide(p,L,accent,plan){
-  const s=p.addSlide();s.background={color:PALE};
-  s.addShape("rect",{x:0,y:0,w:W,h:0.42,fill:{color:NAVY},line:{color:NAVY}});
-  s.addText("LESSON PLAN  ·  TEACHER SLIDE  ·  SKIP WHEN PRESENTING",{x:0.3,y:0,w:W-0.6,h:0.42,fontFace:BF,fontSize:11,bold:true,color:"9DC3E6",charSpacing:3,margin:0,valign:"middle"});
-  s.addText(`${UNIT.code} — Unit ${UNIT.number} — Lesson ${L.n}: ${L.title} — 80 minutes`,
-    {x:0.5,y:0.55,w:W-1,h:0.4,fontFace:HF,fontSize:16,bold:true,color:NAVY,margin:0,valign:"middle"});
-  s.addText([{text:"Objective  ",options:{bold:true,color:BLUE}},{text:L.objective||""}],
-    {x:0.5,y:1.0,w:W-1,h:0.6,fontFace:BF,fontSize:12,color:INK,margin:0,valign:"top"});
-  // timed steps from the plan order (label each activity)
-  const steps=plan.order.map((k,i)=>{
-    const idx=DECK_KEYMAP[L.n][k];
-    const sd=idx!=null?DECKS.find(d=>d.n===L.n).slides[idx]:null;
-    const label=sd?(sd.title||sd.kicker||k):(plan.activities[k]&&plan.activities[k].title)||k;
-    return label;
-  });
-  const top=1.7, avail=Hh-top-0.4, step=Math.min(0.46,avail/steps.length);
+  const seq=L.sequence||[];
+  const times=timeSplit(seq.length);
+  const comp=L.comp||["COM","TH","PS"], lit=new Set(L.compLit||["COM","TH","PS"]);
+  // header helper reused on both plan slides
+  function header(s,part){
+    s.background={color:PALE};
+    s.addShape("rect",{x:0,y:0,w:W,h:0.42,fill:{color:NAVY},line:{color:NAVY}});
+    s.addText("LESSON PLAN  ·  TEACHER SLIDE  ·  SKIP WHEN PRESENTING",{x:0.3,y:0,w:W-2.6,h:0.42,fontFace:BF,fontSize:11,bold:true,color:"9DC3E6",charSpacing:2,margin:0,valign:"middle"});
+    // competency chips top-right
+    ["COM","TH","PS"].forEach((c,i)=>{const on=lit.has(c);const x=W-2.3+i*0.72;
+      s.addShape("roundRect",{x,y:0.06,w:0.6,h:0.3,rectRadius:0.06,fill:{color:on?accent:"20364A"},line:{color:on?accent:"33475B",width:1}});
+      s.addText(c,{x,y:0.06,w:0.6,h:0.3,align:"center",valign:"middle",fontFace:BF,fontSize:11,bold:true,color:on?WHITE:"5E7285",margin:0});});
+    s.addText(`${UNIT.code} — Unit ${UNIT.number} — Lesson ${L.n}: ${L.title} — 80 minutes${part?`  (${part})`:""}`,
+      {x:0.5,y:0.5,w:W-1,h:0.36,fontFace:HF,fontSize:15,bold:true,color:NAVY,margin:0,valign:"middle"});
+  }
+  // ---- PLAN SLIDE 1: objective + standards + timed sequence ----
+  const s1=p.addSlide(); header(s1,"1 of 2");
+  s1.addText([{text:"Objective  ",options:{bold:true,color:BLUE}},{text:L.objective||""}],
+    {x:0.5,y:0.94,w:W-1,h:0.5,fontFace:BF,fontSize:11.5,color:INK,margin:0,valign:"top"});
+  s1.addText([{text:"Standards  ",options:{bold:true,color:BLUE}},{text:L.standards||""}],
+    {x:0.5,y:1.42,w:W-1,h:0.5,fontFace:BF,fontSize:10.5,color:GREY,margin:0,valign:"top"});
+  const top=2.0, avail=Hh-top-0.35, step=Math.min(0.9,avail/Math.max(seq.length,1));
   const accs=["00897B","43A047","F9A825","E8604C","6A4FB3"];
-  steps.forEach((lab,i)=>{
+  seq.forEach((txt,i)=>{
     const y=top+i*step, ac=accs[i%5];
-    s.addShape("roundRect",{x:0.5,y:y+0.04,w:0.5,h:step-0.12,rectRadius:0.06,fill:{color:ac},line:{color:ac}});
-    s.addText(String(i+1),{x:0.5,y:y+0.04,w:0.5,h:step-0.12,align:"center",valign:"middle",fontFace:BF,fontSize:12,bold:true,color:WHITE,margin:0});
-    s.addText(lab,{x:1.15,y,w:W-1.7,h:step,fontFace:BF,fontSize:fitPt([lab],W-1.7,step-0.02,13,10),color:INK,margin:0,valign:"middle"});
+    s1.addShape("roundRect",{x:0.5,y:y+0.04,w:0.78,h:step-0.12,rectRadius:0.06,fill:{color:ac},line:{color:ac}});
+    s1.addText(`${times[i]||""}\nmin`,{x:0.5,y:y+0.04,w:0.78,h:step-0.12,align:"center",valign:"middle",fontFace:BF,fontSize:10,bold:true,color:WHITE,margin:0,lineSpacing:11});
+    s1.addText(txt,{x:1.45,y,w:W-1.95,h:step,fontFace:BF,fontSize:fitPt([txt],W-1.95,step-0.04,11,8),color:INK,margin:0,valign:"middle"});
   });
+  s1.addText("Suggested timing — adjust to your block.",{x:0.5,y:Hh-0.32,w:W-1,h:0.24,fontFace:BF,fontSize:9,italic:true,color:GREY,margin:0});
+  // ---- PLAN SLIDE 2: materials, differentiation, assessment, homework ----
+  const s2=p.addSlide(); header(s2,"2 of 2");
+  let y=1.0;
+  function block(label,lines,col){
+    s2.addText(label,{x:0.5,y,w:W-1,h:0.3,fontFace:BF,fontSize:12,bold:true,color:col,charSpacing:1,margin:0});
+    y+=0.34;
+    const arr=Array.isArray(lines)?lines:[lines];
+    s2.addText(arr.map(t=>({text:t,options:{bullet:{code:"2022"},breakLine:true,paraSpaceAfter:6}})),
+      {x:0.7,y,w:W-1.4,h:0.3+arr.length*0.34,fontFace:BF,fontSize:12,color:INK,margin:0,valign:"top"});
+    y+=arr.reduce((a,t)=>a+Math.max(0.34,Math.ceil(t.length/120)*0.3),0)+0.18;
+  }
+  block("MATERIALS",L.materials||[],accent);
+  const d=L.diff||{};
+  block("DIFFERENTIATION",[`Support — ${d.support||""}`,`Extension — ${d.extension||""}`],"43A047");
+  block("ASSESSMENT",L.assessment||"—","F9A825");
+  block("HOMEWORK",L.homework||"—","E8604C");
 }
 function shapeSlide(p,L,accent,plan){
   const s=p.addSlide();s.background={color:PALE};
   s.addShape("rect",{x:0,y:0,w:W,h:0.42,fill:{color:accent},line:{color:accent}});
   s.addText("SHAPE OF THE DAY",{x:0.3,y:0,w:W-0.6,h:0.42,fontFace:BF,fontSize:12,bold:true,color:WHITE,charSpacing:3,margin:0,valign:"middle"});
   s.addText("Today",{x:MX,y:0.6,w:W-2*MX,h:0.6,fontFace:HF,fontSize:30,bold:true,color:NAVY,margin:0});
-  // student agenda = the non-plan-only activities in order, with activity-type tags
+  // student agenda = the non-plan-only activities in order, with bracketed activity types
+  const deck=DECKS.find(d=>d.n===L.n);
+  const typeFor=(sd,cfg,key)=>{
+    if(cfg.section) return "class activity";
+    const k=((sd&&(sd.kicker||""))+" "+(sd&&sd.title||"")).toLowerCase();
+    if(key==="exit"||/exit/.test(k)) return "exit ticket";
+    if(cfg.ws) return "worksheet";
+    if(/warm|find someone|icebreaker/.test(k)) return "warm-up";
+    if(/watch me|model/.test(k)) return "teacher model";
+    if(/interview|partner|pair/.test(k)) return "partner work";
+    if(/share|discuss|protocol|showcase/.test(k)) return "class discussion";
+    if(/rehearse|practice|draft|write|plan|build|revise|edit|your turn/.test(k)) return "independent work";
+    if(/compare|vs\.?/.test(k)) return "class discussion";
+    return "instruction";
+  };
   const agenda=plan.order.filter(k=>k!=="title").map(k=>{
     const idx=DECK_KEYMAP[L.n][k];
-    const sd=idx!=null?DECKS.find(d=>d.n===L.n).slides[idx]:null;
+    const sd=idx!=null&&deck?deck.slides[idx]:null;
     const cfg=plan.activities[k]||{};
     const name=cfg.title||(sd&&(sd.title||sd.kicker))||k;
-    return name;
+    return `${name}  (${typeFor(sd,cfg,k)})`;
   });
   const top=1.5, avail=Hh-top-0.4, step=Math.min(0.62,avail/agenda.length);
   agenda.forEach((lab,i)=>{
@@ -230,7 +284,7 @@ function handoutSlides(p,L,accent){
 }
 
 // ---- WORKSHEET SECTION close-up (banner + image + how-to) ----
-function sectionWalkthrough(p,L,accent,letter){
+function sectionWalkthrough(p,L,accent,letter,howText){
   const img=partPng(L.n,letter); if(!img) return;
   const s=p.addSlide(); banner(s,L,accent);
   const {sections}=wsSectionsFor(L.n);
@@ -247,7 +301,7 @@ function sectionWalkthrough(p,L,accent,letter){
   const hx=ix+IW+0.5, hw=W-MX-hx;
   s.addShape("roundRect",{x:hx,y:iy,w:hw,h:IH,rectRadius:0.1,fill:{color:ICE},line:{color:accent,width:1.5},shadow:shadow()});
   s.addText("HOW TO COMPLETE IT",{x:hx+0.3,y:iy+0.25,w:hw-0.6,h:0.3,fontFace:BF,fontSize:13,bold:true,color:accent,charSpacing:1,margin:0});
-  const how=partHowTo[letter]||"";
+  const how=howText||partHowTo[letter]||"";
   s.addText(how,{x:hx+0.3,y:iy+0.7,w:hw-0.6,h:IH-1.0,fontFace:BF,fontSize:fitPt([how],hw-0.6,IH-1.0,18,13),color:INK,margin:0,valign:"top"});
   footer(s,L);
 }
@@ -292,6 +346,63 @@ function takehomeSlide(p,L,accent,cfg){
     {x:MX+0.3,y:2.5,w:W-2*MX-0.3,h:region,fontFace:BF,fontSize:fitPt(items,W-2*MX-0.3,region,22,16),color:ICE,margin:0,valign:"top"});
 }
 
+// ---- CLOSERS: notice image, next class, agenda (rule 1 tail + agenda standing order) ----
+// Agenda-from-plan, reusable for both "today" and "next class".
+function agendaItems(lessonN){
+  const plan=DECK_PLAN[lessonN]; if(!plan) return [];
+  const deck=DECKS.find(d=>d.n===lessonN);
+  return plan.order.filter(k=>k!=="title"&&k!=="exit").map(k=>{
+    const idx=DECK_KEYMAP[lessonN][k];
+    const sd=idx!=null&&deck?deck.slides[idx]:null;
+    const cfg=plan.activities[k]||{};
+    return cfg.title||(sd&&(sd.title||sd.kicker))||k;
+  });
+}
+// Full-page image of the take-home notice (goes home today). Uses wsassets/notice.png if present.
+function noticeSlide(p,L,accent){
+  const img=path.join(WSA,"notice.png"); if(!fs.existsSync(img)) return;
+  const s=p.addSlide();
+  s.addText("TAKE-HOME NOTICE · GOES HOME TODAY",{x:MX,y:0.4,w:W-2*MX,h:0.32,fontFace:BF,fontSize:12,bold:true,color:accent,charSpacing:2,margin:0});
+  const {w:iw,h:ih}=require("./imgsize.js")(img); const ar=ih/iw;
+  const H2=6.0, Wd=H2/ar; const ix=(W-Wd)/2, iy=0.95;
+  s.addShape("roundRect",{x:ix-0.08,y:iy-0.08,w:Wd+0.16,h:H2+0.16,rectRadius:0.04,fill:{color:WHITE},line:{color:LINE,width:1},shadow:shadow()});
+  s.addImage({path:img,x:ix,y:iy,w:Wd,h:H2});
+  footer(s,L);
+}
+// Next-class overview: next lesson's shape of the day.
+function nextClassSlide(p,L,accent){
+  const nx=L.n+1; const items=agendaItems(nx); if(!items.length) return; // last lesson
+  const {LESSONS}=require("./u1_content.js");
+  const nl=LESSONS.find(x=>x.n===nx);
+  const s=p.addSlide();s.background={color:NAVY};
+  s.addText("NEXT CLASS",{x:MX,y:0.7,w:W-2*MX,h:0.4,fontFace:BF,fontSize:14,bold:true,color:accent,charSpacing:3,margin:0});
+  s.addText(`Lesson ${nx}: ${nl?nl.title:""}`,{x:MX,y:1.15,w:W-2*MX,h:0.8,fontFace:HF,fontSize:30,bold:true,color:WHITE,margin:0,valign:"top"});
+  const top=2.2, avail=Hh-top-0.5, step=Math.min(0.6,avail/items.length);
+  items.forEach((lab,i)=>{
+    const y=top+i*step;
+    s.addShape("ellipse",{x:MX,y:y+0.02,w:0.46,h:0.46,fill:{color:accent},line:{color:accent}});
+    s.addText(String(i+1),{x:MX,y:y+0.02,w:0.46,h:0.46,align:"center",valign:"middle",fontFace:HF,fontSize:16,bold:true,color:WHITE,margin:0});
+    s.addText(lab,{x:MX+0.66,y,w:W-2*MX-0.76,h:step,fontFace:BF,fontSize:fitPt([lab],W-2*MX-0.76,step-0.02,18,13),color:ICE,margin:0,valign:"middle"});
+  });
+  footer(s,L);
+}
+// Agenda / planner slide — very last. Pulls homework + upcoming items from lesson data.
+function agendaSlide(p,L,accent){
+  const s=p.addSlide();s.background={color:PALE};
+  s.addShape("rect",{x:0,y:0,w:W,h:0.42,fill:{color:accent},line:{color:accent}});
+  s.addText("AGENDA",{x:0.3,y:0,w:W-0.6,h:0.42,fontFace:BF,fontSize:12,bold:true,color:WHITE,charSpacing:3,margin:0,valign:"middle"});
+  s.addText("Take out your agenda",{x:MX,y:0.7,w:W-2*MX,h:0.7,fontFace:HF,fontSize:32,bold:true,color:NAVY,margin:0,valign:"top"});
+  const items=[];
+  if(L.homework) items.push("Homework: "+L.homework);
+  const plan=DECK_PLAN[L.n];
+  if(plan&&plan.takehome) items.push("A notice goes home today — get it signed if needed.");
+  items.push("Write down anything due, and any upcoming assignment or test.");
+  const region=(Hh-0.7)-1.7;
+  s.addText(items.map(t=>({text:t,options:{bullet:{code:"2022"},breakLine:true,paraSpaceAfter:16}})),
+    {x:MX+0.3,y:1.7,w:W-2*MX-0.3,h:region,fontFace:BF,fontSize:fitPt(items,W-2*MX-0.3,region,22,15),color:INK,margin:0,valign:"top"});
+  footer(s,L);
+}
+
 // ---- BUILD ONE LESSON ----
 function build(L){
   const p=new pptxgen();
@@ -318,13 +429,21 @@ function build(L){
     const sd=slideByKey(key);
     if(sd){ const s=p.addSlide(); (R[sd.kind]||R.plain)(s,sd,L,accent); }
 
-    // interleave: worksheet section + its reveal, tight to the activity
-    if(cfg.ws){ sectionWalkthrough(p,L,accent,cfg.ws);
-                if(cfg.reveal) revealSlides(p,L,accent,cfg.ws,plan); }
+    // interleave: worksheet section(s) + reveal(s), tight to the activity
+    if(cfg.ws){
+      const letters=Array.isArray(cfg.ws)?cfg.ws:[cfg.ws];
+      for(const letter of letters){
+        const howText = cfg.how ? (typeof cfg.how==="object"?cfg.how[letter]:cfg.how) : undefined;
+        sectionWalkthrough(p,L,accent,letter,howText);
+        if(cfg.reveal) revealSlides(p,L,accent,letter,plan);
+      }
+    }
   }
 
-  // closers: take-home reminder, notice slide (image), next class — kept from plan if present
-  if(plan.takehome) takehomeSlide(p,L,accent,plan.takehome);
+  // closers (approved L01 order): take-home reminder -> notice image -> next class -> agenda
+  if(plan.takehome){ takehomeSlide(p,L,accent,plan.takehome); noticeSlide(p,L,accent); }
+  nextClassSlide(p,L,accent);
+  agendaSlide(p,L,accent);
 
   const name=`${UNIT.code}_U0${UNIT.number}_L${String(L.n).padStart(2,"0")}_Deck_${VERSION}.pptx`;
   return p.writeFile({fileName:path.join(OUT,name)}).then(()=>{console.log("wrote",name);});
