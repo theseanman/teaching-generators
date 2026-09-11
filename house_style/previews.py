@@ -87,7 +87,7 @@ for part in D['parts']:
     for ci,(pno,a,b) in enumerate(chunks[pid]):
         f=f'{OUT}/part{pid}-c{ci+1}.png'; crop(pno,a,b).save(f); info['chunks'].append(os.path.basename(f))
     items=part.get('items',[])
-    if part['kind'] in ('cloze','lines') and items and 'ans' in items[0]:
+    if part['kind'] in ('cloze','lines') and items and all(i.get('ans') for i in items):
         filled=[]
         for k,it in enumerate(items):
             ls=[m for m in ents if m['slot']==k]

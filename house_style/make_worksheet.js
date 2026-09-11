@@ -43,10 +43,11 @@ function heading(part) {
 }
 const numRun = (n) => R(n, { bold: true });
 const hang = { left: IND, hanging: IND };
-function writingLines(n, partId, slot, keepLast) {
+function writingLines(n, partId, slot, keepLast, gap = LINE_GAP, glueFirst = Infinity, indent = IND) {
   const arr = [];
   for (let i = 0; i < n; i++) {
-    arr.push(P([R("\t")], { indent: { left: IND }, tabStops: lead(W), spacing: { before: LINE_GAP, after: 0 }, keepNext: !(keepLast === false && i === n - 1) }));
+    const keep = i < glueFirst && !(keepLast === false && i === n - 1);
+    arr.push(P([R("\t")], { indent: { left: indent }, tabStops: lead(W), spacing: { before: gap, after: 0 }, keepNext: keep }));
     manifest.push({ part: partId, slot, line: i });
   }
   return arr;
@@ -95,8 +96,10 @@ for (const part of D.parts) {
       }
     });
   } else if (part.kind === "open") {
-    ps.push(P([numRun("Ex.\t"), exTag, R(part.example.ans, { color: BLUE, italics: true })], { indent: hang, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { before: 200, after: 0 }, keepNext: true }));
-    ps.push(...writingLines(part.lines, part.id, "open", false));
+    if (part.example) ps.push(P([numRun("Ex.\t"), exTag, R(part.example.ans, { color: BLUE, italics: true })], { indent: hang, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { before: 200, after: 0 }, keepNext: true }));
+    // long writing spaces (e.g. a full composition) flow across pages: only the heading and first lines are glued
+    const long = part.lines > 14;
+    ps.push(...writingLines(part.lines, part.id, "open", false, part.gap || LINE_GAP, long ? 3 : Infinity, part.example ? IND : 0));
   } else if (part.kind === "check") {
     const cw = W / 2, rows = [];
     for (let r = 0; r < part.checks.length / 2; r++) rows.push(new TableRow({ cantSplit: true, children: [0, 1].map(c => {

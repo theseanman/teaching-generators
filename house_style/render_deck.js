@@ -185,7 +185,7 @@ R.next = (sp, next) => { const s = pres.addSlide(); frame(s, "Next class", "Next
 const slides = []; // {label, next (undefined = auto, null = none), draw(next)}
 const push = (label, draw, next) => slides.push({ label, draw, next });
 const P = L.plan, st = P.steps, pages = [st.slice(0, 7)]; for (let i = 7; i < st.length; i += 6) pages.push(st.slice(i, i + 6));
-if (pages[pages.length - 1].length > 5) pages.push([]); // leave room for the four plan boxes
+if (pages.length === 1 || pages[pages.length - 1].length > 5) pages.push([]); // the four plan boxes never fit on slide 1
 let first = 0; pages.forEach((pg, k) => { const f = first; push("Lesson plan", () => R.plan({}, null, k + 1, pg, f, pages.length), null); first += pg.length; });
 push("Shape of the day", n => R.shape({}, n));
 function expand(sp) {
