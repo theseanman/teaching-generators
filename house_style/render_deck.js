@@ -576,7 +576,7 @@ function oneSlideSize(needsAt, room, gap, tight = gap) { for (let S = MIN; S >= 
 const DRILLSIZES = [];
 // full text across as many slides as it needs, at the floor
 const splitWords = (text, w, room) => { // break at sentence ends; fall back to words only for a sentence longer than a slide
-  const sents = text.match(/[^.!?]+[.!?]+[\u2019\u201D"]?\s*/g) || [text], pgs = []; let cur = "";
+  const sents = text.match(/[^.!?]+(?:[.!?]+[\u2019\u201D"]?\s*|$)/g) || [text], pgs = []; let cur = ""; // (?:…|$) keeps a last sentence with no end mark (Sep 27 fix)
   for (const se of sents.map(x => x.trim())) { const t = cur ? cur + " " + se : se;
     if (textH(t, w, MIN) <= room) { cur = t; continue; }
     if (cur) pgs.push(cur);

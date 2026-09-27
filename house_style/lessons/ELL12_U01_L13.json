@@ -1,0 +1,615 @@
+{
+ "parts": [
+  {
+   "key": "1A-A",
+   "lvl": "ELL 1",
+   "id": "A",
+   "title": "Vocabulary",
+   "kind": "cloze",
+   "lines": 2,
+   "instr": "Write the word from the box beside its meaning. Each word is used once. Cross out each word as you use it.",
+   "bankNote": "describe · sound · kitchen · adjective · see · taste · smell",
+   "example": {
+    "text": "the room where a family cooks is a",
+    "ans": "kitchen",
+    "tail": ""
+   },
+   "items": [
+    {
+     "text": "what your nose notices is a",
+     "ans": "smell",
+     "tail": ""
+    },
+    {
+     "text": "to notice something with your eyes is to",
+     "ans": "see",
+     "tail": ""
+    },
+    {
+     "text": "to try food to know its flavour is to",
+     "ans": "taste",
+     "tail": ""
+    },
+    {
+     "text": "what your ears hear is a",
+     "ans": "sound",
+     "tail": ""
+    },
+    {
+     "text": "to say what something is like is to",
+     "ans": "describe",
+     "tail": ""
+    },
+    {
+     "text": "the name for a describing word like soft or bright:",
+     "ans": "adjective",
+     "tail": ""
+    }
+   ],
+   "how": "Word box: describe · sound · kitchen · adjective · see · taste · smell. Outcome W7. Check each answer as it appears."
+  },
+  {
+   "key": "1A-B",
+   "lvl": "ELL 1",
+   "id": "B",
+   "title": "am, is or are",
+   "kind": "cloze",
+   "lines": 2,
+   "instr": "Write am, is or are on each line. You can use a word more than once.",
+   "bankNote": "are · am · is",
+   "example": {
+    "text": "I ( ? ) fifteen years old.",
+    "ans": "am",
+    "tail": ""
+   },
+   "items": [
+    {
+     "text": "My sister ( ? ) in Grade 9.",
+     "ans": "is",
+     "tail": ""
+    },
+    {
+     "text": "We ( ? ) from Manila.",
+     "ans": "are",
+     "tail": ""
+    },
+    {
+     "text": "I ( ? ) in Room 148.",
+     "ans": "am",
+     "tail": ""
+    },
+    {
+     "text": "The soup ( ? ) hot.",
+     "ans": "is",
+     "tail": ""
+    },
+    {
+     "text": "My parents ( ? ) at work.",
+     "ans": "are",
+     "tail": ""
+    }
+   ],
+   "how": "Word box: are · am · is. Outcome W9. Check each answer as it appears."
+  },
+  {
+   "key": "1A-C",
+   "lvl": "ELL 1",
+   "id": "C",
+   "title": "a, an or the",
+   "kind": "cloze",
+   "lines": 2,
+   "instr": "Write a, an or the on each line.",
+   "bankNote": "the · a · an",
+   "example": {
+    "text": "There is ( ? ) bag on the chair.",
+    "ans": "a",
+    "tail": ""
+   },
+   "items": [
+    {
+     "text": "I have ( ? ) apple.",
+     "ans": "an",
+     "tail": ""
+    },
+    {
+     "text": "( ? ) radio in the kitchen is old.",
+     "ans": "The",
+     "tail": ""
+    },
+    {
+     "text": "She reads ( ? ) book.",
+     "ans": "a",
+     "tail": ""
+    },
+    {
+     "text": "There is ( ? ) egg in the pan.",
+     "ans": "an",
+     "tail": ""
+    }
+   ],
+   "how": "Word box: the · a · an. Outcome W11. Check each answer as it appears."
+  },
+  {
+   "key": "1A-D",
+   "lvl": "ELL 1",
+   "id": "D",
+   "title": "Place words",
+   "kind": "cloze",
+   "lines": 2,
+   "instr": "Write a place word on each line. Use the box.",
+   "bankNote": "on · beside · in · under",
+   "example": {
+    "text": "The pen is ( ? ) the box.",
+    "ans": "in",
+    "tail": ""
+   },
+   "items": [
+    {
+     "text": "The picture is ( ? ) the wall.",
+     "ans": "on",
+     "tail": ""
+    },
+    {
+     "text": "My shoes are ( ? ) the bed.",
+     "ans": "under",
+     "tail": ""
+    },
+    {
+     "text": "The fish swim ( ? ) the water.",
+     "ans": "in",
+     "tail": ""
+    },
+    {
+     "text": "Lina stands ( ? ) her grandmother.",
+     "ans": "beside / next to",
+     "tail": ""
+    }
+   ],
+   "how": "Word box: on · beside · in · under. Outcome W11. Check each answer as it appears."
+  },
+  {
+   "key": "1A-E",
+   "lvl": "ELL 1",
+   "id": "E",
+   "title": "and, but or so",
+   "kind": "cloze",
+   "lines": 2,
+   "instr": "Write and, but or so on the line.",
+   "bankNote": "but · so · and",
+   "example": {
+    "text": "The soup is hot ( ? ) salty.",
+    "ans": "and",
+    "tail": ""
+   },
+   "items": [
+    {
+     "text": "I was cold, ( ? ) I closed the window.",
+     "ans": "so",
+     "tail": ""
+    },
+    {
+     "text": "I like tea, ( ? ) I do not like coffee.",
+     "ans": "but",
+     "tail": ""
+    },
+    {
+     "text": "Lina sings, ( ? ) her grandmother cooks.",
+     "ans": "and",
+     "tail": ""
+    },
+    {
+     "text": "The bus was late, ( ? ) I walked.",
+     "ans": "so",
+     "tail": ""
+    }
+   ],
+   "how": "Word box: but · so · and. Outcome W2. Check each answer as it appears."
+  },
+  {
+   "key": "1A-F",
+   "lvl": "ELL 1",
+   "id": "F",
+   "title": "Capitals and end marks",
+   "kind": "lines",
+   "lines": 2,
+   "instr": "Add the capital letters and the end mark. Write the whole sentence again.",
+   "example": {
+    "text": "my name is lina  →",
+    "ans": "My name is Lina."
+   },
+   "items": [
+    {
+     "text": "we live in canada  →",
+     "ans": "We live in Canada.",
+     "tail": ""
+    },
+    {
+     "text": "is the soup hot  →",
+     "ans": "Is the soup hot?",
+     "tail": ""
+    },
+    {
+     "text": "i eat rice on friday  →",
+     "ans": "I eat rice on Friday.",
+     "tail": ""
+    },
+    {
+     "text": "my friend maria is kind  →",
+     "ans": "My friend Maria is kind.",
+     "tail": ""
+    },
+    {
+     "text": "what is your name  →",
+     "ans": "What is your name?",
+     "tail": ""
+    }
+   ],
+   "how": "Outcome W5. Write the whole sentence again, fixed."
+  },
+  {
+   "key": "2A-A1",
+   "lvl": "ELL 2",
+   "id": "A1",
+   "title": "Sentence or fragment?",
+   "kind": "cloze",
+   "lines": 2,
+   "instr": "Write S for a complete sentence or F for a fragment.",
+   "example": {
+    "text": "The rice in the pan.",
+    "ans": "F",
+    "tail": ""
+   },
+   "items": [
+    {
+     "text": "Lina hums a song.",
+     "ans": "S",
+     "tail": ""
+    },
+    {
+     "text": "When the bus comes.",
+     "ans": "F",
+     "tail": ""
+    },
+    {
+     "text": "My brother reads a book.",
+     "ans": "S",
+     "tail": ""
+    },
+    {
+     "text": "The cold window in the morning.",
+     "ans": "F",
+     "tail": ""
+    }
+   ],
+   "how": "Outcome W1. Check each answer as it appears."
+  },
+  {
+   "key": "2A-A2",
+   "lvl": "ELL 2",
+   "id": "A2",
+   "title": "Sentence or fragment?",
+   "kind": "lines",
+   "lines": 2,
+   "instr": "Fix two fragments. Rewrite each one as a complete sentence.",
+   "example": {
+    "text": "The rice in the pan.  →",
+    "ans": "The rice crackles in the pan."
+   },
+   "items": [
+    {
+     "text": "When the bus comes.  →",
+     "ans": "Any complete sentence, e.g. I get on when the bus comes.",
+     "tail": ""
+    },
+    {
+     "text": "The cold window in the morning.  →",
+     "ans": "Any complete sentence, e.g. The window is cold in the morning.",
+     "tail": ""
+    }
+   ],
+   "how": "Outcome W1. Write the whole sentence again, fixed."
+  },
+  {
+   "key": "2A-B1",
+   "lvl": "ELL 2",
+   "id": "B1",
+   "title": "Joining ideas",
+   "kind": "cloze",
+   "lines": 2,
+   "instr": "Write and, but, so or because on the line.",
+   "bankNote": "so · because · but · and",
+   "example": {
+    "text": "The soup is hot ( ? ) spicy.",
+    "ans": "and",
+    "tail": ""
+   },
+   "items": [
+    {
+     "text": "I stay home ( ? ) I am sick.",
+     "ans": "because",
+     "tail": ""
+    },
+    {
+     "text": "It was cold, ( ? ) I wore a coat.",
+     "ans": "so",
+     "tail": ""
+    },
+    {
+     "text": "The soup is hot, ( ? ) it is not spicy.",
+     "ans": "but",
+     "tail": ""
+    },
+    {
+     "text": "Lina reads, ( ? ) her brother plays.",
+     "ans": "and",
+     "tail": ""
+    }
+   ],
+   "how": "Word box: so · because · but · and. Outcome W2. Check each answer as it appears."
+  },
+  {
+   "key": "2A-B2",
+   "lvl": "ELL 2",
+   "id": "B2",
+   "title": "Joining ideas",
+   "kind": "lines",
+   "lines": 2,
+   "instr": "Join the pair into ONE sentence. Comma before but and so, never before because. (2 marks.)",
+   "example": {
+    "text": "The window is cold. It is sunny outside.  →",
+    "ans": "The window is cold, but it is sunny outside."
+   },
+   "items": [
+    {
+     "text": "The kitchen smells good. Grandmother is cooking.  →",
+     "ans": "The kitchen smells good because Grandmother is cooking.",
+     "tail": ""
+    }
+   ],
+   "how": "Outcome W2. Write the whole sentence again, fixed."
+  },
+  {
+   "key": "2A-C1",
+   "lvl": "ELL 2",
+   "id": "C1",
+   "title": "Capitals and openings",
+   "kind": "lines",
+   "lines": 2,
+   "instr": "Write each sentence again with the correct capital letters.",
+   "example": {
+    "text": "my friend lina is from manila.  →",
+    "ans": "My friend Lina is from Manila."
+   },
+   "items": [
+    {
+     "text": "my family lives in burnaby.  →",
+     "ans": "My family lives in Burnaby.",
+     "tail": ""
+    },
+    {
+     "text": "on friday i go to the library.  →",
+     "ans": "On Friday I go to the library.",
+     "tail": ""
+    }
+   ],
+   "how": "Outcome W7. Write the whole sentence again, fixed."
+  },
+  {
+   "key": "2A-C2",
+   "lvl": "ELL 2",
+   "id": "C2",
+   "title": "Capitals and openings",
+   "kind": "lines",
+   "lines": 2,
+   "instr": "Rewrite each sentence so it starts differently. Put a comma after the opening. (2 marks each.)",
+   "example": {
+    "text": "The rain taps on the glass.  →",
+    "ans": "Outside, the rain taps on the glass."
+   },
+   "items": [
+    {
+     "text": "The bus comes at eight.  →",
+     "ans": "Any opening + comma, e.g. In the morning, the bus comes at eight.",
+     "tail": ""
+    },
+    {
+     "text": "I do my homework after dinner.  →",
+     "ans": "After dinner, I do my homework.",
+     "tail": ""
+    }
+   ],
+   "how": "Outcome W7. Write the whole sentence again, fixed."
+  },
+  {
+   "key": "2A-D",
+   "lvl": "ELL 2",
+   "id": "D",
+   "title": "Edit the paragraph",
+   "kind": "cloze",
+   "instr": "This paragraph has SIX mistakes. Write it again with every mistake fixed.",
+   "example": {
+    "text": "an onion",
+    "ans": "correct: no change",
+    "tail": ""
+   },
+   "items": [
+    {
+     "text": "on",
+     "ans": "On",
+     "tail": ""
+    },
+    {
+     "text": "busy but",
+     "ans": "busy, but",
+     "tail": ""
+    },
+    {
+     "text": "buy",
+     "ans": "buys",
+     "tail": ""
+    },
+    {
+     "text": "Because they need dinner.",
+     "ans": "join: …some fish because they need dinner.",
+     "tail": ""
+    },
+    {
+     "text": "carry",
+     "ans": "carries",
+     "tail": ""
+    },
+    {
+     "text": "bags",
+     "ans": "bags. (end mark)",
+     "tail": ""
+    }
+   ],
+   "how": "Six mistakes: a capital, a comma, two verbs, a fragment and an end mark. The example shows a trap: an onion is already correct."
+  }
+ ],
+ "walks": [
+  {
+   "type": "walk",
+   "part": "1A-A",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "1A-A"
+  },
+  {
+   "type": "walk",
+   "part": "2A-A1",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "2A-A1"
+  },
+  {
+   "type": "walk",
+   "part": "2A-A2",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "2A-A2"
+  },
+  {
+   "type": "walk",
+   "part": "1A-B",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "1A-B"
+  },
+  {
+   "type": "walk",
+   "part": "2A-B1",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "2A-B1"
+  },
+  {
+   "type": "walk",
+   "part": "2A-B2",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "2A-B2"
+  },
+  {
+   "type": "walk",
+   "part": "1A-C",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "1A-C"
+  },
+  {
+   "type": "walk",
+   "part": "2A-C1",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "2A-C1"
+  },
+  {
+   "type": "walk",
+   "part": "2A-C2",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "2A-C2"
+  },
+  {
+   "type": "walk",
+   "part": "1A-D",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "1A-D"
+  },
+  {
+   "type": "prose",
+   "text": "para",
+   "label": "Part D paragraph (ELL 2)"
+  },
+  {
+   "type": "walk",
+   "part": "2A-D",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "2A-D"
+  },
+  {
+   "type": "walk",
+   "part": "1A-E",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "1A-E"
+  },
+  {
+   "type": "walk",
+   "part": "1A-F",
+   "withExample": true
+  },
+  {
+   "type": "reveals",
+   "part": "1A-F"
+  }
+ ],
+ "pb1": {
+  "musts": [
+   "Use a place word in every sentence.",
+   "Join two ideas with and, but or so in ONE sentence.",
+   "Use an adjective in every sentence.",
+   "Capital letter at the start, end mark at the end."
+  ],
+  "task": "Write THREE sentences about your bedroom.",
+  "note": "Practice: 3 marks each for W1, W2, W5 and W7 (Not Yet 0 · Minimally 1 · Meeting 2 · Fully 3). Not entered in the gradebook."
+ },
+ "pb2": {
+  "musts": [
+   "Beginning: name the room and say one thing about it.",
+   "Middle: three details — where things are and a sense detail.",
+   "End: say what the room is like for you.",
+   "Use because once and but or so once. No fragments."
+  ],
+  "task": "Write a short paragraph (at least FIVE sentences) about your bedroom.",
+  "note": "Practice: 4 marks each for W3, W1, W2 and W7 (Not Yet 1 · Minimally 2 · Meeting 3 · Fully 4). Not entered in the gradebook."
+ },
+ "para": "on Saturday, Lina goes to the market with her grandmother. The market is busy but it is fun. Grandmother buy an onion and some fish. Because they need dinner. Lina carry the bags"
+}
