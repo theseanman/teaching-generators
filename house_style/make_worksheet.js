@@ -2,7 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const LESSON = require(path.resolve(process.argv[2])), COURSE = require(path.resolve(__dirname, "courses", LESSON.course + ".js"));
 const THEME = require("./theme");
-const M = LESSON.meta, D = Object.assign({ course: COURSE.code, unit: M.unit, lesson: M.lesson, month: M.month, unitTitle: M.unitTitle, title: M.title }, LESSON.worksheet);
+// Two-level courses (ELL 1/2): LESSON.sheets[i] = { lvl, suffix, label, objective, outcomes, vocab, remember, helpLine }; pass the index as argv[5].
+const M = LESSON.meta, SHEET = process.argv[5] != null ? LESSON.sheets[+process.argv[5]] : null;
+const D = Object.assign({ course: COURSE.code, unit: M.unit, lesson: M.lesson, month: M.month, unitTitle: M.unitTitle, title: M.title },
+  SHEET ? Object.assign({}, SHEET, { parts: LESSON.worksheet.parts.filter(p => p.lvl === SHEET.lvl) }) : LESSON.worksheet);
+const LABEL = D.label || D.course;
 const VER = process.argv[4] || "v1";
 const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, ShadingType, BorderStyle,
   TabStopType, LeaderType, Header, Footer, AlignmentType, PageNumber } = require("docx");
@@ -24,7 +28,7 @@ const box = (children, fill = PALE2, color = "90B4D8") => new Table({
     children })] })] });
 
 const body = [];
-body.push(P([R(`${D.course} \u00B7 Unit ${D.unit} \u00B7 ${D.month}`, { bold: true, color: BLUE, size: 24 })], { spacing: { after: 0 } }));
+body.push(P([R(`${LABEL} \u00B7 Unit ${D.unit} \u00B7 ${D.month}`, { bold: true, color: BLUE, size: 24 })], { spacing: { after: 0 } }));
 body.push(P([R(`${D.unitTitle}: Lesson ${D.lesson} Worksheet`, { bold: true, color: NAVY, size: 40 })], { spacing: { after: 0 } }));
 body.push(P([R(D.title, { italics: true, color: GREY, size: 24 })], { spacing: { after: 120 } }));
 body.push(P([R("Name: ", { bold: true }), R("\t"), R("   Date: ", { bold: true }), R("\t")],
@@ -35,10 +39,19 @@ body.push(box([
   P([R("Goal for this lesson", { bold: true, color: NAVY, size: 24 })], { spacing: { after: 40 } }),
   P([R(D.objective, { size: 24 })], { spacing: { after: 80 } }),
   P([R("Learning outcomes:  ", { bold: true, color: NAVY, size: 22 }), R(D.outcomes, { size: 22 })]) ]));
+if (D.vocab) { const cw = W / 2, rows = [];
+  for (let r = 0; r < D.vocab.length / 2; r++) rows.push(new TableRow({ cantSplit: true, children: [0, 1].map(c => { const v = D.vocab[r * 2 + c];
+    return new TableCell({ width: { size: cw, type: WidthType.DXA }, shading: { type: ShadingType.CLEAR, fill: PALE, color: "auto" }, margins: { top: 70, bottom: 70, left: 140, right: 140 },
+      borders: { top: { style: BorderStyle.SINGLE, size: 6, color: "90B4D8" }, bottom: { style: BorderStyle.SINGLE, size: 6, color: "90B4D8" }, left: { style: BorderStyle.SINGLE, size: 6, color: "90B4D8" }, right: { style: BorderStyle.SINGLE, size: 6, color: "90B4D8" } },
+      children: [P(v ? [R(v[0] + "  ", { bold: true, color: NAVY, size: 24 }), R(v[1], { size: 22 })] : [])] }); }) }));
+  body.push(P([R("Vocabulary", { bold: true, color: BLUE, size: 24 })], { spacing: { before: 200, after: 60 }, keepNext: true }));
+  body.push(new Table({ width: { size: W, type: WidthType.DXA }, columnWidths: [cw, cw], rows })); }
+if (D.remember) { body.push(P([], { spacing: { after: 60 } }));
+  body.push(box([P([R("Remember:  ", { bold: true, color: NAVY, size: 24 }), R(D.remember, { size: 24 })])], "FFF6E0", "E0B252")); }
 
 function heading(part) {
   return [
-    P([R(`Part ${part.id} \u2014 ${part.title}`, { bold: true, color: BLUE, size: 32 })], { spacing: { before: 280, after: 20 }, keepNext: true }),
+    P([R(`Part ${part.id} \u2014 ${part.title}`, { bold: true, color: BLUE, size: 32 })], { spacing: { before: 280, after: 20 }, keepNext: true, pageBreakBefore: !!part.newPage }),
     P([R(part.instr, { italics: true, color: GREY, size: 24 })], { spacing: { after: 140 }, keepNext: true }) ];
 }
 const numRun = (n) => R(n, { bold: true });
@@ -56,7 +69,7 @@ let blocks = [];
 for (const part of D.parts) {
   const ps = [...heading(part)];
   if (part.bank) {
-    const cols = 3, cw = W / cols, rows = [];
+    const cols = part.bankCols || 3, cw = W / cols, rows = [];
     for (let r = 0; r < part.bank.length / cols; r++) rows.push(new TableRow({ cantSplit: true, children: part.bank.slice(r * cols, r * cols + cols).map(w => new TableCell({
       width: { size: cw, type: WidthType.DXA }, shading: { type: ShadingType.CLEAR, fill: PALE, color: "auto" },
       margins: { top: 90, bottom: 90, left: 140, right: 140 },
@@ -112,12 +125,13 @@ for (const part of D.parts) {
   blocks.push(...ps);
 }
 body.push(...blocks);
-body.push(P([], { spacing: { after: 0 } }));
+if (D.helpLine) body.push(P([R(D.helpLine, { italics: true, color: GREY, size: 22 })], { spacing: { before: 240 } }));
+if (!D.helpLine) body.push(P([], { spacing: { after: 0 } })); // the help line already ends the document; an extra empty paragraph can spill onto a blank page
 const doc = new Document({
   styles: { default: { document: { run: { font: FONT, size: SZ } } } },
   sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 1000, bottom: 900, left: 1080, right: 1080, header: 500, footer: 450 } } },
-    headers: { default: new Header({ children: [P([R(`${D.course} \u00B7 Unit ${D.unit} \u00B7 Lesson ${D.lesson} Worksheet  \u00B7  Room ${COURSE.room}`, { size: 18, color: GREY })], { alignment: AlignmentType.RIGHT })] }) },
+    headers: { default: new Header({ children: [P([R(`${LABEL} \u00B7 Unit ${D.unit} \u00B7 Lesson ${D.lesson} Worksheet  \u00B7  Room ${COURSE.room}`, { size: 18, color: GREY })], { alignment: AlignmentType.RIGHT })] }) },
     footers: { default: new Footer({ children: [P([R("Page ", { size: 18, color: GREY }), new TextRun({ children: [PageNumber.CURRENT], size: 18, color: GREY, font: FONT })], { alignment: AlignmentType.CENTER })] }) },
     children: body }] });
-Packer.toBuffer(doc).then(b => { fs.writeFileSync(`${out}/${THEME.fileName(COURSE, M, "Worksheet", VER)}.docx`, b);
-  fs.writeFileSync(`${out}/manifest.json`, JSON.stringify(manifest)); console.log("ok", manifest.length); });
+Packer.toBuffer(doc).then(b => { fs.writeFileSync(`${out}/${THEME.fileName(COURSE, M, "Worksheet", VER)}${D.suffix ? "_" + D.suffix : ""}.docx`, b);
+  fs.writeFileSync(`${out}/manifest${D.suffix ? "_" + D.suffix : ""}.json`, JSON.stringify(manifest)); console.log("ok", manifest.length); });
