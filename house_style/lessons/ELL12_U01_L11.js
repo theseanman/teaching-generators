@@ -2,7 +2,7 @@
 // Rebuilt Sep 26 2026 from the v13 L12 "Editing" deck + Core sheets, to the standing orders, on the L05–L10 pattern.
 // Approved spec Sep 26: edit in three passes + help slip; the GOOD COPY (Sean's term — never "clean copy") is written on a
 // SEPARATE one-page sheet per level (make_goodcopy.js reads `goodCopy` below); worksheet + good copy go in the tray and the
-// good copy is marked at L12 with the Unit 1 composition rubric. Outcomes: ELL 1 W5 · W6 · W12; ELL 2 W7 · W8 · W9 (editing half).
+// good copy is handed back unmarked at L12 for the share, re-collected at the end of L12 and marked then. Outcomes: ELL 1 W5 · W6 · W12; ELL 2 W7 · W8 · W9 (editing half).
 // v13 answer-key faults fixed: 2A Part A counts ignored missing end marks; both Part B examples were garbled; 2A B4 repeated A3.
 // Unit order: L10 Making It Better · L11 this · L12 This Is Me
 const vocab = [
@@ -44,7 +44,7 @@ module.exports = {
    ["25", "The good copy", "Hand out the Good Copy sheets. Students write the whole piece again, neatly, with every change. Circulate: the good copy is what you mark."],
    ["5", "Check, exit ticket and hand in", "Part D tick-box check, then the Part E exit ticket. Good copy on top, worksheet under it, in the tray. Next class, then agendas."] ],
   diff: "Support: ELL 1 may write the good copy straight from the Lesson 9 draft with the Lesson 10 sentences swapped in, one sentence per line; keep the three-passes slide up. Extension: ELL 2 early finishers do a fourth pass for joining words and commas, then read the good copy to a partner.",
-  assess: "MARKING TODAY: collect every good copy with its worksheet (the tray). Mark the good copy at Lesson 12 with the Unit 1 composition rubric (ELL 1 W1 · W2 · W5 · W7; ELL 2 W3 · W1 · W2 · W7 · W9). Part C shows the editing; the help slips are the W12 evidence for ELL 1.",
+  assess: "MARKING TODAY: collect every good copy with its worksheet (the tray). Hand the good copies back unmarked at the start of Lesson 12 for the share; mark them after Lesson 12 with the Unit 1 rubric. Part C shows the editing; help slips are ELL 1 W12 evidence.",
   homework: "None if the good copy is in the tray. An unfinished good copy goes home and comes back at the start of Lesson 12.",
   watch: "Students copying the old draft without the Lesson 10 changes. Editing everything at once instead of in passes. ELL 2 verbs without the s. Anyone waiting silently: hand them a help slip." },
  shape: [["Warm-up: words and grammar", "quick practice"], ["How many?", "warm-up game"], ["Match the word", "vocabulary game"],
@@ -112,7 +112,7 @@ module.exports = {
   { type: "exit", part: "2A-E", note: "Then hand in your good copy and worksheet." }, { type: "reveals", part: "2A-E", good: true },
   { type: "rows", label: "Hand in", tag: "Before you go", head: "Hand in your good copy", icon: "icon-folder.png", rows: [
     ["1", "Check your name is on both sheets."], ["2", "Good copy on top, worksheet under it."],
-    ["3", "Put them in the tray."], ["4", "I mark your good copy before next class."]] },
+    ["3", "Put them in the tray."], ["4", "You get it back next class to share."]] },
   { type: "nextshape", label: "Next class", head: "Next class: This Is Me", items: [
     ["Warm-up: words and grammar", "quick practice"], ["Warm-up game", "game"], ["How we share", "mini-lesson"],
     ["A good listener", "class activity"], ["Share your writing", "partner speaking"], ["Look how far you came", "reflection"], ["Exit ticket", "quick write"]] },

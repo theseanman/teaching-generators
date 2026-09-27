@@ -1,0 +1,192 @@
+// ELL12 U1 L12 — This Is Me (showcase). ALL content here; the renderer holds the design.
+// Rebuilt Sep 26 2026 from the v13 L13 "Showcase" deck + Core sheets, to the standing orders, on the L05–L11 pattern.
+// Approved Sep 26: good copies (collected end of L11) are handed back UNMARKED at the start for the share, re-collected at the
+// end with this worksheet and marked after L12 (Unit 1 composition rubric). No core-competency reflection here: that is end of term.
+// Next class = the practice test, answers gone over as a class; the unit test follows.
+// v13 faults fixed: garbled Part B examples, one-line Part C answers, walkthrough "Part D" that was not on the sheets.
+// Unit order: L11 Cleaning It Up · L12 this · then practice test + unit test
+const vocab = [
+  ["share", "to read your writing to others"],
+  ["listen", "to give the speaker your full attention"],
+  ["picture", "to see it in your mind"],
+  ["question", "something you ask to learn more"],
+  ["reflect", "to think back about your learning"],
+  ["proud", "pleased with what you did"],
+  ["grow", "to get better over time"],
+  ["audience", "the people who listen"]];
+const bankWords = ["grow", "question", "audience", "share", "proud", "picture", "reflect", "listen"];
+const helpLine = "Stuck? Fill in a help slip: “Can you check my …?”  “I need help with …”";
+const M1 = "My place is my uncle’s shop. I see old shelves and a red door. The shelves are next to the window. I smell coffee, and I hear the radio. The shop is small, but it is busy. It matters to me because my uncle teaches me there.";
+const M2 = "On Saturday mornings, my uncle’s shop is where I feel useful. Old shelves lean next to the window, full of rice bags and tins. The radio plays in the back, and the shop smells of coffee. When customers pay, the cold coins feel heavy in my hand. The till sits on a wooden counter by the door, so I can greet everyone who comes in. The shop is small, but it is always busy. This shop matters to me because my uncle trusts me there.";
+
+module.exports = {
+ course: "ELL12",
+ meta: { unit: 1, unitTitle: "Who I Am", lesson: 12, title: "This Is Me", subtitle: "Share, listen, look back", month: "September" },
+ banner: { obj: "Share your good copy, listen well, and look back at how you have grown.",
+   std: "ELL 1: W1 simple sentences · W7 familiar words  •  ELL 2: W1 simple sentences · W9 revise (reflection)", lit: ["COM", "TH", "PS"] },
+ plan: {
+  objective: "Students share a favourite sentence from their good copy, listen as an audience, and reflect on their growth since Lesson 1. The share confirms authorship; it is not scored.",
+  outcomes: "ELL 1: W1 · W7. ELL 2: W1 · W9 (reflection).",
+  materials: "Deck · ELL 1 and ELL 2 Lesson 12 worksheets · the good copies from the tray, to hand back · students’ Lesson 1 sheets (duotangs) · help slips",
+  timing: "80 minutes",
+  steps: [
+   ["8", "Warm-up Parts A and B", "In exercise books, five items per level, both levels on one slide. Part A · Vocabulary: ELL 1 feeling words (proud, nervous, excited, tired, happy); ELL 2 learning verbs (improved, learned, struggled, practised, shared). Part B · Grammar: ELL 1 could or can; ELL 2 used to or now. Reveal one at a time, alternating levels."],
+   ["6", "Guess the place", "Warm-up game. Read each short description; partners guess the place and say which detail gave it away. Five places, then the answers. English only."],
+   ["3", "Title, goals and good copies back", "Read the three goals. Hand back the good copies, unmarked: students read theirs once and underline one favourite sentence."],
+   ["5", "Match the word", "Eight sharing words against meanings from a shuffled bank, revealed one at a time, then the key-vocabulary summary."],
+   ["4", "How we share", "The speaker’s job and the listener’s job: read clearly and look up once; eyes on the speaker, picture the place, one thing you pictured, one question."],
+   ["5", "Look how far you came", "Lesson 1 beside the good copy, with the My Uncle’s Shop models in full. Students take out their own Lesson 1 sheet and compare."],
+   ["15", "Share your favourite sentence", "Small groups of three or four. Each student reads one sentence from the good copy; each listener says one thing they pictured and asks one question. English only."],
+   ["10", "Worksheet Parts A and B", "Hand out the worksheets. Walk Part A and Part B for each level with the worked example. Part A answers one at a time; Part B one good answer each."],
+   ["17", "Part C: look how far I came", "Walk Part C and show one good answer for each level. Students answer about their own growth from Lesson 1 to the good copy."],
+   ["5", "Check, exit ticket and hand in", "Part D tick-box check, then the Part E exit ticket. Good copy on top, worksheet under it, in the tray. Next class, then agendas."] ],
+  diff: "Support: ELL 1 may share in a pair instead of a group and read their sentence twice; the frames stay on screen. Extension: ELL 2 early finishers write a second question for their classmate and add a second goal in Part C.",
+  assess: "MARKING TODAY: collect every good copy again with this worksheet (the tray). Mark the good copies now with the Unit 1 composition rubric (ELL 1 W1 · W2 · W5 · W7; ELL 2 W3 · W1 · W2 · W7 · W9). The share confirms authorship and is not scored.",
+  homework: "None. Next class is the practice test, gone over together; the unit test follows.",
+  watch: "Students reading too fast or without looking up. Listeners with no question. Part C answers that say “good” instead of naming the change. Anyone without a good copy: they share from the Lesson 9 draft." },
+ shape: [["Warm-up: words and grammar", "quick practice"], ["Guess the place", "warm-up game"], ["Your good copy is back", "reading"],
+   ["Match the word", "vocabulary game"], ["How we share", "mini-lesson"], ["Look how far you came", "reflection"],
+   ["Share your favourite sentence", "small-group speaking"], ["Worksheet Parts A, B and C", "worksheet"], ["Check, exit ticket, hand in", "quick write"]],
+ sequence: [
+  { type: "drill", part: "A", kind: "Vocabulary", lvls: [
+    { lvl: "ELL 1", bankLabel: "Feeling words", bank: "tired · happy · proud · excited · nervous",
+      items: [["I did well. I feel ____.", "proud"], ["Before a test I feel ____.", "nervous"], ["It is my birthday! I am ____.", "excited"],
+        ["I slept badly. I am ____.", "tired"], ["I got a gift. I am ____.", "happy"]] },
+    { lvl: "ELL 2", bankLabel: "Learning verbs", bank: "shared · struggled · improved · practised · learned",
+      items: [["My spelling ____ a lot.", "improved"], ["I ____ a new word today.", "learned"], ["I ____ with commas.", "struggled"],
+        ["I ____ my verbs daily.", "practised"], ["I ____ my writing aloud.", "shared"]] } ] },
+  { type: "drill", part: "B", kind: "Grammar", lvls: [
+    { lvl: "ELL 1", bankLabel: "could or can?", bank: "can · could",
+      items: [["In Lesson 1 I ____ write one line.", "could"], ["Now I ____ write six.", "can"], ["Last year I ____ not read it.", "could"],
+        ["Now I ____ read it.", "can"], ["Before, I ____ only say hello.", "could"]] },
+    { lvl: "ELL 2", bankLabel: "used to or now?", bank: "now · used to",
+      items: [["I ____ write short lines.", "used to"], ["____ I write paragraphs.", "Now"], ["I ____ forget capitals.", "used to"],
+        ["____ I check every one.", "Now"], ["I ____ be shy in class.", "used to"]] } ] },
+  { type: "rows", label: "Guess the place", tag: "Warm-up game", head: "Guess the place: how to play", englishOnly: true, rows: [
+    ["1", "I read a short description of a place."], ["2", "With a partner: guess the place."],
+    ["3", "Say the detail that gave it away."], ["Win", "The first pair with the place AND the detail."]] },
+  { type: "rows", label: "Guess the place: try these", tag: "Warm-up game", head: "Where am I?", rows: [
+    ["1", "It smells of garlic rice. A kettle sings at six."], ["2", "The radio plays. Coins are cold in my hand."],
+    ["3", "Tall trees. Birds. A bench in the sun."], ["4", "Horns honk. People stand by the door."], ["5", "Rain taps the glass. The city hums below."]] },
+  { type: "rows", label: "Guess the place: answers", tag: "Warm-up game · answers", head: "The places", rows: [
+    ["1", "a kitchen: the garlic rice and the kettle"], ["2", "a shop: the radio and the coins"], ["3", "a park: the trees and the bench"],
+    ["4", "a bus: the horns and the door"], ["5", "a balcony: the rain and the city below"]] },
+  { type: "speaking", label: "Guess the place: frames", head: "Guess the place: say it like this", englishOnly: true, signAll: true, icon: "icon-friends.png",
+    prompt: "Listen to the description. Guess the place with your partner.",
+    frames: ["I think it is a ______.", "The clue is ______.", "I can picture the ______."] },
+  { type: "title", label: "Today’s lesson" },
+  { type: "goals", label: "Today’s goals", items: [
+    "Share one sentence from your good copy.", "Listen: picture the place, ask one question.", "Look back: see how far you came."] },
+  { type: "rows", label: "Your good copy is back", tag: "Your good copy", head: "Your good copy is back", icon: "icon-read.png", rows: [
+    ["1", "Read your good copy once, quietly."], ["2", "Underline ONE favourite sentence."], ["3", "You will read it to a small group."]] },
+  { type: "match", label: "Match the word", head: "Match the word", bank: bankWords, words: vocab },
+  { type: "vocab", label: "Key vocabulary", head: "Key vocabulary", words: vocab },
+  { type: "rows", label: "How we share", tag: "Teaching 1 of 2", head: "How we share", rows: [
+    ["Speaker", "read your favourite sentence clearly; look up once"], ["Listeners", "eyes on the speaker; picture the place"],
+    ["After", "say one thing you pictured; ask one question"]] },
+  { type: "rows", label: "Look how far you came", tag: "Teaching 2 of 2", head: "Look how far you came", rows: [
+    ["Lesson 1", "a few sentences about me: my name, my age"], ["Lesson 11", "a whole place a reader can see, hear and smell"],
+    ["You", "take out your Lesson 1 sheet and your good copy. Read both."]] },
+  { type: "prose", text: "g1", label: "My Uncle’s Shop, good copy (ELL 1)" },
+  { type: "prose", text: "g2", label: "My Uncle’s Shop, good copy (ELL 2)" },
+  { type: "text2", a: "g1", b: "g2", label: "Both good copies", tag: "Model · both good copies", head: "Two good copies" },
+  { type: "speaking", label: "Share your favourite sentence", head: "Share your favourite sentence", englishOnly: true, signAll: true, icon: "icon-friends.png",
+    prompt: "In your group, read your favourite sentence. Each listener says one thing they pictured and asks one question.",
+    frames: ["My favourite sentence is ______.", "I can picture your ______.", "Where / Who / Why ______?"] },
+  { type: "handout", label: "Hand out the worksheet", note: "ELL 1 and ELL 2 sheets. Name and date first. Keep your good copy and your Lesson 1 sheet out.",
+    items: [["A", "a good listener · speaker or listener?"], ["B", "my classmate’s place · respond to a classmate"], ["C", "look how far I came"], ["D", "check your work"], ["E", "exit ticket", true]],
+    foot: "At the end, your good copy and this sheet go in the tray." },
+  { type: "walk", part: "1A-A", withExample: true }, { type: "reveals", part: "1A-A" },
+  { type: "walk", part: "2A-A", withExample: true }, { type: "reveals", part: "2A-A" },
+  { type: "walk", part: "1A-B", withExample: true }, { type: "reveals", part: "1A-B", good: true },
+  { type: "walk", part: "2A-B", withExample: true }, { type: "reveals", part: "2A-B", good: true },
+  { type: "walk", part: "1A-C", withExample: true }, { type: "reveals", part: "1A-C", good: true },
+  { type: "walk", part: "2A-C", withExample: true }, { type: "reveals", part: "2A-C", good: true },
+  { type: "walk", part: "1A-D" }, { type: "walk", part: "2A-D" },
+  { type: "pages", label: "The whole sheet again" },
+  { type: "exit", part: "1A-E", note: "Then hand in your good copy and this sheet." }, { type: "reveals", part: "1A-E", good: true },
+  { type: "exit", part: "2A-E", note: "Then hand in your good copy and this sheet." }, { type: "reveals", part: "2A-E", good: true },
+  { type: "rows", label: "Hand in", tag: "Before you go", head: "Hand in your good copy", icon: "icon-folder.png", rows: [
+    ["1", "Check your name is on both sheets."], ["2", "Good copy on top, worksheet under it."],
+    ["3", "Put them in the tray."], ["4", "Now I mark your good copy."]] },
+  { type: "nextshape", label: "Next class", head: "Next class: Practice Test", items: [
+    ["Practice test", "independent work"], ["Go over the answers", "class review"], ["What to study for the unit test", "planning"]] },
+  { type: "rows", label: "Agendas", tag: "Before you go", head: "Take out your agenda", icon: "icon-calendar.png", rows: [
+    ["Next class", "Practice test, then we go over it together."], ["After that", "The Unit 1 test."],
+    ["Homework", "None. Bring a pencil and an eraser."]] } ],
+ sheets: [
+  { lvl: "ELL 1", suffix: "1A", label: "ELL 1", objective: "Share your writing, listen to a classmate, and look back at your growth.",
+    outcomes: "ELL 1  W1 Write simple sentences  •  W7 Familiar words and phrases", vocab,
+    remember: "Sharing your writing takes courage. Looking back shows how much you have grown.", helpLine },
+  { lvl: "ELL 2", suffix: "2A", label: "ELL 2", objective: "Share your writing, respond to a classmate, and reflect on your growth.",
+    outcomes: "ELL 2  W1 Simple sentences  •  W9 Revise and edit (reflecting on your changes)", vocab,
+    remember: "Reflection means looking back honestly: what changed, and what is next.", helpLine } ],
+ worksheet: { parts: [
+  // ---------------- ELL 1 ----------------
+  { key: "1A-A", lvl: "ELL 1", id: "A", title: "A good listener", kind: "cloze",
+    instr: "Does a good listener do this? Write yes or no.",
+    example: { text: "looks at the speaker", ans: "yes", tail: "" },
+    items: [{ text: "talks to a friend", ans: "no", tail: "" }, { text: "pictures the place", ans: "yes", tail: "" },
+      { text: "reads their own paper", ans: "no", tail: "" }, { text: "asks one question", ans: "yes", tail: "" },
+      { text: "plays on a phone", ans: "no", tail: "" }],
+    how: "A good listener looks, pictures the place and asks a question. A good listener does not talk or look away." },
+  { key: "1A-B", lvl: "ELL 1", id: "B", title: "My classmate’s place", kind: "lines", lines: 2, newPage: true,
+    instr: "Listen to a classmate. Write about their place in full sentences.",
+    example: { text: "Their place is … (Lina’s classmate)", ans: "Their place is a kitchen." },
+    items: [{ text: "Their place is …", ans: "Their place is a balcony." },
+      { text: "One thing I pictured:", ans: "I pictured the rain on the glass." },
+      { text: "One question I asked:", ans: "Who sits there with you?" }],
+    how: "Write the place first. Then one thing you could see in your mind. Then the question you asked." },
+  { key: "1A-C", lvl: "ELL 1", id: "C", title: "Look how far I came", kind: "lines", lines: 2,
+    instr: "Look at your Lesson 1 sheet and your good copy. Answer about you.",
+    example: { text: "In Lesson 1, I could write … (Lina)", ans: "In Lesson 1, I could write one sentence about me." },
+    items: [{ text: "In Lesson 1, I could write …", ans: "In Lesson 1, I could write my name and my age." },
+      { text: "Now I can write …", ans: "Now I can write six sentences about my uncle’s shop." },
+      { text: "I am proud of …", ans: "I am proud of my red door detail." },
+      { text: "Next I want to get better at …", ans: "Next I want to get better at spelling." }],
+    how: "Look at both pieces of writing. Say what changed. Name one thing you are proud of and one thing to work on." },
+  { key: "1A-D", lvl: "ELL 1", id: "D", title: "Check your work", kind: "check",
+    instr: "Tick each box when it is true.",
+    checks: ["I shared my favourite sentence.", "I listened and pictured a classmate’s place.", "I asked one question.",
+      "I wrote what I can do now.", "I named one thing to get better at.", "My good copy is in the tray."],
+    how: "Tick a box only when it is true. Fix anything you cannot tick yet." },
+  { key: "1A-E", lvl: "ELL 1", id: "E", title: "Exit ticket", kind: "exit", lines: 2,
+    instr: "Answer, then hand in your good copy and this sheet.",
+    items: [{ text: "My favourite sentence is …", reveal: "My favourite sentence is: I smell coffee, and I hear the radio." }],
+    how: "Copy the sentence you underlined in your good copy." },
+  // ---------------- ELL 2 ----------------
+  { key: "2A-A", lvl: "ELL 2", id: "A", title: "Speaker or listener?", kind: "cloze",
+    instr: "Write S if it is the speaker’s job or L if it is the listener’s.",
+    example: { text: "Read your favourite sentence clearly.", ans: "S", tail: "" },
+    items: [{ text: "Picture the speaker’s place.", ans: "L", tail: "" }, { text: "Look up at the audience once.", ans: "S", tail: "" },
+      { text: "Say one thing you could picture.", ans: "L", tail: "" }, { text: "Ask one question about the place.", ans: "L", tail: "" },
+      { text: "Choose your best sentence to share.", ans: "S", tail: "" }],
+    how: "The speaker prepares and reads. The listeners picture, respond and ask." },
+  { key: "2A-B", lvl: "ELL 2", id: "B", title: "Respond to a classmate", kind: "lines", lines: 2, newPage: true,
+    instr: "Listen to a classmate’s sentence. Name their place, one specific thing that worked, and one real question.",
+    example: { text: "One thing that worked (Lina’s classmate):", ans: "The line about the blinking city lights let me see the balcony." },
+    items: [{ text: "Their place:", ans: "Their place is a balcony above a busy street." },
+      { text: "One thing that worked (be specific):", ans: "The rain tapping on the glass let me hear the balcony." },
+      { text: "One question I would ask:", ans: "Who taught you to love that place?" }],
+    how: "Be specific: name the detail that worked. Ask a question you really want answered." },
+  { key: "2A-C", lvl: "ELL 2", id: "C", title: "My growth this unit", kind: "lines", lines: 2,
+    instr: "Look at your Lesson 1 sheet and your good copy. Reflect honestly on what changed.",
+    example: { text: "In Lesson 1 my writing was … (Lina)", ans: "In Lesson 1 my writing was three short sentences about me." },
+    items: [{ text: "In Lesson 1 my writing was …", ans: "In Lesson 1 my writing was a few flat sentences about my name." },
+      { text: "Now my writing can …", ans: "Now my writing can put a reader inside my uncle’s shop." },
+      { text: "The change I am proudest of is …, because …", ans: "The change I am proudest of is the cold coins, because the reader can feel them." },
+      { text: "Next unit I want to get better at …", ans: "Next unit I want to get better at commas." }],
+    how: "Name real changes, not just “better”. Say why the change matters. Choose one goal you can work on." },
+  { key: "2A-D", lvl: "ELL 2", id: "D", title: "Check your work", kind: "check",
+    instr: "Tick each box when it is true.",
+    checks: ["I shared my writing clearly.", "I listened and responded to a classmate.", "I asked a real question.",
+      "I reflected on real changes.", "I named a goal for next unit.", "My good copy is in the tray."],
+    how: "Tick a box only when it is true. Fix anything you cannot tick yet." },
+  { key: "2A-E", lvl: "ELL 2", id: "E", title: "Exit ticket", kind: "exit", lines: 2,
+    instr: "Answer, then hand in your good copy and this sheet.",
+    items: [{ text: "My favourite sentence is …, because …", reveal: "My favourite sentence is the one about the cold coins, because you can feel them." }],
+    how: "Choose the sentence you underlined and say why it works." } ] },
+ texts: {
+  g1: { lvl: "ELL 1 · good copy", title: "My Uncle’s Shop", body: M1 },
+  g2: { lvl: "ELL 2 · good copy", title: "My Uncle’s Shop", body: M2 } }
+};
