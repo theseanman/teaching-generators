@@ -1,0 +1,210 @@
+// ELL12 U1 L11 — Cleaning It Up. ALL content here; the renderer holds the design.
+// Rebuilt Sep 26 2026 from the v13 L12 "Editing" deck + Core sheets, to the standing orders, on the L05–L10 pattern.
+// Approved spec Sep 26: edit in three passes + help slip; the GOOD COPY (Sean's term — never "clean copy") is written on a
+// SEPARATE one-page sheet per level (make_goodcopy.js reads `goodCopy` below); worksheet + good copy go in the tray and the
+// good copy is marked at L12 with the Unit 1 composition rubric. Outcomes: ELL 1 W5 · W6 · W12; ELL 2 W7 · W8 · W9 (editing half).
+// v13 answer-key faults fixed: 2A Part A counts ignored missing end marks; both Part B examples were garbled; 2A B4 repeated A3.
+// Unit order: L10 Making It Better · L11 this · L12 This Is Me
+const vocab = [
+  ["edit", "to find and fix mistakes"],
+  ["capital", "a big letter: starts, names, I"],
+  ["end mark", ". or ? or !"],
+  ["spelling", "the right letters in a word"],
+  ["pass", "one read for one job"],
+  ["checklist", "a list you tick as you check"],
+  ["help slip", "a note to ask for help"],
+  ["good copy", "the final, neat version you hand in"]];
+const bankWords = ["pass", "good copy", "capital", "help slip", "edit", "end mark", "checklist", "spelling"];
+const helpLine = "Stuck? Fill in a help slip: “Can you check my …?”  “I need help with …”";
+const M1 = "My place is my uncle’s shop. I see old shelves and a red door. The shelves are next to the window. I smell coffee, and I hear the radio. The shop is small, but it is busy. It matters to me because my uncle teaches me there.";
+const E1 = "my place is my uncle’s shop. I see old shelfs and a red door The shelves are next to the window. i smell coffee, and I here the radio. The shop is small, but it is busy. It matters to me because my uncle teachs me there.";
+const M2 = "On Saturday mornings, my uncle’s shop is where I feel useful. Old shelves lean next to the window, full of rice bags and tins. The radio plays in the back, and the shop smells of coffee. When customers pay, the cold coins feel heavy in my hand. The till sits on a wooden counter by the door, so I can greet everyone who comes in. The shop is small, but it is always busy. This shop matters to me because my uncle trusts me there.";
+const E2 = "On saturday mornings, my uncle’s shop is where i feel useful. Old shelves lean next to the window, full of rice bags and tins The radio play in the back, and the shop smells of coffee. When customers pay, the cold coins feels heavy in my hand. The till sits on a wooden counter by the door, so I can greet everyone who comes in. the shop is small, but it is allways busy. This shop matters to me becuase my uncle trusts me there.";
+
+module.exports = {
+ course: "ELL12",
+ meta: { unit: 1, unitTitle: "Who I Am", lesson: 11, title: "Cleaning It Up", subtitle: "Edit, then write your good copy", month: "September" },
+ banner: { obj: "Edit in three passes, then write your good copy.",
+   std: "ELL 1: W5 capitals and end marks · W6 spelling · W12 asking for help  •  ELL 2: W7 capitals and punctuation · W8 spelling · W9 edit", lit: ["COM", "TH", "PS"] },
+ plan: {
+  objective: "Students edit their revised writing in three passes (capitals, end marks, spelling), ask for help with a help slip, and write the good copy of their place piece: the one you mark.",
+  outcomes: "ELL 1: W5 · W6 · W12. ELL 2: W7 · W8 · W9 (editing half).",
+  materials: "Deck · ELL 1 and ELL 2 Lesson 11 worksheets · ELL 1 and ELL 2 Good Copy sheets · students’ Lesson 9 drafts and Lesson 10 sheets (duotangs) · help slips · the tray",
+  timing: "80 minutes",
+  steps: [
+   ["8", "Warm-up Parts A and B", "In exercise books, five items per level, both levels on one slide. Part A · Vocabulary: ELL 1 the right spelling (friend, school, people, because, family); ELL 2 sound-alike words (hear, there, their, too, two). Part B · Grammar: ELL 1 the word that needs a capital; ELL 2 verbs that match (is, are, smells, smell). Reveal one at a time, alternating levels."],
+   ["6", "How many?", "Warm-up game. A sentence with mistakes goes on the screen; partners hold up fingers for the number of mistakes, then one pair says the fixed sentence. Five sentences, then the answers. English only."],
+   ["2", "Title and goals", "Read the three goals: edit one thing at a time, ask for help, write the good copy."],
+   ["5", "Match the word", "Eight editing words against meanings from a shuffled bank, revealed one at a time, then the key-vocabulary summary."],
+   ["6", "Edit one thing at a time, with the model", "Three passes: capitals, end marks, spelling (ELL 2 adds verbs). Read the ELL 1 and ELL 2 versions of My Uncle’s Shop with mistakes in, then each beside its good copy."],
+   ["3", "Using the help slip", "“Can you check my …?” and “I need help with …”, pointing to the exact spot. For ELL 1 asking for help is W12 on the report card."],
+   ["3", "Read it out loud", "Partners read one part of their writing aloud; the ear finds mistakes the eye misses. English only."],
+   ["9", "Worksheet Parts A and B", "Hand out the worksheets. Walk Part A and Part B for each level with the worked example; answers one at a time."],
+   ["8", "Part C: my three passes", "Students edit the Lesson 9 draft and the starred Lesson 10 sentences one pass at a time and write one fix from each pass. Help slips out."],
+   ["25", "The good copy", "Hand out the Good Copy sheets. Students write the whole piece again, neatly, with every change. Circulate: the good copy is what you mark."],
+   ["5", "Check, exit ticket and hand in", "Part D tick-box check, then the Part E exit ticket. Good copy on top, worksheet under it, in the tray. Next class, then agendas."] ],
+  diff: "Support: ELL 1 may write the good copy straight from the Lesson 9 draft with the Lesson 10 sentences swapped in, one sentence per line; keep the three-passes slide up. Extension: ELL 2 early finishers do a fourth pass for joining words and commas, then read the good copy to a partner.",
+  assess: "MARKING TODAY: collect every good copy with its worksheet (the tray). Mark the good copy at Lesson 12 with the Unit 1 composition rubric (ELL 1 W1 · W2 · W5 · W7; ELL 2 W3 · W1 · W2 · W7 · W9). Part C shows the editing; the help slips are the W12 evidence for ELL 1.",
+  homework: "None if the good copy is in the tray. An unfinished good copy goes home and comes back at the start of Lesson 12.",
+  watch: "Students copying the old draft without the Lesson 10 changes. Editing everything at once instead of in passes. ELL 2 verbs without the s. Anyone waiting silently: hand them a help slip." },
+ shape: [["Warm-up: words and grammar", "quick practice"], ["How many?", "warm-up game"], ["Match the word", "vocabulary game"],
+   ["Edit one thing at a time", "mini-lesson"], ["Using the help slip", "mini-lesson"], ["Read it out loud", "partner speaking"],
+   ["Worksheet Parts A, B and C", "worksheet"], ["Write your good copy", "independent writing"], ["Check, exit ticket, hand in", "quick write"]],
+ sequence: [
+  { type: "drill", part: "A", kind: "Vocabulary", lvls: [
+    { lvl: "ELL 1", bankLabel: "The right spelling", bank: "people · family · school · because · friend",
+      items: [["frend or friend? ____", "friend"], ["skool or school? ____", "school"], ["peple or people? ____", "people"],
+        ["becuz or because? ____", "because"], ["famly or family? ____", "family"]] },
+    { lvl: "ELL 2", bankLabel: "Sound-alike words", bank: "two · their · hear · too · there",
+      items: [["I can ____ the rain.", "hear"], ["Put it over ____.", "there"], ["They love ____ kitchen.", "their"],
+        ["It is ____ hot to eat.", "too"], ["I have ____ sisters.", "two"]] } ] },
+  { type: "drill", part: "B", kind: "Grammar", lvls: [
+    { lvl: "ELL 1", bankLabel: "Which word needs a capital?", bank: "Manila · I · Monday · We · Ana",
+      items: [["we eat rice. → ____", "We"], ["She is from manila. → ____", "Manila"], ["My friend ana is kind. → ____", "Ana"],
+        ["On monday I cook. → ____", "Monday"], ["Lina and i read. → ____", "I"]] },
+    { lvl: "ELL 2", bankLabel: "Verbs that match", bank: "smell · is · are · smells",
+      items: [["The plates ____ empty.", "are"], ["My kitchen ____ like home.", "smells"], ["The windows ____ open.", "are"],
+        ["The flowers ____ sweet.", "smell"], ["Rice ____ on the stove.", "is"]] } ] },
+  { type: "rows", label: "How many?", tag: "Warm-up game", head: "How many? How to play", englishOnly: true, rows: [
+    ["1", "A sentence with mistakes goes on the screen."], ["2", "With a partner: count the mistakes. Hold up your fingers."],
+    ["3", "One pair says the fixed sentence."], ["Look for", "capitals · end marks · spelling"]] },
+  { type: "rows", label: "How many?: try these", tag: "Warm-up game", head: "How many mistakes?", rows: [
+    ["1", "my dog is big"], ["2", "I live in vancouver."], ["3", "we go to skool on monday"], ["4", "Lina and i cook rice."], ["5", "the rain is to loud"]] },
+  { type: "rows", label: "How many?: answers", tag: "Warm-up game · answers", head: "The answers", rows: [
+    ["1", "2 — My dog is big."], ["2", "1 — I live in Vancouver."], ["3", "4 — We go to school on Monday."],
+    ["4", "1 — Lina and I cook rice."], ["5", "3 — The rain is too loud."]] },
+  { type: "speaking", label: "How many?: frames", head: "How many? Say it like this", englishOnly: true, signAll: true, icon: "icon-friends.png",
+    prompt: "Count the mistakes with your partner. Then say the fixed sentence.",
+    frames: ["There are ______ mistakes.", "______ needs a capital.", "It should be ______."] },
+  { type: "title", label: "Today’s lesson" },
+  { type: "goals", label: "Today’s goals", items: [
+    "Edit one thing at a time.", "Ask for help with a help slip.", "Write your good copy and hand it in."] },
+  { type: "match", label: "Match the word", head: "Match the word", bank: bankWords, words: vocab },
+  { type: "vocab", label: "Key vocabulary", head: "Key vocabulary", words: vocab },
+  { type: "rows", label: "Edit one thing at a time", tag: "Teaching 1 of 2", head: "Edit one thing at a time", rows: [
+    ["Pass 1", "capitals: every start, every name, I"], ["Pass 2", "end marks: every sentence ends with . ? or !"],
+    ["Pass 3", "spelling: circle a word you are not sure of, then check it"], ["ELL 2", "Pass 4: verbs (is / are, plays / play)"]] },
+  { type: "prose", text: "e1", label: "Find the mistakes (ELL 1)" },
+  { type: "prose", text: "e2", label: "Find the mistakes (ELL 2)" },
+  { type: "text2", a: "e1", b: "g1", label: "ELL 1: mistakes and good copy", tag: "Model · ELL 1 · before and after", head: "Mistakes and good copy: ELL 1" },
+  { type: "text2", a: "e2", b: "g2", label: "ELL 2: mistakes and good copy", tag: "Model · ELL 2 · before and after", head: "Mistakes and good copy: ELL 2" },
+  { type: "rows", label: "Using the help slip", tag: "Teaching 2 of 2", head: "Using the help slip", icon: "icon-hand.png", rows: [
+    ["Can you check my …?", "spelling · sentence · word"], ["I need help with …", "point to the exact spot"],
+    ["Asking is a skill", "it counts on your report card"]] },
+  { type: "speaking", label: "Read it out loud", head: "Read it out loud", englishOnly: true, signAll: true, icon: "icon-friends.png",
+    prompt: "Read one part of your writing out loud to a partner. Your ear finds mistakes your eye misses.",
+    frames: ["My sentence is ______.", "I hear a mistake at ______.", "It should be ______."] },
+  { type: "handout", label: "Hand out the worksheet", note: "ELL 1 and ELL 2 worksheets. Name and date first. Take out your Lesson 9 draft and your Lesson 10 sheet.",
+    items: [["A", "find the mistake · how many mistakes?"], ["B", "fix it · fix the line"], ["C", "my three passes"], ["D", "check your work"], ["E", "exit ticket", true]],
+    foot: "The Good Copy sheet comes after Part C." },
+  { type: "walk", part: "1A-A", withExample: true }, { type: "reveals", part: "1A-A" },
+  { type: "walk", part: "2A-A", withExample: true }, { type: "reveals", part: "2A-A" },
+  { type: "walk", part: "1A-B", withExample: true }, { type: "reveals", part: "1A-B" },
+  { type: "walk", part: "2A-B", withExample: true }, { type: "reveals", part: "2A-B" },
+  { type: "walk", part: "1A-C", withExample: true }, { type: "reveals", part: "1A-C", good: true },
+  { type: "walk", part: "2A-C", withExample: true }, { type: "reveals", part: "2A-C", good: true },
+  { type: "rows", label: "Your good copy", tag: "Your good copy", head: "Write your good copy", icon: "icon-pen.png", rows: [
+    ["1", "Take a Good Copy sheet. Name, date and a title."], ["2", "Write your WHOLE piece again, neatly."],
+    ["3", "Put in every change: your ★ sentences and your fixes."], ["4", "This is the copy I mark."]] },
+  { type: "walk", part: "1A-D" }, { type: "walk", part: "2A-D" },
+  { type: "pages", label: "The whole sheet again" },
+  { type: "exit", part: "1A-E", note: "Then hand in your good copy and worksheet." }, { type: "reveals", part: "1A-E", good: true },
+  { type: "exit", part: "2A-E", note: "Then hand in your good copy and worksheet." }, { type: "reveals", part: "2A-E", good: true },
+  { type: "rows", label: "Hand in", tag: "Before you go", head: "Hand in your good copy", icon: "icon-folder.png", rows: [
+    ["1", "Check your name is on both sheets."], ["2", "Good copy on top, worksheet under it."],
+    ["3", "Put them in the tray."], ["4", "I mark your good copy before next class."]] },
+  { type: "nextshape", label: "Next class", head: "Next class: This Is Me", items: [
+    ["Warm-up: words and grammar", "quick practice"], ["Warm-up game", "game"], ["How we share", "mini-lesson"],
+    ["A good listener", "class activity"], ["Share your writing", "partner speaking"], ["Look how far you came", "reflection"], ["Exit ticket", "quick write"]] },
+  { type: "rows", label: "Agendas", tag: "Before you go", head: "Take out your agenda", icon: "icon-calendar.png", rows: [
+    ["Next class", "This Is Me: we share our writing."], ["Homework", "None if your good copy is in the tray."],
+    ["Remember", "Keep your Lesson 9 draft and Lesson 10 sheet in your duotang."]] } ],
+ sheets: [
+  { lvl: "ELL 1", suffix: "1A", label: "ELL 1", objective: "Edit in three passes, then write your good copy.",
+    outcomes: "ELL 1  W5 Capitals and end marks  •  W6 Spell familiar words  •  W12 Ask for help with editing", vocab,
+    remember: "Edit one thing at a time: capitals, end marks, spelling. Use a help slip when you are stuck.", helpLine },
+  { lvl: "ELL 2", suffix: "2A", label: "ELL 2", objective: "Self-edit in passes, then write your good copy.",
+    outcomes: "ELL 2  W7 Capitalization and punctuation  •  W8 Spelling  •  W9 Revise and edit (editing today)", vocab,
+    remember: "Edit in passes: capitals, end marks, spelling, verbs. Read it out loud. Your good copy is the version I mark.", helpLine } ],
+ worksheet: { parts: [
+  // ---------------- ELL 1 ----------------
+  { key: "1A-A", lvl: "ELL 1", id: "A", title: "Find the mistake", kind: "cloze",
+    instr: "Each sentence has ONE mistake. Write the correct word or mark.",
+    example: { text: "the rice is hot.", ans: "The", tail: "" },
+    items: [{ text: "My room is quiet", ans: "quiet.", tail: "" }, { text: "i live in Richmond.", ans: "I", tail: "" },
+      { text: "She is from manila.", ans: "Manila", tail: "" }, { text: "My frend is kind.", ans: "friend", tail: "" },
+      { text: "We cook on sunday.", ans: "Sunday", tail: "" }],
+    how: "Look for a missing capital, a missing end mark, or a spelling mistake. Each sentence has only one." },
+  { key: "1A-B", lvl: "ELL 1", id: "B", title: "Fix it", kind: "lines", lines: 2,
+    instr: "Write each sentence correctly. Fix the capital, end mark or spelling.",
+    example: { text: "my room is quiet  →", ans: "My room is quiet." },
+    items: [{ text: "i see the window  →", ans: "I see the window." },
+      { text: "she lives in richmond  →", ans: "She lives in Richmond." },
+      { text: "is the rice ready  →", ans: "Is the rice ready?" },
+      { text: "my famly is here  →", ans: "My family is here." }],
+    how: "Copy the sentence and fix every mistake: capital at the start, capitals on names, an end mark, the right spelling." },
+  { key: "1A-C", lvl: "ELL 1", id: "C", title: "My three passes", kind: "lines", lines: 1, newPage: true,
+    instr: "Edit your Lesson 9 draft and your ★ Lesson 10 sentences. Do one pass at a time. Write the words you fixed from each pass: before → after.",
+    example: { text: "Capitals (Lina)  →", ans: "my grandmother’s kitchen  →  My grandmother’s kitchen" },
+    items: [{ text: "Pass 1, capitals: one fix", ans: "my place  →  My place" },
+      { text: "Pass 2, end marks: one fix", ans: "a red door  →  a red door." },
+      { text: "Pass 3, spelling: one fix", ans: "shelfs  →  shelves" }],
+    how: "Read your writing three times. Each time, look for ONE thing only. Write one fix from each read. Stuck? Help slip." },
+  { key: "1A-D", lvl: "ELL 1", id: "D", title: "Check your work", kind: "check",
+    instr: "Tick each box when it is true.",
+    checks: ["I checked every capital.", "I checked every end mark.", "I checked my spelling.",
+      "I used a help slip when I was stuck.", "I wrote my good copy.", "My good copy has every change."],
+    how: "Tick a box only when it is true. Fix anything you cannot tick yet." },
+  { key: "1A-E", lvl: "ELL 1", id: "E", title: "Exit ticket", kind: "exit", lines: 2,
+    instr: "Answer, then hand in your good copy and this sheet.",
+    items: [{ text: "I fixed … the most.", reveal: "I fixed capitals the most." }],
+    how: "Capitals, end marks or spelling: which did you fix most?" },
+  // ---------------- ELL 2 ----------------
+  { key: "2A-A", lvl: "ELL 2", id: "A", title: "How many mistakes?", kind: "cloze",
+    instr: "Write the number of mistakes. Count capitals, end marks, spelling and verbs.",
+    example: { text: "my kitchen in richmond smells like home.", ans: "2", tail: "" },
+    items: [{ text: "the rice cooker clicks in the corner", ans: "2", tail: "" },
+      { text: "She open the window.", ans: "1", tail: "" },
+      { text: "i can here the rain outside", ans: "3", tail: "" },
+      { text: "The plates is empty.", ans: "1", tail: "" },
+      { text: "lina wants to be a nurse", ans: "2", tail: "" }],
+    how: "Check each thing in turn: a capital at the start and on names, an end mark, the spelling, the verb. A missing end mark counts." },
+  { key: "2A-B", lvl: "ELL 2", id: "B", title: "Fix the line", kind: "lines", lines: 2,
+    instr: "Rewrite each line correctly.",
+    example: { text: "my kitchen in richmond smells like home.  →", ans: "My kitchen in Richmond smells like home." },
+    items: [{ text: "i can here the rain outside  →", ans: "I can hear the rain outside." },
+      { text: "The plates is empty.  →", ans: "The plates are empty." },
+      { text: "my brother play soccer on saturday  →", ans: "My brother plays soccer on Saturday." },
+      { text: "their is a park near my house  →", ans: "There is a park near my house." }],
+    how: "Fix every mistake in the line: capitals, end mark, spelling, and a verb that matches its subject." },
+  { key: "2A-C", lvl: "ELL 2", id: "C", title: "My editing passes", kind: "lines", lines: 1, newPage: true,
+    instr: "Edit your Lesson 9 paragraph and your ★ Lesson 10 sentences, one pass at a time. Write the words you fixed from each pass (before → after). Then read it out loud.",
+    example: { text: "Capitals (Lina)  →", ans: "on sunday nights  →  On Sunday nights" },
+    items: [{ text: "Pass 1, capitals: one fix", ans: "On saturday mornings  →  On Saturday mornings" },
+      { text: "Pass 2, end marks and commas: one fix", ans: "and tins The radio  →  and tins. The radio" },
+      { text: "Pass 3, spelling: one fix", ans: "becuase  →  because" },
+      { text: "Pass 4, verbs: one fix", ans: "The radio play  →  The radio plays" }],
+    how: "Read your paragraph four times, one job each time. Write one real fix from each pass. Then read it out loud to catch what is left." },
+  { key: "2A-D", lvl: "ELL 2", id: "D", title: "Check your work", kind: "check",
+    instr: "Tick each box when it is true.",
+    checks: ["I checked capitals, names and I.", "I checked end marks and commas.", "I checked my spelling.",
+      "I checked every verb.", "I read my paragraph out loud.", "My good copy has every change."],
+    how: "Tick a box only when it is true. Fix anything you cannot tick yet." },
+  { key: "2A-E", lvl: "ELL 2", id: "E", title: "Exit ticket", kind: "exit", lines: 2,
+    instr: "Answer, then hand in your good copy and this sheet.",
+    items: [{ text: "I fixed … the most, because …", reveal: "I fixed verbs the most, because I forget the s." }],
+    how: "Which pass found the most? Say why." } ] },
+ texts: {
+  e1: { lvl: "ELL 1 · with mistakes", title: "My Uncle’s Shop", body: E1 },
+  g1: { lvl: "ELL 1 · good copy", title: "My Uncle’s Shop", body: M1 },
+  e2: { lvl: "ELL 2 · with mistakes", title: "My Uncle’s Shop", body: E2 },
+  g2: { lvl: "ELL 2 · good copy", title: "My Uncle’s Shop", body: M2 } },
+ // Separate one-page Good Copy sheet per level (make_goodcopy.js)
+ goodCopy: [
+  { lvl: "ELL 1", suffix: "1A", lines: 14,
+    steps: "Write your whole piece again, neatly. Use your Lesson 9 draft, your ★ Lesson 10 sentences and your Lesson 11 fixes. One sentence on each line is fine.",
+    checks: ["My name and a title are at the top.", "Every change is in.", "Every sentence has a capital and an end mark.", "I read it one more time."] },
+  { lvl: "ELL 2", suffix: "2A", lines: 15, gap: 260,
+    steps: "Write your whole paragraph again, neatly. Use your Lesson 9 draft, your ★ Lesson 10 sentences and your Lesson 11 fixes. Write on every line.",
+    checks: ["My name and a title are at the top.", "Every change is in.", "I checked capitals, marks, spelling, verbs.", "I read it out loud one more time."] } ]
+};

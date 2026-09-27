@@ -41,10 +41,10 @@ module.exports = {
    ["4", "Read your fix", "Partners read the sentence you marked and their partner suggests one thing to add. English only."],
    ["10", "Worksheet Parts A and B", "Hand out both sheets. Walk Part A and Part B for each level with the worked example. Part A answers one at a time; Part B shows one good answer each."],
    ["24", "Part C: revise your draft", "Walk Part C and show one good answer for each level. Students rewrite the sentence you marked, then one more, before and after; ELL 2 add a new because sentence. They star each changed sentence on the Lesson 9 draft. Circulate: anyone without a fix picks a flat sentence."],
-   ["5", "Check and exit ticket", "Part D tick-box check, then the Part E exit ticket. Both sheets stay in the duotang for the clean copy. Next class, then agendas."] ],
+   ["5", "Check and exit ticket", "Part D tick-box check, then the Part E exit ticket. Both sheets stay in the duotang for the good copy. Next class, then agendas."] ],
   diff: "Support: ELL 1 may choose the stronger word from the Part A pairs for Part C; the three-ways slide can stay up during Part C. Extension: ELL 2 early finishers revise a third flat spot and add a second sense to their ending.",
-  assess: "MARKING TODAY: nothing collected. Hand back the Lesson 9 drafts at the start (one strength, one fix each); Part C is built on that fix. Glance at Part C as you circulate. The clean copy is collected at the end of Lesson 11.",
-  homework: "None. Keep the Lesson 9 draft and this sheet together in your duotang: you need both for the clean copy in Lesson 11.",
+  assess: "MARKING TODAY: nothing collected. Hand back the Lesson 9 drafts at the start (one strength, one fix each); Part C is built on that fix. Glance at Part C as you circulate. The good copy is collected at the end of Lesson 11.",
+  homework: "None. Keep the Lesson 9 draft and this sheet together in your duotang: you need both for the good copy in Lesson 11.",
   watch: "Students editing spelling instead of revising. Changes that swap one flat word for another (nice → good). ELL 2 because sentences that give no real reason. Students without a returned draft: give them a flat sentence to start." },
  shape: [["Warm-up: words and grammar", "quick practice"], ["Pump it up", "warm-up game"], ["Your draft is back", "reading feedback"],
    ["Match the word", "vocabulary game"], ["Revise, not edit", "mini-lesson"], ["Three ways to revise", "mini-lesson"],
@@ -114,13 +114,13 @@ module.exports = {
   { type: "exit", part: "2A-E", note: "Then both sheets go in your duotang." }, { type: "reveals", part: "2A-E", good: true },
   { type: "rows", label: "Keep your draft", tag: "Before you go", head: "Keep both sheets", icon: "icon-folder.png", rows: [
     ["1", "Your Lesson 9 draft: every changed sentence has a star."], ["2", "This sheet: your new sentences are in Part C."],
-    ["3", "Both go in your duotang."], ["4", "Next class you use both to write a clean copy."]] },
+    ["3", "Both go in your duotang."], ["4", "Next class you use both to write a good copy."]] },
   { type: "nextshape", label: "Next class", head: "Next class: Cleaning It Up", items: [
     ["Warm-up: words and grammar", "quick practice"], ["Warm-up game", "game"], ["Edit one thing at a time", "mini-lesson"],
-    ["Using the help slip", "mini-lesson"], ["Read it out loud", "partner speaking"], ["Write your clean copy", "independent writing"], ["Hand in", "clean copy"]] },
+    ["Using the help slip", "mini-lesson"], ["Read it out loud", "partner speaking"], ["Write your good copy", "independent writing"], ["Hand in", "good copy"]] },
   { type: "rows", label: "Agendas", tag: "Before you go", head: "Take out your agenda", icon: "icon-calendar.png", rows: [
-    ["Next class", "Cleaning It Up: edit and write your clean copy."], ["Homework", "None. Keep both sheets in your duotang."],
-    ["Remember", "The clean copy is handed in at the end of next class."]] } ],
+    ["Next class", "Cleaning It Up: edit and write your good copy."], ["Homework", "None. Keep both sheets in your duotang."],
+    ["Remember", "The good copy is handed in at the end of next class."]] } ],
  sheets: [
   { lvl: "ELL 1", suffix: "1A", label: "ELL 1", objective: "Revise your sentences: add a sense or a stronger word.",
     outcomes: "ELL 1  W7 Familiar words and phrases  •  W2 Compound sentences with and, but, so", vocab,
