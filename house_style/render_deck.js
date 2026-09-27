@@ -591,7 +591,7 @@ R.prose = (sp, next, chunk, k, of) => { const s = pres.addSlide(); const tx = L.
   card(s, 0.4, TOP, 9.2, BOT - TOP, "FFFFFF", LINE);
   T(s, chunk, 0.65, TOP + 0.15, 8.7, BOT - TOP - 0.3, { fontSize: MIN, lineSpacingMultiple: 1.0 }); };
 R.text2 = (sp, next, ca, cb, k, of) => { const s = pres.addSlide(); const A = L.texts[sp.a], B = L.texts[sp.b];
-  frame(s, "Class text \u00B7 both versions" + (of > 1 ? ` \u00B7 ${k} of ${of}` : ""), "Side by side", next);
+  frame(s, (sp.tag || "Class text \u00B7 both versions") + (of > 1 ? ` \u00B7 ${k} of ${of}` : ""), sp.head || "Side by side", next);
   [[A, ca, 0.4, PALE, LINE, BLUE], [B, cb, 5.05, TINT, TLINE, ACC]].forEach(([tx, c, x, f, l, col]) => {
     card(s, x, TOP, 4.55, BOT - TOP, f, l);
     T(s, `${tx.lvl} \u00B7 ${tx.title}`.toUpperCase(), x + 0.18, TOP + 0.08, 4.2, 0.24, { ref: true, fontSize: 11, bold: true, color: col, charSpacing: 1 });
@@ -669,7 +669,7 @@ function expand(sp) {
   if (sp.type === "prose") { const tx = L.texts[sp.text], ch = splitWords(tx.body, 8.7, BOT - TOP - 0.34);
     return ch.forEach((c, i) => push(sp.label || tx.title, n => R.prose(sp, n, c, i + 1, ch.length), i < ch.length - 1 ? null : undefined)); }
   if (sp.type === "text2") { const room = BOT - TOP - 0.5, a = splitWords(L.texts[sp.a].body, 4.2, room), b = splitWords(L.texts[sp.b].body, 4.2, room), m = Math.max(a.length, b.length);
-    for (let i = 0; i < m; i++) push("Side by side", n => R.text2(sp, n, a[i], b[i], i + 1, m), i < m - 1 ? null : undefined); return; }
+    for (let i = 0; i < m; i++) push(sp.label || "Side by side", n => R.text2(sp, n, a[i], b[i], i + 1, m), i < m - 1 ? null : undefined); return; }
   if (sp.type === "nextshape") { let at = 0; return pack(sp.items, needShape, BOT - TOP).forEach((sl, i, a) => { const from = at; at += sl.length;
       push(sp.label || "Next class", n => R.shape({ slice: sl, from, cont: i > 0, tag: "Next class", head: sp.head }, n), i < a.length - 1 ? null : undefined); }); }
   if (sp.type === "walk") { const p = part(sp.part), NEW = !!CO.levels, blank = NEW && p.kind === "cloze" ? "  ________" : "";
