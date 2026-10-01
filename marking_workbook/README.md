@@ -61,6 +61,26 @@ alone unless `--overwrite` is passed.
 **Terminology.** "clean copy" was renamed to "good copy" throughout the
 workbook on Oct 1 2026 (26 cells). Name MARK.ONE assignments to match.
 
+## The other scripts
+
+- `fix_workbook.py` — the v4.1 -> v4.2 pass: clean copy -> good copy, and abs/ns
+  added to the level dropdowns.
+- `add_interim.py` — adds the `Interim proficiency` column. It writes into the one
+  empty column between each Results tab's visible block and its hidden helper band,
+  because openpyxl does NOT rewrite formula references on an insert — inserting a
+  column would silently corrupt every helper formula to its right.
+- `add_fla_tabs.py` — builds `T1 Gradebook` and `T1 Results` for the night class.
+
+**FLA band-lookup gotcha, found by testing:** the grade and proficiency tables must
+be ASCENDING thresholds with `MATCH(...,1)`. A descending array with `MATCH(...,-1)`
+returns the band ABOVE the mark — it scored 79.2% as an A and 87.5% as #N/A. Verified
+across nine probe values against Sean's own conversion table: A>=86, B>=73, C+>=67,
+C>=60, C->=50, F below; Extending>=89, Proficient>=73, Developing>=60, Emerging below.
+
+**FLA layout:** both columns of one assignment (level and mark) carry the SAME value
+in row 4, or the grouping treats them as two different items and the assignment
+cannot be resolved.
+
 ## Open at the end of the Oct 1 session
 
 - `Parent Signatures on Class Outline` has 59 ticks in MARK.ONE and no column
@@ -69,5 +89,11 @@ workbook on Oct 1 2026 (26 cells). Name MARK.ONE assignments to match.
   exercise-book checkpoint, so there is no level column for it.
 - ELL 3 `Lesson 4 Part C describing with Senses`: the schedule starts at L5,
   so no L4 column exists.
-- FLA Term 1 has marks but no tabs in the workbook; a Gradebook and Results
-  pair was specced and awaiting Sean's go.
+- ELL 3: Sean's "describing with senses" marks are sitting in column D of C and
+  G, which the workbook labels `Own sentences` at W1/L5, outcome W4
+  (conjunctions). His MARK.ONE assignment is named for Lesson 4 and the task is
+  detail/senses, not conjunctions, so either the column is being used for
+  something other than its label or the lesson projection has drifted. Unresolved
+  — do not reinterpret his entries without asking.
+- C!D holds `transferred` for one student: a third free-text value outside the
+  dropdown, like `absent` was. No code exists for a student who has left.

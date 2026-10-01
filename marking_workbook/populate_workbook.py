@@ -33,7 +33,8 @@ DLO_TO_CELL  = {0: None, 1: 'NYM', 2: 'MM', 3: 'M', 4: 'FM'}
 PROF_TO_CELL = {0: 'EM', 1: 'DV', 2: 'PR', 3: 'EX'}
 
 LEVEL_ROW7 = {'1A': {'1A', '1A + 2A'}, '2A': {'2A', '1A + 2A'},
-              '3A': {'3'}, 'ENG8': {'8'}}
+              '3A': {'3'}, 'ENG8': {'8'},
+              '6': {'6', '6 + 7'}, '7': {'7', '6 + 7'}}   # FLA night class
 
 HDR_WEEK, HDR_LESSON, HDR_ITEM, HDR_OUTCOME, HDR_APPLIES = 3, 4, 5, 6, 7
 FIRST_DATA_ROW, LAST_DATA_ROW, FIRST_DATA_COL, EXAMPLE_ROW = 9, 48, 3, 8
