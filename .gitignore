@@ -1,0 +1,10 @@
+# Build outputs — this repo holds generators, never generated decks or worksheets.
+out/
+**/out/
+
+# Installed dependencies
+node_modules/
+**/node_modules/
+
+# OS and editor noise
+.DS_Store
