@@ -8,3 +8,8 @@ node_modules/
 
 # OS and editor noise
 .DS_Store
+
+# Python bytecode from the worksheet/preview scripts
+__pycache__/
+**/__pycache__/
+*.pyc
