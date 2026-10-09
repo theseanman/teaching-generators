@@ -35,9 +35,14 @@ const box = (rows, widths) => new Table({ columnWidths: widths || [FULL], width:
 function ruledLines(n, o = {}) {
   const arr = [];
   const right = o.width || CONTENT_W;
+  // HANDWRITING PITCH (Sean, Oct 9 2026): rule-to-rule must clear 0.38in and the
+  // FIRST rule must sit well clear of the prompt above it. Word/LibreOffice take
+  // max(after_prev, before_next), not the sum, so the pitch is line + that max.
+  //   line 300 (15pt) + after 260 (13pt) = 28pt = 0.39in between rules
+  //   first rule: before 200 (10pt) -> 25pt = 0.35in below the prompt
   for (let i = 0; i < n; i++) arr.push(new Paragraph({
     children: [new TextRun({ text: "\t", size: 22, font: "Calibri", color: "9AA7B4" })],
-    spacing: { after: o.after ?? 200, before: i === 0 ? (o.before ?? 60) : 140, line: 240 },
+    spacing: { after: o.after ?? 360, before: i === 0 ? (o.before ?? 300) : 360, line: 340 },
     tabStops: [{ type: TabStopType.RIGHT, position: right, leader: LeaderType.UNDERSCORE }],
     indent: o.indent,
   }));
@@ -62,7 +67,7 @@ function labelBox(label, lines, accent) {
     margins: { top: 120, bottom: 160, left: 160, right: 160 },
     borders: { top: { style: BorderStyle.SINGLE, size: 4, color: accent }, bottom: { style: BorderStyle.SINGLE, size: 4, color: accent },
                left: { style: BorderStyle.SINGLE, size: 4, color: accent }, right: { style: BorderStyle.SINGLE, size: 4, color: accent } },
-    children: [new Paragraph({ children: [H.run(label, { bold: true, color: accent, size: 21 })], spacing: { after: 60 } }),
+    children: [new Paragraph({ children: [H.run(label, { bold: true, color: accent, size: 21 })], spacing: { after: 280 } }),
                ...ruledLines(lines)],
   });
   return box([new TableRow({ cantSplit: true, children: [cell] })]);
@@ -85,7 +90,7 @@ const checklist = items => items.map(it => new Paragraph({
 function frames(list, type) {
   const out = [];
   list.forEach(q => {
-    out.push(new Paragraph({ children: [H.run(q, { bold: true, color: H.C.navy, size: 21 })], spacing: { after: 40, before: 80 }, keepNext: true }));
+    out.push(new Paragraph({ children: [H.run(q, { bold: true, color: H.C.navy, size: 21 })], spacing: { after: 280, before: 240 }, keepNext: true }));
     out.push(...ruledLines(linesForType(type || "sentence")));
   });
   return out;
@@ -125,7 +130,7 @@ function clozeBlock(bank, items, used = []) {
   out.push(H.spacer(120));
   items.forEach((it, i) => {
     out.push(new Paragraph({ children: [H.run((i + 1) + ".  ", { bold: true, color: H.C.blue, size: 22 }), ...runsWithBlanks(it.text)],
-      spacing: { after: 180, line: 300 }, keepNext: i >= items.length - 2 }));
+      spacing: { after: 240, line: 320 }, keepNext: i >= items.length - 2 }));
   });
   return out;
 }
