@@ -104,25 +104,40 @@ P[6] = {
 
 // L7 — Setting & atmosphere. deck:0 title,1 warm,2 idea,3 watch,4 your turn ws7,5 takeaway,6 exit. wsKey c4.
 P[7] = {
-  wsKey: "c4",
+  wsKey: "c6",
+  // Lesson 7 opens by HANDING BACK the marked Lesson 5 showing passages; today's
+  // setting work belongs to that same moment (Sean, Oct 9 2026).
+  sections: {
+    handback: { kicker: "First \u00B7 your marked work", title: "Your Lesson 5 passage is back",
+      activityType: "hand-back",
+      items: [
+        "I have marked the showing passage you wrote in Lesson 5 and it comes back to you now.",
+        "Take one minute to read my comment on it. Do not put it away.",
+        "Keep it on your desk \u2014 today we build the setting of that same moment.",
+      ] },
+  },
+  order: ["title", "handback", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "exit"],
+  agendaExtra: [
+    "Your marked Lesson 5 showing passage came back today \u2014 keep it in your duotang; Lesson 10 plans from it.",
+  ],
   parts: [
     ["A","answers",
-      "Two versions of the same kitchen. Name the atmosphere each creates and underline the detail that made it.",
-      { title:"Name the feeling — the two moods",
+      "Listen to both kitchen passages first. Then name the atmosphere of each in ONE word, and underline the exact detail that created it.",
+      { title:"Name the feeling \u2014 the two moods",
         answers:[
-          "Version 1 → warm / cozy (“sun warmed,” “kettle hummed,” “bread smelled sweet”)",
-          "Version 2 → cold / bleak (“grey and still,” “tap dripped,” “cold, greasy water”)",
-        ], note:"Same place, opposite feeling — built entirely from the sensory details chosen." }],
+          "Version 1 is warm and safe. The details that built it: \u201Calready awake,\u201D \u201Csun lay in a long stripe,\u201D \u201Cbread that was almost ready.\u201D",
+          "Version 2 is bleak and neglected. The details that built it: \u201Cnobody had opened the blinds,\u201D \u201Ccold, greasy water,\u201D \u201Clast night\u2019s dinner.\u201D",
+        ], note:"Same kitchen, same arrival, opposite feeling \u2014 built entirely out of which details the writer chose to show." }],
     ["B","open",
-      "Build the setting of YOUR small moment. Choose the atmosphere first, then the see / hear / feel details that make it.",
-      { title:"Build your setting — one example",
-        example:"Time & place: my kitchen, late at night.   Atmosphere: uneasy.   See: one light over the stove.   Hear: the fridge humming, then a floorboard.   Feel: cold tile under bare feet.",
-        note:"Pick the feeling first; then choose only the details that build it." }],
+      "Your marked Lesson 5 passage is on your desk. Build the setting of THAT moment \u2014 not a new one. Choose the atmosphere first, then only the see / hear / feel details that build it.",
+      { title:"Build your setting \u2014 one good answer",
+        example:"Time & place: my kitchen, late at night, the night the power went out.   Atmosphere: uneasy.   I see: one candle bending in the draught.   I hear: the fridge gone silent, then a floorboard.   I feel: cold tile under bare feet.",
+        note:"Pick the feeling first. Then every detail you choose has a job: build that one feeling." }],
     ["C","open",
-      "Take one everyday place and write it in ONE clear mood using three details.",
-      { title:"Same place, new mood — one example",
-        example:"A bus stop, lonely: “One flickering light. My own breath in the cold. Not a single car for ten minutes.”",
-        note:"Three details, all pulling the same way — that's how mood is built." }],
+      "Take one everyday place and write it in ONE clear mood using three details. Three or four sentences.",
+      { title:"Same place, new mood \u2014 one good answer",
+        example:"A bus stop, lonely: One flickering light buzzed over the bench. My own breath went white and drifted off. Not a single car came past for ten minutes.",
+        note:"Three details, all pulling the same way \u2014 that is how mood is built." }],
   ],
 };
 

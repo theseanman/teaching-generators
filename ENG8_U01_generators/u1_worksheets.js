@@ -219,36 +219,52 @@ const WORKSHEETS = [
 
 // ------------------------------- L7 -------------------------------
 { n:7, title:"Setting & Atmosphere", subtitle:"Where it happens \u2014 and how it makes you feel.",
+  check:[
+    "I named the atmosphere of each kitchen version in one word.",
+    "I underlined the detail that created that feeling.",
+    "I wrote the time and place of my Lesson 5 moment.",
+    "I chose ONE atmosphere word for that moment.",
+    "I listed a see, a hear and a feel detail.",
+    "All of my details build the SAME feeling.",
+    "I wrote one everyday place in one clear mood.",
+    "I used three details in my mood paragraph.",
+  ],
   blocks:[
-    { kind:"section", t:"Part A — Name the Feeling", accentStep:1 },
-    { kind:"instr", t:"Two versions of the same place. Read each, then name the atmosphere and underline the detail that created it." },
-    { kind:"frames", list:[
-      "Version 1 \u2014 \u201CSun warmed the kitchen; the kettle hummed and bread smelled sweet.\u201D  Atmosphere:",
-      "Version 2 \u2014 \u201CThe kitchen was grey and still; a tap dripped into cold, greasy water.\u201D  Atmosphere:",
+    { kind:"section", t:"Part A \u2014 Name the Feeling", accentStep:1,
+      example:"\u201CThe gym was dark except one light over the far hoop; my shoes squeaked and nobody answered.\u201D   Atmosphere: lonely \u2014 the detail that did it: \u201Cnobody answered.\u201D" },
+    { kind:"instr", t:"Two versions of the same place. Read each one, then name the atmosphere in one word and underline the detail that created it." },
+    { kind:"frames", type:"sentence", list:[
+      "Version 1 \u2014 the kitchen in the morning sun.  Atmosphere:",
+      "Version 2 \u2014 the same kitchen, grey and still.  Atmosphere:",
     ]},
 
-    { kind:"section", t:"Part B — Build Your Moment\u2019s Setting", accentStep:2 },
-    { kind:"instr", t:"Now build the setting of YOUR small moment. Choose the atmosphere first, then the details that make it." },
-    { kind:"box", label:"Setting \u2014 time and place (when + where)", lines:1 },
+    { kind:"section", t:"Part B \u2014 Build Your Moment\u2019s Setting", accentStep:2,
+      example:"Time & place: my grandmother\u2019s kitchen, early morning, the summer I was nine.   Atmosphere: safe.   I see: flour left on the counter.   I hear: the kettle starting up.   I feel: the warm edge of the stove through my sleeve." },
+    { kind:"instr", t:"Now build the setting of the moment you already wrote about in your Lesson 5 showing passage \u2014 the one coming back to you today. Choose the atmosphere FIRST, then only the details that build it." },
+    { kind:"box", label:"Setting \u2014 time and place (when + where)", lines:2 },
     { kind:"box", label:"Atmosphere \u2014 the feeling I want (one word)", lines:1 },
     { kind:"instr", t:"Sensory details that build that feeling:" },
-    { kind:"frames", list:[
+    { kind:"frames", type:"sentence", list:[
       "I see:",
       "I hear:",
       "I feel / smell:",
     ]},
 
-    { kind:"section", t:"Part C — Same Place, New Mood", accentStep:3 },
+    { kind:"section", t:"Part C \u2014 Same Place, New Mood", accentStep:3,
+      example:"A bus stop, lonely:  One flickering light. My own breath going white in the cold. Not a single car for ten minutes." },
     { kind:"instr", t:"Take one everyday place (a bus stop, a gym, your kitchen) and write it in ONE clear mood using three details." },
-    { kind:"write", lines:4 },
+    { kind:"write", type:"multi" },
 
     { kind:"support", blocks:[
       { kind:"instr", t:"Atmosphere word bank: cozy, tense, lonely, hopeful, peaceful, uneasy, joyful, gloomy." },
-      { kind:"instr", t:"Two-mood model to copy: WELCOMING = warm light, laughter, bright colour. LONELY = one flickering light, echoing steps, silence." },
+      { kind:"instr", t:"Two-mood model to copy the shape of \u2014 WELCOMING: warm light, laughter down the hall, a poster peeling at one corner. LONELY: one flickering light, my own footsteps too loud, every locker shut." },
+      { kind:"instr", t:"Sentence starters for Part B \u2014 \u201CIt was ___ o\u2019clock in ___.\u201D  \u201CThe feeling I want is ___.\u201D  \u201CI could see ___, hear ___, and feel ___.\u201D" },
     ]},
     { kind:"extension", blocks:[
-      { kind:"instr", t:"Write your place a THIRD way in a mixed mood \u2014 e.g. bittersweet (happy and sad at once)." },
-      { kind:"write", lines:2 },
+      { kind:"instr", t:"Write your place a THIRD way in a mixed mood \u2014 bittersweet, say, where it is happy and sad at the same time. Use three details that pull in two directions." },
+      { kind:"write", type:"multi" },
+      { kind:"instr", t:"Then name the one detail doing the most work, and say why." },
+      { kind:"write", type:"sentence" },
     ]},
   ]},
 
