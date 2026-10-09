@@ -285,16 +285,32 @@ function sheetHead(W, L, label) {
   c.push(H.spacer(120));
   return c;
 }
+// Name / Date header (Sean, Oct 9 2026): the Date blank must take a full handwritten
+// date. Name ~3.3in, Block ~0.8in, Date ~2.2in, drawn with underscore-leader tabs.
 function nameHeader() {
-  const lw = Math.round(FULL * 0.66);
-  return new Table({ columnWidths: [lw, FULL - lw], width: { size: FULL, type: WidthType.DXA },
+  const grey = { color: H.C.midGrey, size: 21 };
+  const lw = Math.round(FULL * 0.46);          // Name column
+  const rw = FULL - lw;                        // Block + Date column
+  const nameStop = lw - 160;                   // leader runs to the cell edge
+  const blockW = 950, gap = 260;              // ~0.8in blank, gap, then Date takes the rest
+  const blockLabel = 800, dateLabel = 650;     // room for the words "Block:" and "Date:"
+  const stops = [
+    { type: TabStopType.RIGHT, position: blockLabel + blockW, leader: LeaderType.UNDERSCORE },
+    { type: TabStopType.LEFT,  position: blockLabel + blockW + gap },
+    { type: TabStopType.RIGHT, position: rw - 160, leader: LeaderType.UNDERSCORE },
+  ];
+  return new Table({ columnWidths: [lw, rw], width: { size: FULL, type: WidthType.DXA },
     borders: { ...noB(), bottom: { style: BorderStyle.SINGLE, size: 4, color: H.C.line } },
     rows: [new TableRow({ children: [
       new TableCell({ width: { size: lw, type: WidthType.DXA }, borders: noB(), margins: { bottom: 60 },
-        children: [new Paragraph({ children: [H.run("Name: ", { color: H.C.midGrey, size: 21 }),
-          new TextRun({ text: " ".repeat(44), underline: { type: "single" }, size: 21, font: "Calibri" })] })] }),
-      new TableCell({ width: { size: FULL - lw, type: WidthType.DXA }, borders: noB(), margins: { bottom: 60 },
-        children: [new Paragraph({ alignment: AlignmentType.RIGHT, children: [H.run("Block: ____   Date: ____", { color: H.C.midGrey, size: 21 })] })] }),
+        children: [new Paragraph({
+          tabStops: [{ type: TabStopType.RIGHT, position: nameStop, leader: LeaderType.UNDERSCORE }],
+          children: [H.run("Name: ", grey), new TextRun({ text: "\t", size: 21, font: "Calibri", color: "9AA7B4" })] })] }),
+      new TableCell({ width: { size: rw, type: WidthType.DXA }, borders: noB(), margins: { bottom: 60 },
+        children: [new Paragraph({ tabStops: stops,
+          children: [H.run("Block: ", grey), new TextRun({ text: "\t", size: 21, font: "Calibri", color: "9AA7B4" }),
+                     new TextRun({ text: "\t", size: 21, font: "Calibri" }),
+                     H.run("Date: ", grey), new TextRun({ text: "\t", size: 21, font: "Calibri", color: "9AA7B4" })] })] }),
     ] })] });
 }
 
