@@ -32,6 +32,8 @@ const noB = () => { const n = { style: BorderStyle.NONE }; return { top: n, bott
 const box = (rows, widths) => new Table({ columnWidths: widths || [FULL], width: { size: FULL, type: WidthType.DXA }, borders: noB(), rows });
 
 // ---- writing space: underscore-leader tab stops only ----
+let GLUE = false;              // true while emitting the blocks of one Part
+const keep = (isLast) => (GLUE && !isLast) ? { keepNext: true } : {};
 function ruledLines(n, o = {}) {
   const arr = [];
   const right = o.width || CONTENT_W;
@@ -45,6 +47,7 @@ function ruledLines(n, o = {}) {
     spacing: { after: o.after ?? 360, before: i === 0 ? (o.before ?? 300) : 360, line: 340 },
     tabStops: [{ type: TabStopType.RIGHT, position: right, leader: LeaderType.UNDERSCORE }],
     indent: o.indent,
+    ...keep(o.last && i === n - 1),
   }));
   return arr;
 }
@@ -83,15 +86,16 @@ function sixBox() {
     borders: { top: b, bottom: b, left: b, right: b, insideHorizontal: b, insideVertical: b },
     rows: [new TableRow({ children: cells })] });
 }
-const checklist = items => items.map(it => new Paragraph({
+const checklist = (items, o = {}) => items.map((it, i) => new Paragraph({
   children: [H.run("❑  ", { size: 24, color: "5A6B7B" }), H.run(it, { size: 22 })],
-  spacing: { after: 120, line: 264 },
+  spacing: { after: 160, line: 300 },
+  ...keep(o.last && i === items.length - 1),
 }));
-function frames(list, type) {
+function frames(list, type, o = {}) {
   const out = [];
-  list.forEach(q => {
+  list.forEach((q, i) => {
     out.push(new Paragraph({ children: [H.run(q, { bold: true, color: H.C.navy, size: 21 })], spacing: { after: 280, before: 240 }, keepNext: true }));
-    out.push(...ruledLines(linesForType(type || "sentence")));
+    out.push(...ruledLines(linesForType(type || "sentence"), { last: o.last && i === list.length - 1 }));
   });
   return out;
 }
@@ -194,26 +198,46 @@ function checkPart(items, accent) {
 function renderBlocks(blocks, tier = "core") {
   const out = [];
   let partAccent = H.C.blue, pendingExample = null, bankUsed = [];
-  blocks.forEach(b => {
+  // index of the last renderable block in each Part, so its final paragraph is
+  // NOT glued forward (otherwise the whole sheet becomes one unbreakable block)
+  const lastOfPart = new Set();
+  let run = [];
+  blocks.forEach((b, i) => {
+    if (b.kind === "section") { if (run.length) lastOfPart.add(run[run.length - 1]); run = []; }
+    else if (b.kind !== "support" && b.kind !== "extension") run.push(i);
+  });
+  if (run.length) lastOfPart.add(run[run.length - 1]);
+
+  blocks.forEach((b, bi) => {
+    const isLast = lastOfPart.has(bi);
+    GLUE = b.kind !== "section";
     const acc = b.accentStep ? H.accentFor(b.accentStep) : H.C.blue;
     switch (b.kind) {
       case "section":
         partAccent = acc;
-        out.push(H.h2(b.t, acc));
-        pendingExample = b.example || null;       // rendered after the Part's instruction
+        out.push(new Paragraph({            // H.h2 + keepNext, so a heading never strands at a page foot
+          children: [H.run(b.t, { size: 26, bold: true, color: H.C.white })],
+          shading: { type: ShadingType.CLEAR, color: "auto", fill: acc },
+          spacing: { after: 120, before: 240, line: 300 }, keepNext: true,
+          border: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE } } }));
+        GLUE = true;
+        pendingExample = b.example || null;       // rendered after the Part's instruction...
         bankUsed = b.exampleUses || [];
+        if (pendingExample && !(blocks[bi + 1] && blocks[bi + 1].kind === "instr")) {
+          out.push(exampleLine(pendingExample, partAccent)); pendingExample = null;   // ...or right here if there is none
+        }
         break;
       case "instr":
-        out.push(H.text(b.t, { size: 22 }));
+        out.push(H.text(b.t, { size: 22, keepNext: GLUE }));
         if (pendingExample) { out.push(exampleLine(pendingExample, partAccent)); pendingExample = null; }
         break;
-      case "note": out.push(new Paragraph({ children: [H.run("✎  " + b.t, { italics: true, color: H.C.midGrey, size: 21 })], spacing: { before: 120, after: 80 } })); break;
-      case "write": out.push(...ruledLines(b.lines || linesForType(b.type))); break;
+      case "note": out.push(new Paragraph({ children: [H.run("✎  " + b.t, { italics: true, color: H.C.midGrey, size: 21 })], spacing: { before: 120, after: 80 }, ...keep(false) })); break;
+      case "write": out.push(...ruledLines(b.lines || linesForType(b.type), { last: isLast })); break;
       case "longblanks": { const rows = b.rows || 1, per = b.per || 3; for (let r = 0; r < rows; r++) out.push(blankRow(per)); out.push(H.spacer(80)); break; }
       case "box": out.push(labelBox(b.label, b.lines, H.C.blue)); out.push(H.spacer(80)); break;
       case "sixbox": out.push(sixBox()); out.push(H.spacer(80)); break;
-      case "frames": out.push(...frames(b.list, b.type)); break;
-      case "checklist": out.push(...checklist(b.items)); break;
+      case "frames": out.push(...frames(b.list, b.type, { last: isLast })); break;
+      case "checklist": out.push(...checklist(b.items, { last: isLast })); break;
       case "table": out.push(wsTable(b.head, b.rows, b.widths, b.tall)); out.push(H.spacer(100)); break;
       case "fill": out.push(inlineFill(b.prompt)); break;
       case "cloze": out.push(...clozeBlock(b.bank, b.items, bankUsed)); break;
@@ -233,6 +257,7 @@ function renderBlocks(blocks, tier = "core") {
       case "support": case "extension": break;
     }
   });
+  GLUE = false;
   return out;
 }
 const tierBlocks = (W, kind) => {

@@ -252,8 +252,8 @@ const WORKSHEETS = [
 
     { kind:"section", t:"Part C \u2014 Same Place, New Mood", accentStep:3,
       example:"A bus stop, lonely:  One flickering light. My own breath going white in the cold. Not a single car for ten minutes." },
-    { kind:"instr", t:"Take one everyday place (a bus stop, a gym, your kitchen) and write it in ONE clear mood using three details." },
-    { kind:"write", type:"multi" },
+    { kind:"instr", t:"Take one everyday place (a bus stop, a gym, your kitchen) and write it in ONE clear mood using three details. Three or four sentences." },
+    { kind:"write", type:"paragraph" },
 
     { kind:"support", blocks:[
       { kind:"instr", t:"Atmosphere word bank: cozy, tense, lonely, hopeful, peaceful, uneasy, joyful, gloomy." },
@@ -370,6 +370,7 @@ const WORKSHEETS = [
 
     { kind:"section", t:"Part B — Your Planning Organizer", accentStep:2,
       example:"Hook box: “The rope burned my palms.”   Beat 1: I reached the branch.   Beat 2: I looked down and the ground tilted.   Beat 3: My legs locked.   Beat 4: I let go and dropped.   Why it matters: “I chose it myself.”" },
+    { kind:"instr", t:"Fill every box. The hook is one sentence. Each beat is one sentence that SHOWS what happened. Keep it all inside ONE moment." },
     { kind:"box", label:"Hook (one sentence that drops us in)", lines:2 },
     { kind:"box", label:"Beat 1 (what happens first \u2014 shown)", lines:2 },
     { kind:"box", label:"Beat 2", lines:2 },
@@ -379,11 +380,11 @@ const WORKSHEETS = [
 
     { kind:"section", t:"Part C — Scope Check", accentStep:3,
       example:"Partner’s plan: the rope climb. ONE moment? Yes — about thirty seconds. Could I picture every beat? Beat 3 just said “I was scared”, so no — I told them to show it. Does the closing line land? Yes." },
-    { kind:"instr", t:"Trade with a partner. Read their plan and answer:" },
-    { kind:"checklist", items:[
-      "Is this ONE small moment (minutes, not a whole day)?",
-      "Can I picture each beat, or are some just \u2018telling\u2019?",
-      "Does the closing line land why it matters?",
+    { kind:"instr", t:"Trade with a partner. Read their plan and answer each question in a sentence. Then hand it back and talk it through." },
+    { kind:"frames", type:"sentence", list:[
+      "Is this ONE small moment (minutes, not a whole day)? How do you know?",
+      "Can you picture every beat, or is one of them just \u2018telling\u2019? Which one?",
+      "Does the closing line land why it matters? What does it say?",
     ]},
 
     { kind:"support", blocks:[
@@ -424,7 +425,11 @@ const WORKSHEETS = [
 
     { kind:"section", t:"Part C — Reread & Flag", accentStep:3,
       example:"Telling line I underlined: “I was really nervous.”   Line I am proud of: “the grass came up soft.”" },
-    { kind:"instr", t:"Reread your draft. Underline ONE line that TELLS instead of shows \u2014 don\u2019t fix it yet. Then mark one line you\u2019re proud of." },
+    { kind:"instr", t:"Reread your draft. Underline ONE line that TELLS instead of shows \u2014 don\u2019t fix it yet. Then mark one line you\u2019re proud of. Copy both out here." },
+    { kind:"frames", type:"sentence", list:[
+      "The telling line I underlined:",
+      "The line I am proud of:",
+    ]},
     { kind:"checklist", items:[
       "I wrote the whole moment, start to finish.",
       "I underlined one \u2018telling\u2019 line to revise later.",
