@@ -657,13 +657,14 @@ const DECKS = [
 
 // ============================= LESSON 10 =============================
 { n:10, short:"Planning the Narrative", slides:[
-  { kind:"title", title:"Choosing the Moment", sub:"You have all the tools. Now we plan the paragraph." },
+  { kind:"title", title:"Choosing the Moment", sub:"A new moment \u2014 and all the tools you have been building." },
 
   { kind:"plain", kicker:"Connect · Everything you\u2019ve built",
     title:"You\u2019re ready to plan",
     cards:[
-      { h:"You have\u2026", t:"a moment (your object), a way to make it vivid (showing), character and setting tools, and complete sentences." },
-      { h:"Now", t:"we put them together into a plan for ONE paragraph." },
+      { h:"What you have already done", t:"Told an object talk (Lesson 4). Grown a showing passage (Lesson 5). Found traits through action (Lesson 6). Built a setting with an atmosphere (Lesson 7)." },
+      { h:"Today", t:"You put all four to work on ONE paragraph \u2014 planned today, drafted next class." },
+      { h:"The one rule", t:"This is a NEW small moment. NOT the one from your Lesson 5 passage. Same toolkit, fresh material." },
     ], cardH:1.1 },
 
   { kind:"step", step:1, kicker:"Today\u2019s idea",
@@ -685,6 +686,7 @@ const DECKS = [
   { kind:"step", step:3, kicker:"Your turn · Worksheet 10",
     title:"Plan your moment",
     bullets:[
+      "Choose your NEW moment \u2014 not the Lesson 5 one.",
       "Write your hook idea.",
       "List 3\u20134 showing beats, in order.",
       "Write your \u2018why it matters\u2019 line.",

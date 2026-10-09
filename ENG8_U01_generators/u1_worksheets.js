@@ -347,9 +347,20 @@ const WORKSHEETS = [
   ]},
 
 // ------------------------------- L10 -------------------------------
-{ n:10, title:"Planning Your Narrative", subtitle:"One small moment \u2014 hook, beats, and why it matters.",
+{ n:10, title:"Planning Your Narrative", subtitle:"One NEW small moment \u2014 hook, beats, and why it matters.",
+  check:[
+    "I chose a NEW moment, not the one from my Lesson 5 passage.",
+    "My moment lasts minutes, not a whole day.",
+    "My hook is an action or an image, not \u201COne day\u2026\u201D",
+    "I have 3 or 4 beats, in order.",
+    "Every beat SHOWS something instead of naming a feeling.",
+    "My closing line says why the moment mattered.",
+    "A partner read my plan and checked the scope.",
+    "My organizer is finished and ready to draft from.",
+  ],
   blocks:[
-    { kind:"section", t:"Part A — The Shape", accentStep:1 },
+    { kind:"section", t:"Part A — The Shape", accentStep:1,
+      example:"HOOK: “The rope burned my palms as I climbed.”   THE MOMENT: reached the branch / looked down and the ground tilted / froze / made my fingers open and dropped.   WHY IT MATTERS: “That was the first time I chose to be brave instead of being told to be.”" },
     { kind:"instr", t:"A personal-narrative paragraph has three parts. You\u2019ll plan each one below." },
     { kind:"frames", list:[
       "HOOK \u2014 drops us into the moment (an action or image, not \u201COne day\u2026\u201D):",
@@ -357,7 +368,8 @@ const WORKSHEETS = [
       "WHY IT MATTERS \u2014 the closing line:",
     ]},
 
-    { kind:"section", t:"Part B — Your Planning Organizer", accentStep:2 },
+    { kind:"section", t:"Part B — Your Planning Organizer", accentStep:2,
+      example:"Hook box: “The rope burned my palms.”   Beat 1: I reached the branch.   Beat 2: I looked down and the ground tilted.   Beat 3: My legs locked.   Beat 4: I let go and dropped.   Why it matters: “I chose it myself.”" },
     { kind:"box", label:"Hook (one sentence that drops us in)", lines:2 },
     { kind:"box", label:"Beat 1 (what happens first \u2014 shown)", lines:1 },
     { kind:"box", label:"Beat 2", lines:1 },
@@ -365,7 +377,8 @@ const WORKSHEETS = [
     { kind:"box", label:"Beat 4 (optional)", lines:1 },
     { kind:"box", label:"Why it matters (closing line)", lines:2 },
 
-    { kind:"section", t:"Part C — Scope Check", accentStep:3 },
+    { kind:"section", t:"Part C — Scope Check", accentStep:3,
+      example:"Partner’s plan: the rope climb. ONE moment? Yes — about thirty seconds. Could I picture every beat? Beat 3 just said “I was scared”, so no — I told them to show it. Does the closing line land? Yes." },
     { kind:"instr", t:"Trade with a partner. Read their plan and answer:" },
     { kind:"checklist", items:[
       "Is this ONE small moment (minutes, not a whole day)?",
@@ -385,19 +398,32 @@ const WORKSHEETS = [
 
 // ------------------------------- L11 -------------------------------
 { n:11, title:"Drafting Your Narrative", subtitle:"Write the whole moment through \u2014 fixing comes later.",
+  check:[
+    "I wrote the whole moment, start to finish.",
+    "I started at my hook and ended on my why-it-matters line.",
+    "I stayed inside ONE moment.",
+    "I showed instead of telling, as much as I could.",
+    "I kept going instead of stopping to fix things.",
+    "I underlined one telling line to revise later.",
+    "I marked one line I am proud of.",
+    "My draft is ready to revise next class.",
+  ],
   blocks:[
-    { kind:"section", t:"Part A — Before You Draft", accentStep:1 },
+    { kind:"section", t:"Part A — Before You Draft", accentStep:1,
+      example:"My hook: “The rope burned my palms as I climbed.”   My “why it matters” line: “That was the first time I chose to be brave instead of being told to be.”" },
     { kind:"instr", t:"Copy your plan across so it\u2019s in front of you as you write." },
     { kind:"frames", list:[
       "My hook:",
       "My \u2018why it matters\u2019 line:",
     ]},
 
-    { kind:"section", t:"Part B — Draft", accentStep:2 },
+    { kind:"section", t:"Part B — Draft", accentStep:2,
+      example:"“The rope burned my palms as I climbed. At the top branch I looked down and the ground tilted. My legs locked and for a second I could not breathe. Then I made my fingers open, and I dropped — and the grass came up soft.”" },
     { kind:"instr", t:"Write your whole moment, start to finish. Don\u2019t stop to fix \u2014 keep moving. Show, don\u2019t tell. Stay in the one moment." },
     { kind:"write", lines:12 },
 
-    { kind:"section", t:"Part C — Reread & Flag", accentStep:3 },
+    { kind:"section", t:"Part C — Reread & Flag", accentStep:3,
+      example:"Telling line I underlined: “I was really nervous.”   Line I am proud of: “the grass came up soft.”" },
     { kind:"instr", t:"Reread your draft. Underline ONE line that TELLS instead of shows \u2014 don\u2019t fix it yet. Then mark one line you\u2019re proud of." },
     { kind:"checklist", items:[
       "I wrote the whole moment, start to finish.",

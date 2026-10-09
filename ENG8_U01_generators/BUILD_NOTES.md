@@ -55,9 +55,9 @@ apply_plans.js
   * Entry replacement now counts braces, so it works on an already-spliced file.
 
 STATUS BY LESSON
-  L07 — rebuilt to the standing orders and verified (33 slides, floor clean).
+  L07, L10, L11 — rebuilt to the standing orders and verified (floor clean).
   L01–L06 — taught. Not rebuilt.
-  L08–L14 — the generators are now compliant, but the lesson DATA still needs
+  L08, L09, L12, L13, L14 — the generators are compliant, but the lesson DATA needs
     the same pass L07 got: worked examples and a Check Part per worksheet, and
     past-tense referents. make_worksheets.js will fail loudly on each until the
     data is authored. Known content debt:
@@ -67,6 +67,14 @@ STATUS BY LESSON
       * L13 says "clean copy" three times; the standing term is GOOD COPY.
       * L13 points at "the L9 checklist", which will not exist after the merge.
       * L12/L13/L14 still speak about the writing as though it is upcoming.
+      * L14's worksheet Part A also says "clean-copy paragraph".
+
+DECIDED Oct 9 2026 (Sean)
+  * The narrative is a NEW moment, NOT the Lesson 5 one. L07 is therefore
+    PRACTICE on a known moment; L10 states the new-moment rule up front and
+    the Check Part ticks it.
+  * A narrative rubric is to be written (nothing in the set produces one).
+  * The unit test gets its own day after the showcase.
 
 TIMINGS: the plan slide uses an EVEN suggested split (labelled "adjust to your
 block") because the lesson data carries no per-step minutes. Encode a weighting
