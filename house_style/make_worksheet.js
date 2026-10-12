@@ -46,6 +46,14 @@ if (D.vocab) { const cw = W / 2, rows = [];
       children: [P(v ? [R(v[0] + "  ", { bold: true, color: NAVY, size: 24 }), R(v[1], { size: 22 })] : [])] }); }) }));
   body.push(P([R("Vocabulary", { bold: true, color: BLUE, size: 24 })], { spacing: { before: 200, after: 60 }, keepNext: true }));
   body.push(new Table({ width: { size: W, type: WidthType.DXA }, columnWidths: [cw, cw], rows })); }
+// Reading text printed on the sheet (worksheet.text = key into LESSON.texts): title, line-numbered lines, word list.
+if (D.text && LESSON.texts && LESSON.texts[D.text]) { const tx = LESSON.texts[D.text];
+  body.push(P([R(tx.title, { bold: true, color: BLUE, size: 32 })], { spacing: { before: 240, after: 20 }, keepNext: true }));
+  body.push(P([R("Read it twice. Line numbers are there so you can say where you found an answer.", { italics: true, color: GREY, size: 22 })], { spacing: { after: 100 }, keepNext: true }));
+  tx.lines.forEach((ln, i) => body.push(P([R(String(i + 1) + "\t", { color: GREY, size: 18 }), R(ln, { size: 23 })],
+    { indent: { left: 500, hanging: 500 }, tabStops: [{ type: TabStopType.LEFT, position: 500 }], spacing: { after: 40, line: 300 }, keepNext: i < tx.lines.length - 1 })));
+  if (tx.words && tx.words.length) body.push(P(tx.words.flatMap((w, i) => [R((i ? "   \u00B7   " : "Words:  ") , { color: GREY, size: 20 }), R(w[0], { bold: true, color: NAVY, size: 20 }), R(" \u2014 " + w[1], { size: 20 })]), { spacing: { before: 80, after: 60 } }));
+}
 if (D.remember) { body.push(P([], { spacing: { after: 60 } }));
   body.push(box([P([R("Remember:  ", { bold: true, color: NAVY, size: 24 }), R(D.remember, { size: 24 })])], "FFF6E0", "E0B252")); }
 
