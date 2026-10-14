@@ -46,13 +46,17 @@ const shadow = () => ({ type: "outer", color: "8899AA", blur: 6, offset: 2, angl
 
 // ---- READABILITY FLOOR ----
 const MIN = 28, HEAD = 36, ANS = 30;
+const FIT_PREF = 20, FIT_LAST = 16;   // one-slide rule floors
 const SMALL = [];                      // collected offenders; build fails if non-empty
 let CURRENT = "";                      // label for error messages
 
 // T() is the only way text reaches a slide. ref:true marks a reference strip.
 function T(s, text, x, y, w, h, o = {}) {
-  const { ref, ...opt } = o;
-  if (!ref) {
+  const { ref, fit, ...opt } = o;
+  if (fit) {                             // one-slide exception: 16 pt is the hard floor
+    const size = opt.fontSize || MIN;
+    if (size < FIT_LAST) SMALL.push(`${CURRENT} — ${String(text).slice(0, 48)}: ${size} pt (one-slide floor ${FIT_LAST})`);
+  } else if (!ref) {
     const size = opt.fontSize || MIN;
     if (size < MIN) SMALL.push(`${CURRENT} — ${String(Array.isArray(text) ? text[0].text : text).slice(0, 48)}: ${size} pt (floor ${MIN})`);
   }
@@ -80,6 +84,12 @@ function chunk(arr, w, h, pt) {
 function ptFit(arr, w, h, max = HEAD) {
   for (let pt = max; pt >= MIN; pt -= 1) if (heightOf(arr, w, pt) <= h) return pt;
   return MIN;
+}
+// Largest size at which EVERYTHING fits one slide: prefer the 28 pt floor, then
+// 20, then 16. Used only where the one-slide rule applies.
+function ptFitOne(arr, w, h) {
+  for (let pt = MIN; pt >= FIT_LAST; pt -= 1) if (heightOf(arr, w, pt) <= h) return pt;
+  return FIT_LAST;
 }
 // Teacher-plan-only shrink helper (plan slides are exempt from the floor).
 function planFit(lines, w, h, maxPt, minPt, ls = 1.25) {
@@ -430,7 +440,7 @@ function shapeSlide(p, L, accent, plan) {
     const idx = DECK_KEYMAP[L.n][k];
     const sd = idx != null && deck ? deck.slides[idx] : null;
     const cfg = plan.activities[k] || {};
-    const name = cfg.title || (sd && (sd.title || sd.kicker)) || k;
+    const name = cfg.title || (cfg.marking && cfg.marking.title) || (sd && (sd.title || sd.kicker)) || k;
     return `${name}  (${typeFor(sd, cfg, k)})`;
   });
   // one slide per group so the floor holds
@@ -453,9 +463,11 @@ function shapeSlide(p, L, accent, plan) {
 }
 
 // ---- HAND-OUT REMINDER (divider + full pages; the ONE place images are used) ----
-function handoutSlides(p, L, accent) {
-  const { title, sections } = wsSectionsFor(L.n);
-  darkList(p, L, accent, "YOUR WORKSHEET", title || "Let's look at it together", sections);
+function handoutSlides(p, L, accent, override) {
+  // `override` (plan.handout) lets a lesson hand out something that is not a
+  // worksheet — e.g. the practice test on a marking day.
+  const { title, sections } = override || wsSectionsFor(L.n);
+  darkList(p, L, accent, (override && override.kicker) || "YOUR WORKSHEET", title || "Let's look at it together", sections);
   const pages = pagePngs(L.n);
   pages.forEach((img, i) => {
     const s = p.addSlide();
@@ -519,6 +531,37 @@ function sectionWalkthrough(p, L, accent, letter, howText) {
   return items;
 }
 
+// ---- MARKING WALKTHROUGH (peer marking days) ----
+// Mirrors sectionWalkthrough, but the questions are authored in DECK_PLAN
+// (generated from u1_assess.js) because the hand-out is a TEST, not a worksheet.
+function markWalkthrough(p, L, accent, m) {
+  const bodyW = W - 2 * MX - 0.6;
+  const items = m.questions || [];
+  const s0 = p.addSlide(); banner(s0, L, accent);
+  kicker(s0, "How to mark this section", accent);
+  T(s0, m.title, MX, 1.16, W - 2 * MX, 0.9, { fontFace: HF, fontSize: HEAD, bold: true, color: NAVY, valign: "top" });
+  const hy = 2.25, hh = Math.max(1.3, heightOf([m.how], bodyW, MIN) + 0.95);
+  s0.addShape("roundRect", { x: MX, y: hy, w: W - 2 * MX, h: Math.min(hh, (Hh - 0.7) - hy), rectRadius: 0.1,
+    fill: { color: ICE }, line: { color: accent, width: 1.5 }, shadow: shadow() });
+  T(s0, "HOW TO MARK IT", MX + 0.3, hy + 0.2, bodyW, 0.3,
+    { ref: true, fontFace: BF, fontSize: 13, bold: true, color: accent, charSpacing: 1 });
+  T(s0, m.how, MX + 0.3, hy + 0.6, bodyW, Math.min(hh, (Hh - 0.7) - hy) - 0.78,
+    { fontFace: BF, fontSize: MIN, color: INK, valign: "top" });
+  footer(s0, L);
+  if (items.length) {
+    // ONE SLIDE: every question of the section visible at once while marking.
+    const region = (Hh - 0.7) - 2.3, bw = W - 2 * MX - 0.4;
+    const pt = ptFitOne(items, bw, region);
+    const s = p.addSlide(); banner(s, L, accent);
+    kicker(s, "The questions", accent);
+    T(s, m.title, MX, 1.16, W - 2 * MX, 0.9, { fontFace: HF, fontSize: HEAD, bold: true, color: NAVY, valign: "top" });
+    T(s, items.map(t => ({ text: t, options: { breakLine: true, paraSpaceAfter: pt >= MIN ? 14 : 9 } })),
+      MX + 0.2, 2.3, bw, region, { fontFace: BF, fontSize: pt, color: INK, valign: "middle", fit: pt < MIN });
+    footer(s, L);
+  }
+  return items;
+}
+
 // ---- REVEAL slide(s) ----
 const numbered = s => /^\s*\d+[.)]/.test(String(s));
 const strip = s => String(s).replace(/^\s*\d+[.)]\s*/, "");
@@ -554,19 +597,26 @@ function revealSlides(p, L, accent, letter, plan, items) {
     const shown = ans.slice(0, k);
     const nxt = qOf(k);
     const region = (Hh - 0.7) - 2.3 - (nxt ? 1.35 : 0);
-    const groups = chunk(shown.map(a => numbered(a) ? a : a), W - 2 * MX - 0.4, region, MIN);
-    const grp = groups[groups.length - 1];            // keep the newest answer visible
-    const base = shown.length - grp.length;
+    let grp, base, apt = ANS, cont = false;
+    if (plan.fitOneSlide) {
+      // every answer so far stays visible: shrink rather than drop earlier ones
+      grp = shown; base = 0; apt = ptFitOne(shown, W - 2 * MX - 0.4, region);
+    } else {
+      const groups = chunk(shown.map(a => numbered(a) ? a : a), W - 2 * MX - 0.4, region, MIN);
+      grp = groups[groups.length - 1];                // keep the newest answer visible
+      base = shown.length - grp.length;
+      cont = groups.length > 1;
+    }
     const s = p.addSlide(); banner(s, L, accent);
     kicker(s, "Answers", accent);
-    T(s, (rc.title || "Let's check") + (groups.length > 1 ? " (cont.)" : ""), MX, 1.16, W - 2 * MX, 0.9,
+    T(s, (rc.title || "Let's check") + (cont ? " (cont.)" : ""), MX, 1.16, W - 2 * MX, 0.9,
       { fontFace: HF, fontSize: HEAD, bold: true, color: NAVY, valign: "top" });
     T(s, grp.map((a, i) => {
       const idx = base + i;
       const label = numbered(a) ? a : `${idx + 1}.  ${a}`;
       const isNew = idx === k - 1;
       return { text: label, options: { breakLine: true, paraSpaceAfter: 12, color: isNew ? BLUE : GREY, bold: isNew } };
-    }), MX + 0.2, 2.3, W - 2 * MX - 0.4, region, { fontFace: BF, fontSize: ANS, valign: "middle" });
+    }), MX + 0.2, 2.3, W - 2 * MX - 0.4, region, { fontFace: BF, fontSize: apt, valign: "middle", fit: apt < MIN });
     if (nxt) nextStrip(s, `Next question · #${k + 1}`, nxt, accent);
     if (rc.note && k === ans.length && !nxt)
       T(s, rc.note, MX, Hh - 1.15, W - 2 * MX, 0.7, { fontFace: BF, fontSize: MIN, italic: true, color: GREY, valign: "top" });
@@ -582,7 +632,7 @@ function agendaItems(lessonN) {
     const idx = DECK_KEYMAP[lessonN][k];
     const sd = idx != null && deck ? deck.slides[idx] : null;
     const cfg = plan.activities[k] || {};
-    return cfg.title || (sd && (sd.title || sd.kicker)) || k;
+    return cfg.title || (cfg.marking && cfg.marking.title) || (sd && (sd.title || sd.kicker)) || k;
   });
 }
 const takehomeSlide = (p, L, accent, cfg) => darkList(p, L, accent, "TAKE-HOME", cfg.title || "Take-home", cfg.items || []);
@@ -600,7 +650,7 @@ function noticeSlide(p, L, accent) {
 }
 // NEXT CLASS — follows the TEACHING ORDER, not lesson number + 1.
 // ORDER is the live teaching sequence (Sean's Oct 2 2026 reorder).
-const ORDER = [1, 2, 3, 4, 5, 6, 7, 10, 11, 8, 9, 12, 13, 14];
+const ORDER = [1, 2, 3, 4, 5, 6, 7, 10, 11, 8, 9, 12, 13, 14, 15, 16];
 function nextClassSlide(p, L, accent) {
   const i = ORDER.indexOf(L.n);
   const nx = i >= 0 && i + 1 < ORDER.length ? ORDER[i + 1] : null;
@@ -642,7 +692,7 @@ function build(L) {
 
   for (const key of plan.order) {
     const cfg = plan.activities[key] || {};
-    if (plan.handoutKey === key) handoutSlides(p, L, accent);
+    if (plan.handoutKey === key) handoutSlides(p, L, accent, plan.handout);
 
     if (key === "title") { titleSlide(p, slideByKey("title"), L, accent); continue; }
     if (key === "exit") { exitSlide(p, slideByKey("exit"), L, accent); continue; }
@@ -650,6 +700,12 @@ function build(L) {
 
     const sd = slideByKey(key);
     if (sd) (R[sd.kind] || R.plain)(p, sd, L, accent);
+
+    if (cfg.marking) {
+      const items = markWalkthrough(p, L, accent, cfg.marking);
+      revealSlides(p, L, accent, cfg.marking.part, plan, items);
+      continue;
+    }
 
     if (cfg.ws) {
       const letters = Array.isArray(cfg.ws) ? cfg.ws : [cfg.ws];

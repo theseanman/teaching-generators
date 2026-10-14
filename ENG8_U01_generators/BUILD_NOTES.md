@@ -79,3 +79,53 @@ DECIDED Oct 9 2026 (Sean)
 TIMINGS: the plan slide uses an EVEN suggested split (labelled "adjust to your
 block") because the lesson data carries no per-step minutes. Encode a weighting
 rule if a non-even split is wanted.
+
+## Oct 14 2026 — tests rebuilt to the standing orders + peer-marking decks (L15/L16)
+
+**make_assessments.js → v2.** The four Unit 1 test documents were built before the
+worksheet standing orders and broke four of them. Fixed in the generator, not per sheet:
+
+* writing space was paragraph bottom borders → now underscore-leader tab stops
+  (Word merges consecutive bordered paragraphs, which is why that rule exists);
+* clearance ran 0.04in prompt-to-rule and 0.125in rule-to-rule → now line 340 +
+  after 360 (0.39in) and before 300 under the prompt (0.35in+);
+* every box/table/header was 8760 dxa → now 10080, the full usable width;
+* the Name row had no Date field at all → Name / Block / Date on leaders, Date ~2in.
+
+Also added: objective + RSS learning outcomes at the top; writing space by response
+type (paragraph 8 lines, sentence 2); a pre-hand-in tick-box Check Part in two
+columns; and the Section D rubric as full-width criterion blocks, all four levels,
+on its own page at the end so duplex lands it on the back.
+
+**Peer marking (Sean, Oct 14 2026).** `sec.peer` in u1_assess.js decides who marks a
+section. Practice test: a classmate marks all four, gives Section D a proficiency
+level and writes a second-person comment, and signs the marking panel. Unit test:
+a classmate marks A/B/C; Section D is ring-fenced for Mr. Reid and the panel says so.
+A mark box sits beside every peer-marked question.
+
+**Worked examples on a test.** The "(example) as the first item of every Part" rule
+would hand students an answer, so on the practice test it is a `HOW TO ANSWER THIS
+SECTION` panel built on a throwaway micro-text (a driver at a red light) that appears
+on neither test. The unit test carries none.
+
+**make_decks_v2.js** gained three additive things (L01–L14 output is byte-identical,
+verified against L12/L13):
+
+* `plan.handout` — hand out something that is not a worksheet (here, the test);
+* `cfg.marking` + `markWalkthrough()` — a marking walkthrough whose questions are
+  authored in DECK_PLAN instead of pulled from WORKSHEETS, so the deck, the printed
+  test and the answer key all come off u1_assess.js and cannot drift;
+* `plan.fitOneSlide` — the Sep 22 one-slide rule (a section's questions and its
+  cumulative answer set never run across slides; shrink to 20 pt, 16 as a last
+  resort). Opt-in per lesson, so taught lessons keep the behaviour they were built with.
+
+ORDER now ends `… 12, 13, 14, 15, 16`.
+
+**Still open:** Sean's Oct 14 teaching order was given as 10 → 11 → 8 → 9 → practice
+test → unit test, which does not say where 12 (revise), 13 (edit) and 14 (showcase)
+now sit. L15/L16 are at the end of ORDER, so their next-class slides are right either
+way, but L09's next-class slide still points at L12.
+
+Separately: `make_worksheets.js` reports 45 standing-order gaps across the U1
+worksheets (no worked `(example)` on most Parts, several sheets with no Check Part).
+Pre-existing, in the taught sheets, not touched here.

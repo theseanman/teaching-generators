@@ -88,7 +88,7 @@ const DECK_PLAN = {
   10: {"handoutKey":"c4","order":["title","c1","c2","c3","c4","exit"],"activities":{"c1":{},"c2":{},"c3":{},"c4":{"ws":["A","B","C"],"reveal":true,"how":{"A":"A narrative paragraph has three parts. Plan a HOOK that drops us in (not “One day…”), the MOMENT in 3–4 showing beats, and a WHY-IT-MATTERS closing line.","B":"Fill your planning organizer: the hook line, each beat in order, and the closing line. This becomes your draft next class.","C":"Trade plans with a partner. Use the scope check to make sure it's ONE small moment you can picture, with a closing line that lands."}}},"reveals":{"A":{"kind":"open","title":"The shape — one worked example","example":"Hook: “The rope burned my palms as I climbed.”   Beats: reached the branch / looked down / froze / made myself let go and drop.   Why it matters: “That's the first time I chose to be brave instead of just being told to.”","note":"Hook = action or image. Beats = shown, in order. Closing = why the moment stuck."},"B":{"kind":"open","title":"Planning organizer — one filled box","example":"Hook: “The rope burned my palms.”   Beat 1: I reached the branch.   Beat 2: I looked down and the ground tilted.   Beat 3: I froze.   Beat 4: I let go and dropped.   Why it matters: I chose it myself.","note":"Every box filled with a shown beat, in order. That's a paragraph you can write from."}}},
   11: {"handoutKey":"c3","order":["title","c1","c2","c3","c4","exit"],"activities":{"c1":{},"c2":{},"c3":{"ws":["A","B","C"],"reveal":true,"how":{"A":"Copy your plan across so it's in front of you: your hook line and your why-it-matters line.","B":"Write your whole moment start to finish. Don't stop to fix anything — keep moving, show don't tell, stay in the one moment.","C":"Reread your draft. Underline ONE line that TELLS instead of shows (don't fix it yet), and mark one line you're proud of."}},"c4":{}},"reveals":{"A":{"kind":"open","title":"Before you draft — one example","example":"My hook: “The rope burned my palms as I climbed.”   Why it matters: “That's the first time I chose brave.”","note":"Just carry your plan over. Having the hook and closing in view keeps the draft on track."},"B":{"kind":"open","title":"Draft — what a full-through draft looks like","example":"“The rope burned my palms as I climbed. At the top branch I looked down and the ground tilted. My legs locked. For a second I couldn't breathe. Then I made my fingers open, and I dropped — and the grass came up soft.”","note":"Whole moment, start to finish, no stopping to fix. Fixing comes next class."}}},
   12: {"handoutKey":"c3","order":["title","c1","c2","c3","c4","exit"],"activities":{"c1":{},"c2":{},"c3":{"ws":["A","B","C"],"reveal":true,"how":{"A":"Sort each action: does it belong to REVISING (meaning) or EDITING (mechanics)? Write R or E.","B":"Find telling lines in your own draft and rewrite at least two into showing.","C":"Sharpen one setting detail and one character-through-action detail. Then have a partner mark one spot they couldn't picture, and revise it."}},"c4":{}},"reveals":{"A":{"kind":"answers","title":"Revising vs. editing","answers":["1. R — turning “I was scared” into a showing sentence (changes meaning)","2. E — fixing a capital letter (mechanics)","3. R — adding a sensory detail to the setting (changes meaning)","4. E — repairing a fragment (mechanics)","5. R — cutting a part that drifts off the moment (changes meaning)"],"note":"Revising changes what the writing SHOWS. Editing fixes how it's written. Today is revising."},"B":{"kind":"open","title":"The telling hunt — one example","example":"Telling: “I was really happy.”   Showing: “I couldn't stop grinning; my cheeks actually ached by the end.”","note":"Hunt for was/felt/very/really — then show it instead."},"C":{"kind":"open","title":"Sharpen & partner check — one example","example":"Partner couldn't picture: “the room was a mess.”   Revised: “Clothes covered the floor and a plate of toast had gone hard on the desk.”","note":"Let a partner find the fuzzy spot — then make it something they can see."}}},
-  13: {"handoutKey":"c1","order":["title","c1","c2","c3","c4","exit"],"activities":{"c1":{"ws":["A","B","C"],"reveal":true,"how":{"A":"Read the model paragraph. Underline the showing lines, box the hook, and star the why-it-matters line. Then check every sentence is complete.","B":"Apply the fragment checklist from Lesson 9 to YOUR paragraph. List any fragments you found and how you fixed them.","C":"Second edit pass — capitals, end punctuation, spelling, a partner peer-edit, and a clean copy ready for the showcase. Tick each."}},"c2":{},"c3":{},"c4":{}},"reveals":{"A":{"kind":"open","title":"Annotate the model — what to mark","example":"Hook (box): “The whistle screamed and I was off the block before I could think.”   Star (why it matters): “all those grey 6 a.m. practices finally meant something.”   Showing lines: the cold water, the burning arms, the wall coming closer.","note":"Seeing the target in someone else's paragraph makes it easier to hit in your own."},"B":{"kind":"answers","title":"Edit pass 1: fragments — how it looks","answers":["Found: “When the wall came closer.” → Fixed: “When the wall came closer, I pushed harder.”","Found: “Gasping for air.” → Fixed: “I ripped my goggles off, gasping for air.”"],"note":"One pass, one job: hunt only for fragments and repair each one."}}},
+  13: {"handoutKey":"c1","order":["title","c1","c2","c3","c4","exit"],"activities":{"c1":{"ws":["A","B","C"],"reveal":true,"how":{"A":"Read the model paragraph. Underline the showing lines, box the hook, and star the why-it-matters line. Then check every sentence is complete.","B":"Apply the fragment checklist from Lesson 9 to YOUR paragraph. List any fragments you found and how you fixed them.","C":"Second edit pass — capitals, end punctuation, spelling, a partner peer-edit, and a good copy ready for the showcase. Tick each."}},"c2":{},"c3":{},"c4":{}},"reveals":{"A":{"kind":"open","title":"Annotate the model — what to mark","example":"Hook (box): “The whistle screamed and I was off the block before I could think.”   Star (why it matters): “all those grey 6 a.m. practices finally meant something.”   Showing lines: the cold water, the burning arms, the wall coming closer.","note":"Seeing the target in someone else's paragraph makes it easier to hit in your own."},"B":{"kind":"answers","title":"Edit pass 1: fragments — how it looks","answers":["Found: “When the wall came closer.” → Fixed: “When the wall came closer, I pushed harder.”","Found: “Gasping for air.” → Fixed: “I ripped my goggles off, gasping for air.”"],"note":"One pass, one job: hunt only for fragments and repair each one."}}},
   14: {"handoutKey":"c4","order":["title","c1","c2","c3","c4","exit"],"activities":{"c1":{},"c2":{},"c3":{},"c4":{"ws":["A","B","C"],"reveal":true,"how":{"A":"Presenter check before you share: object ready, clean-copy paragraph ready to read or tell, opening line known. Tick all three.","B":"For each presenter, write one appreciation (something that worked) and one clarifying question.","C":"Reflect on the whole unit: what changed between your out-loud version and your written one, the reader/writer you're becoming, and one goal for next unit."}}},"reveals":{"B":{"kind":"open","title":"Audience notes — one row","example":"Presenter: Sam.   Appreciation: the ending on the empty chair really landed.   Question: “How long after did that happen?”","note":"Appreciate something specific, then ask a real question. That's the protocol."},"C":{"kind":"open","title":"Reflection: then & now — one example","example":"Changed: my talk listed facts; my paragraph stays in one moment and shows it.   Becoming: a writer who trusts small details.   Next unit: I want to get better at strong endings.","note":"Name a real change from Lesson 4 to now — that's the growth the unit was for."}}},
 };
 
@@ -827,18 +827,18 @@ const DECKS = [
     ] },
 
   { kind:"step", step:3, kicker:"Edit · Pass 2",
-    title:"Conventions & clean copy",
+    title:"Conventions & good copy",
     bullets:[
       "Capital letters and end punctuation.",
       "Obvious spelling.",
       "Swap and peer-edit against the checklist.",
-      "Write your clean copy for the showcase.",
+      "Write your good copy for the showcase.",
     ] },
 
   { kind:"exit", title:"Ready to publish",
     items:[
       "Is every sentence complete? Yes / Fix one more.",
-      "Finalize your clean copy for the \u2018This Is Me\u2019 showcase.",
+      "Finalize your good copy for the \u2018This Is Me\u2019 showcase.",
     ] },
 ]},
 
@@ -884,5 +884,201 @@ const DECKS = [
     ] },
 ]},
 ];
+
+
+// ============================================================================
+// L15 / L16 — PEER MARKING DAYS (Sean, Oct 14 2026)
+// The questions and answers below are GENERATED from u1_assess.js, so the deck,
+// the printed test and the answer key cannot drift apart. Practice test: a
+// classmate marks all four sections. Unit test: a classmate marks A/B/C and
+// Section D goes to Mr. Reid.
+// ============================================================================
+const { PRACTICE_TEST, UNIT_TEST } = require("./u1_assess.js");
+
+const MARKS = n => `(${n} ${n === 1 ? "mark" : "marks"})`;
+function qLine(it, i) {
+  if (it.type === "match") {
+    const terms = it.match.key.map(k => k.term).join("  ·  ");
+    return `${i + 1}.  ${it.q}   ${terms}   ${MARKS(it.marks)}`;
+  }
+  // `sub` is a list of prompts; `lines` is a list ONLY on label/sf items
+  // (elsewhere it is a ruled-line count), so pick the array explicitly.
+  const list = it.sub || (Array.isArray(it.lines) ? it.lines : null);
+  if (list) {
+    const subs = list.map((t, j) => `${String.fromCharCode(97 + j)}) ${t}`).join("   ");
+    return `${i + 1}.  ${it.q}   ${subs}   ${MARKS(it.marks)}`;
+  }
+  return `${i + 1}.  ${it.q}   ${MARKS(it.marks)}`;
+}
+function aLine(it, i) {
+  if (it.type === "match") {
+    const key = it.match.key.map(k => `${k.term} → ${k.letter}`).join("   ");
+    return `${i + 1}.  ${key}   ${MARKS(it.marks)}`;
+  }
+  // sub-item keys are written "1) ... 2) ..." but the paper labels them a) b) c),
+  // so match the paper and avoid "1.  1) ..." on the reveal slide.
+  const k = String(it.key).replace(/(^|\s)(\d)\)/g, (m, pre, d) => `${pre}${String.fromCharCode(96 + Number(d))})`);
+  return `${i + 1}.  ${k}`;
+}
+// one marking activity per section, built straight off the test data
+function markingFor(T, secId, how) {
+  const sec = T.sections.find(x => x.id === secId);
+  return {
+    activityType: "peer marking",
+    marking: {
+      part: secId,
+      title: `Section ${sec.id} — ${sec.title}`,
+      how,
+      questions: sec.items.map(qLine),
+    },
+  };
+}
+function revealFor(T, secId, title, note) {
+  const sec = T.sections.find(x => x.id === secId);
+  return { kind: "answers", title, answers: sec.items.map(aLine), note };
+}
+
+const HOW_A = "Mark against the answer on the screen, not against the way you would have said it. Full marks when the answer means the same thing in the writer's own words. Half the marks when part of it is there — a feeling named but no detail copied, a claim with no evidence. Write the mark in the box at the right of the question.";
+const HOW_B = "The matching question is all or nothing per line: one mark for each term matched to the right letter. For the written questions, a claim on its own is half — the trait AND the detail that proves it are both needed for full marks.";
+const HOW_C = "Grammar is the one place you can be strict. Subject underlined once and predicate underlined twice, both right, or no mark for that sentence. S and F are right or wrong. A repaired fragment must be a complete sentence — if it still leaves the thought hanging, it is not fixed.";
+const HOW_D = "This one is judgement, so slow down. Read the paragraph once without a pen. Then use the rubric on the back of the sheet: decide a level for the writing as a whole, write the mark, and write the writer one comment that names something real.";
+
+// ---------------------------------- L15 ----------------------------------
+DECKS.push({ n: 15, slides: [
+  { kind: "title", title: "Practice Test, then Peer Marking",
+    sub: "Write it. Trade it. Mark it. Find out what to review — while there is still time to review it." },
+  { kind: "compare", kicker: "First, the deal", title: "Practice test  vs.  Unit test",
+    left:  { h: "Today — practice test", items: ["Not graded. Nothing goes in the gradebook.", "Same shape as the unit test, shorter.", "Marked by a classmate, in class, today.", "Its whole job is to show you what to review."] },
+    right: { h: "Next class — unit test", items: ["Graded. This one counts.", "60 marks, the same four sections.", "Sections A, B and C marked in class.", "Your writing comes to me."] } },
+  { kind: "plain", kicker: "Before you mark", title: "Four rules for marking someone's test",
+    cards: [
+      { h: "Different pen", t: "Mark in a colour that is not the colour the test was written in, so everyone can see what was added afterwards." },
+      { h: "Mark the answer, not the person", t: "You are checking it against the answer on the screen. Not against your own paper, and not against who wrote it." },
+      { h: "Half marks are real", t: "Two-mark questions can score 1. Part of the answer there earns part of the mark." },
+      { h: "Sign it", t: "Your name goes in the marking panel. If a mark is wrong, the writer needs to know who to ask." },
+    ] },
+  { kind: "plain", kicker: "Section D", title: "Giving a level, and writing the comment",
+    cards: [
+      { h: "Use the rubric on the back", t: "Four criteria: one small moment, showing not telling, detail you can picture, complete sentences. Decide where the paragraph sits on the whole." },
+      { h: "Level first, mark second", t: "Circle Emerging, Developing, Proficient or Extending, then put the mark out of 6 in the box." },
+      { h: "Write to them, not about them", t: "“You stayed in one moment the whole way through” — not “the student stayed in one moment.”" },
+      { h: "Name one real thing", t: "One thing that worked, and one thing to do next time. “Good job” tells the writer nothing." },
+    ] },
+  { kind: "plain", kicker: "Last step", title: "Total it, sign it, hand it back",
+    bullets: [
+      "Add the four section boxes into the TOTAL box in the marking panel.",
+      "Sign your name on the ‘Marked by’ line.",
+      "Hand the test back to the person whose name is on it.",
+      "Writers: read the comment before you look at the number.",
+    ] },
+  { kind: "exit", title: "What are you reviewing tonight?",
+    items: [
+      "Write down the TWO sections you scored lowest on.",
+      "Write down the ONE thing you will review before next class.",
+      "The unit test is next class. Same four sections, 60 marks.",
+    ] },
+]});
+DECK_KEYMAP[15] = { title: 0, setup: 1, howmark: 2, profcomment: 3, totals: 4, exit: 5 };
+DECK_PLAN[15] = {
+  fitOneSlide: true,   // marking days: a section's questions and its answer set each stay on ONE slide
+  handoutKey: "write",
+  handout: { kicker: "YOUR TEST", title: "Unit 1 Practice Test — what is on it",
+    sections: ["Section A — Reading Comprehension & Strategies (10)", "Section B — Literary Terms (10)",
+               "Section C — Grammar: Subject / Predicate & Fragments (10)", "Section D — Writing: Showing, Not Telling (10)",
+               "Check — tick it before you hand it over", "Marking panel — your marker fills this in and signs it",
+               "Rubric on the back — how Section D is marked"] },
+  order: ["title", "setup", "write", "swap", "howmark", "mA", "mB", "mC", "mD", "profcomment", "totals", "exit"],
+  activities: {
+    title: {},
+    setup: { activityType: "instruction" },
+    write: { section: true, activityType: "independent work", kicker: "Test conditions", title: "Write the practice test",
+      items: ["35 minutes, silent, on your own.", "All four sections, including the paragraph in Section D.",
+              "If you get stuck, leave it and come back — a blank tells you what to review just as well as a wrong answer.",
+              "Marking pens stay away until everyone is finished."] },
+    swap: { section: true, activityType: "class activity", kicker: "Swap", title: "Trade tests",
+      items: ["Writing pen away. Marking pen out.", "Pass your test forward — you will not be marking the person beside you.",
+              "Check the name on the front. That is who your comment is written to.",
+              "Do not change anything the writer wrote. You add marks and a comment, nothing else."] },
+    howmark: { activityType: "instruction" },
+    mA: markingFor(PRACTICE_TEST, "A", HOW_A),
+    mB: markingFor(PRACTICE_TEST, "B", HOW_B),
+    mC: markingFor(PRACTICE_TEST, "C", HOW_C),
+    mD: markingFor(PRACTICE_TEST, "D", HOW_D),
+    profcomment: { activityType: "instruction" },
+    totals: { activityType: "class activity" },
+    exit: {},
+  },
+  reveals: {
+    A: revealFor(PRACTICE_TEST, "A", "Section A — what earns the marks", "Where the answer on the screen is a list of options, any one of them earns the mark."),
+    B: revealFor(PRACTICE_TEST, "B", "Section B — what earns the marks", "Claim plus evidence. One without the other is half."),
+    C: revealFor(PRACTICE_TEST, "C", "Section C — what earns the marks", "Grammar is right or wrong. Be strict here — it is the kindest thing you can do before the unit test."),
+    D: { kind: "open", title: "Section D — what full marks looks like",
+      example: "Telling: “I was scared.”  →  “My hands would not stay still, so I jammed them into my pockets.”\n\nParagraph: “The bell went and the hallway filled before I had my locker open. I tried the combination twice. On the third try my thumb slipped and the lock held shut. I pressed my forehead against the cold metal door and waited for the hallway to empty.”",
+      note: "One moment, shown not named, details you can picture, sentences that are complete. That is Proficient or better — and you can say exactly why." },
+  },
+  agendaExtra: ["The Unit 1 test is next class — same four sections, 60 marks."],
+};
+
+// ---------------------------------- L16 ----------------------------------
+DECKS.push({ n: 16, slides: [
+  { kind: "title", title: "Unit 1 Test", sub: "Everything the unit taught, on your own. Then we mark Sections A, B and C together." },
+  { kind: "plain", kicker: "If we ran out of time", title: "Finishing last class's marking",
+    bullets: [
+      "Practice tests come back out, marking pens out.",
+      "We pick up in the Lesson 15 deck at the section we stopped at.",
+      "Total the panel, sign it, hand it back — then the unit test starts.",
+    ] },
+  { kind: "plain", kicker: "One difference today", title: "Section D is not marked in here",
+    cards: [
+      { h: "A, B and C", t: "Marked in class by a classmate, exactly the way we did it last time." },
+      { h: "Section D", t: "Left blank by your marker. I mark the writing myself, against the rubric on the back." },
+      { h: "Why", t: "The writing mark is the one that counts hardest in this unit, so it is mine to make." },
+    ] },
+  { kind: "plain", kicker: "Last step", title: "Total what you marked, then hand it in",
+    bullets: [
+      "Add Sections A, B and C into the panel. Leave the Section D box and the TOTAL box blank.",
+      "Sign the ‘Marked by’ line.",
+      "Tests come to me with the writing unmarked. They come back with it marked.",
+    ] },
+  { kind: "exit", title: "Before you go",
+    items: ["Hand your marked test to the front.", "Write down one thing from this unit you want to keep using in your writing next unit."] },
+]});
+DECK_KEYMAP[16] = { title: 0, finish: 1, dblank: 2, collect: 3, exit: 4 };
+DECK_PLAN[16] = {
+  fitOneSlide: true,
+  handoutKey: "write",
+  handout: { kicker: "YOUR TEST", title: "Unit 1 Test — what is on it",
+    sections: ["Section A — Reading Comprehension & Strategies (15)", "Section B — Literary Terms (15)",
+               "Section C — Grammar: Subject / Predicate & Fragments (15)", "Section D — Writing: Showing, Not Telling (15)",
+               "Check — tick it before you hand it over", "Marking panel — A, B and C only",
+               "Rubric on the back — how I mark Section D"] },
+  order: ["title", "finish", "write", "swap", "howmark", "mA", "mB", "mC", "dblank", "collect", "exit"],
+  activities: {
+    title: {},
+    finish: { activityType: "peer marking" },
+    write: { section: true, activityType: "independent work", kicker: "Test conditions", title: "Write the unit test",
+      items: ["45 minutes, silent, on your own.", "All four sections. Section D is the one I mark, so give it the time.",
+              "Finished early? Read your paragraph against the rubric on the back and fix what you can.",
+              "Marking pens stay away until everyone is finished."] },
+    swap: { section: true, activityType: "class activity", kicker: "Swap", title: "Trade tests",
+      items: ["Writing pen away. Marking pen out.", "Pass your test forward — not to the person beside you.",
+              "Sections A, B and C only today.", "Do not write anything on Section D."] },
+    howmark: { section: true, activityType: "instruction", kicker: "Same rules as last class", title: "How we mark",
+      items: ["Different coloured pen.", "Mark against the answer on the screen, not your own paper.",
+              "Half marks are real.", "Sign the panel — your name goes on what you marked."] },
+    mA: markingFor(UNIT_TEST, "A", HOW_A),
+    mB: markingFor(UNIT_TEST, "B", HOW_B),
+    mC: markingFor(UNIT_TEST, "C", HOW_C),
+    dblank: { activityType: "instruction" },
+    collect: { activityType: "class activity" },
+    exit: {},
+  },
+  reveals: {
+    A: revealFor(UNIT_TEST, "A", "Section A — what earns the marks", "Where the answer is a list of options, any one of them earns the mark."),
+    B: revealFor(UNIT_TEST, "B", "Section B — what earns the marks", "Claim plus evidence. One without the other is half."),
+    C: revealFor(UNIT_TEST, "C", "Section C — what earns the marks", "Right or wrong. Be strict — this one counts."),
+  },
+  agendaExtra: ["Unit 1 is finished. Your test comes back with the writing marked."],
+};
 
 module.exports = { DECKS, DECK_PLAN, DECK_KEYMAP };

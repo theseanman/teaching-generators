@@ -497,13 +497,13 @@ const WORKSHEETS = [
       ["",""],
     ], tall:true },
 
-    { kind:"section", t:"Part C — Edit Pass 2: Conventions & Clean Copy", accentStep:3 },
+    { kind:"section", t:"Part C — Edit Pass 2: Conventions & Good Copy", accentStep:3 },
     { kind:"checklist", items:[
       "Every sentence starts with a capital and ends with punctuation.",
       "No fragments left.",
       "I checked obvious spelling.",
       "A partner peer-edited my paragraph.",
-      "My clean copy is ready for the showcase.",
+      "My good copy is ready for the showcase.",
     ]},
 
     { kind:"support", blocks:[

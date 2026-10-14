@@ -389,11 +389,11 @@ const LESSONS = [
       "Editing pass 1 — fragments: apply the L9 checklist to their own paragraph; repair every fragment.",
       "Editing pass 2 — conventions: capitalization, end punctuation, obvious spelling.",
       "Peer edit: swap and check a partner's paragraph against the editing checklist.",
-      "Prepare the clean copy for the showcase.",
+      "Prepare the good copy for the showcase.",
     ],
-    assessment: "Formative — editing checklist completed; the clean copy is the diagnostic piece that will be scored on the 4-point scale.",
+    assessment: "Formative — editing checklist completed; the good copy is the diagnostic piece that will be scored on the 4-point scale.",
     diff: { support: "Editing checklist chunked into one-target passes; model annotation partly done as an example.", extension: "Edit a deliberately error-seeded passage against the checklist, then their own." },
-    homework: "Finalize the clean copy for the 'This Is Me' showcase.",
+    homework: "Finalize the good copy for the 'This Is Me' showcase.",
   },
   {
     n: 14, title: "\"This Is Me\" Showcase — Publish, Present & Reflect",
@@ -414,5 +414,66 @@ const LESSONS = [
     homework: "None — unit complete.",
   },
 ];
+
+
+// ---- L15 / L16: the practice test and the unit test, both peer-marked in class
+// (Sean's decision Oct 14 2026). On the practice test a classmate marks all four
+// sections; on the unit test a classmate marks A/B/C and Section D goes to Mr. Reid.
+LESSONS.push({
+  n: 15,
+  title: "Practice Test & Peer Marking",
+  objective: "Students write the Unit 1 practice test, then mark a classmate's test against the answer key and the Section D rubric, so each of them leaves knowing exactly what to review.",
+  standards: "Comprehend & Connect: respond to text, showing comprehension and inference. Create & Communicate: assess their own and others' work against criteria. Content: narrative terms, subject/predicate, fragments, showing not telling.",
+  vocab: ["criteria", "proficiency", "evidence"],
+  materials: [
+    "ENG8_U01_PracticeTest_v2 — one per student (7 pages, duplex; the rubric prints on the back)",
+    "ENG8_U01_PracticeTest_AnswerKey_v2 — teacher copy",
+    "A second pen in a different colour for marking — students must not mark in the pen they wrote with",
+    "Deck 15 (this deck) — the answers are revealed from it, one at a time",
+  ],
+  sequence: [
+    "Set up (5 min): hand the practice test out face down and name the deal — this one is not graded, it exists to show you what to review before the test that is graded. Marking pens stay in the bag until the writing is done.",
+    "Write the practice test (35 min): silent, test conditions, all four sections including the Section D paragraph. Circulate and note where students stall, but do not coach answers — a practice test that is helped is a practice test that tells you nothing.",
+    "Swap (5 min): writing pens away, marking pens out. Collect and redistribute so that nobody marks the person beside them. The writer's name stays on the paper; the marker signs the marking panel at the end, so both names are on every sheet.",
+    "Mark Sections A, B and C together (20 min): one question at a time from this deck — question on the screen, markers decide, then the answer is revealed. The mark goes in the box at the right of each question and the section total goes in the marking panel.",
+    "Mark Section D with the rubric (10 min): read the four criteria off the back of the sheet, give the paragraph a proficiency level and a mark out of 6, then write one comment to the writer in the second person — 'you', not 'the student'.",
+    "Total and return (3 min): markers add the four sections into the TOTAL box, sign the panel, and hand the test back to its owner. Writers read the comment before they look at the number.",
+    "Exit ticket (2 min): name the two sections you scored lowest on and the one thing you will review tonight. The unit test is next class.",
+  ],
+  assessment: "Formative only — the practice test is not entered in the gradebook. What is being watched is whether students can apply the criteria to someone else's work, which is the same skill they need on their own.",
+  diff: {
+    support: "Marking partner reads the answer aloud from the screen before the pair decides a mark; Section D marked on the first two criteria only.",
+    extension: "After marking, write the one question you would add to this test and the answer you would accept for it.",
+  },
+  homework: "Review the two sections you scored lowest on. The Unit 1 test is next class.",
+});
+
+LESSONS.push({
+  n: 16,
+  title: "Unit 1 Test",
+  objective: "Students show independently what Unit 1 taught, then mark Sections A, B and C of a classmate's test; Section D comes to Mr. Reid.",
+  standards: "Comprehend & Connect: respond to text, showing comprehension and inference. Create & Communicate: write a personal narrative that shows rather than tells; assess work against criteria.",
+  vocab: [],
+  materials: [
+    "ENG8_U01_UnitTest_v2 — one per student (7 pages, duplex; the rubric prints on the back)",
+    "ENG8_U01_UnitTest_AnswerKey_v2 — teacher copy",
+    "A second pen in a different colour for marking",
+    "Deck 16 (this deck); Deck 15 if practice-test marking still has to be finished",
+  ],
+  sequence: [
+    "Finish the practice-test marking if it ran over (10 min, only if needed): pick up in Deck 15 at the section you stopped at, then the practice tests go back to their owners. Skip this step entirely if Lesson 15 finished.",
+    "Set up (3 min): test out face down, marking pens away, phones away. Name the one difference from last class — Section D is not marked in here today.",
+    "Write the unit test (45 min): silent, test conditions, all four sections. No coaching. Students who finish early reread Section D against the rubric on the back.",
+    "Swap (4 min): marking pens out, tests redistributed so nobody marks a neighbour. The marker signs the panel.",
+    "Mark Sections A, B and C together (16 min): same protocol as last class — question shown, markers decide, answer revealed, mark in the box. Section D is left blank; the panel says so.",
+    "Collect (2 min): tests come in with A/B/C marked and signed. Mr. Reid marks Section D against the rubric and returns them with the writing mark.",
+  ],
+  assessment: "Summative. Sections A, B and C are peer-marked in class and spot-checked; Section D is marked by Mr. Reid on the four-criterion rubric, in proficiency terms.",
+  diff: {
+    support: "Extra time in the support block; the reading passage may be read aloud once before the test begins.",
+    extension: "None — the test is the same for everyone.",
+  },
+  homework: "None.",
+});
 
 module.exports = { UNIT, TEACHER, STUDENT, LESSONS };

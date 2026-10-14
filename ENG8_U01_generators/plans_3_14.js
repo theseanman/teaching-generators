@@ -286,7 +286,7 @@ P[13] = {
           "Found: “Gasping for air.” → Fixed: “I ripped my goggles off, gasping for air.”",
         ], note:"One pass, one job: hunt only for fragments and repair each one." }],
     ["C","checklist",
-      "Second edit pass — capitals, end punctuation, spelling, a partner peer-edit, and a clean copy ready for the showcase. Tick each.", null],
+      "Second edit pass — capitals, end punctuation, spelling, a partner peer-edit, and a good copy ready for the showcase. Tick each.", null],
   ],
 };
 

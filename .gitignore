@@ -13,3 +13,7 @@ node_modules/
 __pycache__/
 **/__pycache__/
 *.pyc
+
+# Worksheet/test page rasters are generated each session from the built docx
+wsassets/
+**/wsassets/
