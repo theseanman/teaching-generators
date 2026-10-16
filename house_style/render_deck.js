@@ -425,7 +425,7 @@ R.cards = (sp, next) => { const s = pres.addSlide(); frame(s, sp.tag + (sp.cont 
 
 R.textpage = (sp, next, i, pages) => { const tx = L.texts[sp.text], pg = pages[i], s = pres.addSlide();
   frame(s, `${tx.title} \u00B7 ${i + 1} of ${pages.length}`, null, next);
-  T(s, `${tx.title}  \u00B7  lines ${pg[0] + 1}\u2013${pg[pg.length - 1] + 1}`, 0.4, 0.95, 9.2, 0.5, { fontSize: 32, bold: true, color: NAVY });
+  T(s, `${tx.title}  \u00B7  ${pg.length > 1 ? `lines ${pg[0] + 1}\u2013${pg[pg.length - 1] + 1}` : `line ${pg[0] + 1}`}`, 0.4, 0.95, 9.2, 0.5, { fontSize: 32, bold: true, color: NAVY });
   const runs = []; pg.forEach((k, j) => { runs.push({ text: String(k + 1).padStart(2, " ") + "   ", options: { bold: true, color: ACC } });
     runs.push({ text: tx.lines[k], options: { breakLine: j < pg.length - 1 } }); });
   card(s, 0.4, TOP, 9.2, BOT - TOP, "FAFCFE", "C9DCEE");
