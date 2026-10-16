@@ -549,4 +549,130 @@ const WORKSHEETS = [
   ]},
 ];
 
-module.exports = { WORKSHEETS };
+
+// ---- L12 REBUILT Oct 16 2026: Revise & Edit + Good Copy sheet with the narrative rubric ----
+// The rubric is the single source for the printed page and the mark (standing order
+// Oct 12 2026). Second person throughout: the student reads it.
+const NARRATIVE_RUBRIC = {
+  title: "How your narrative good copy is marked",
+  intro: "I mark your good copy on these five things, on the BC 4-point Proficiency Scale. Read them before you write, and again before you hand it in.",
+  criteria: [
+    { name: "One small moment",
+      levels: {
+        Emerging:   "You write about a long stretch of time — a whole day, a trip, a season — so the reader never lands anywhere.",
+        Developing: "You start in one moment but drift into other events, or you summarise the moment instead of staying inside it.",
+        Proficient: "You stay in one small moment from start to finish. The reader can tell how long it lasted.",
+        Extending:  "You stay in one small moment and slow down at the part that matters most, so the reader feels the moment stretch.",
+      } },
+    { name: "Hook, beats and ending",
+      levels: {
+        Emerging:   "Your paragraph has no clear start or end — it begins in the middle of things or just stops.",
+        Developing: "You have a start and an end, but the opening is a summary (“One day…”) or the ending does not say why the moment mattered.",
+        Proficient: "You open with a hook that drops the reader into the moment, the beats come in order, and you end on why the moment mattered.",
+        Extending:  "Your hook, your beats and your closing line work together, so the ending lands harder because of how you began.",
+      } },
+    { name: "Showing, not telling",
+      levels: {
+        Emerging:   "You name the feelings (“I was scared,” “it was fun”) and leave it there.",
+        Developing: "You show in places, but you still name the feeling outright in others.",
+        Proficient: "You show the feeling through action and detail instead of naming it.",
+        Extending:  "You show the feeling so clearly through action and detail that naming it would weaken the writing.",
+      } },
+    { name: "Detail the reader can picture",
+      levels: {
+        Emerging:   "Your details are general — “the room,” “some people” — so there is nothing to picture.",
+        Developing: "You give one or two specific details; the rest stays vague.",
+        Proficient: "You choose specific details, including what you saw, heard or felt, and they build one feeling.",
+        Extending:  "Every detail you choose pulls the same way, and at least one is exact enough to be only yours.",
+      } },
+    { name: "Complete sentences and conventions",
+      levels: {
+        Emerging:   "Fragments, run-ons or missing capitals and end punctuation make the paragraph hard to follow.",
+        Developing: "Most sentences are complete and punctuated; a few fragments or slips slow the reader down.",
+        Proficient: "Your sentences are complete, with capitals, end punctuation and spelling checked.",
+        Extending:  "Your sentences are complete and correct, and you vary their length on purpose, so the writing has a rhythm.",
+      } },
+  ],
+};
+
+WORKSHEETS[WORKSHEETS.findIndex(w => w.n === 12)] = {
+  n: 12,
+  fileTag: "ReviseEdit",
+  title: "Revise & Edit Your Narrative",
+  subtitle: "Make it show. Make it correct. Then write the good copy.",
+  check: [
+    "I can say the difference between revising and editing.",
+    "I turned at least two telling lines into showing.",
+    "I revised the spot my partner couldn’t picture.",
+    "I found and fixed the fragments in my draft.",
+    "I checked capitals, end punctuation and spelling.",
+    "My good copy is written out neatly and handed in.",
+  ],
+  blocks: [
+    { kind: "section", t: "Part A — Revising or Editing?", accentStep: 1,
+      example: "Turn “I was nervous” into a showing sentence.   →   R  (it changes what the reader sees)" },
+    { kind: "instr", t: "REVISING changes what your writing shows (meaning). EDITING fixes how it is written (mechanics). Write R or E beside each action." },
+    { kind: "table", head: ["Action", "R or E"], widths: [7680, 2400], tall: true, rows: [
+      ["Add a sound you heard during the moment.", ""],
+      ["Put a capital letter at the start of a sentence.", ""],
+      ["Repair “Because the bell rang.” into a full sentence.", ""],
+      ["Cut a sentence that drifts away from the moment.", ""],
+      ["Rewrite the last line so it says why the moment mattered.", ""],
+    ] },
+    { kind: "section", t: "Part B — The Telling Hunt", accentStep: 2, flow: true,
+      example: "Telling: “I was really nervous.”   Showing: “My hands would not stay still, so I jammed them into my pockets.”" },
+    { kind: "instr", t: "Start with the telling line you underlined in Lesson 11 Part C. Then find ONE more telling line in your draft. Rewrite each one so it shows the feeling instead of naming it. Make the change on your draft too." },
+    { kind: "frames", type: "sentence", list: [
+      "Telling line 1 (the one you underlined in Lesson 11):",
+      "My showing revision:",
+      "Telling line 2:",
+      "My showing revision:",
+    ] },
+    { kind: "section", t: "Part C — Partner Read", accentStep: 3, flow: true,
+      example: "My partner couldn’t picture: “the room was a mess.”   My revision: “Clothes covered the floor and a plate of toast had gone hard on the desk.”" },
+    { kind: "instr", t: "Swap drafts. Read your partner’s whole draft and put a small ✗ in the margin at ONE place you couldn’t picture. Swap back. Revise the spot your partner marked." },
+    { kind: "frames", type: "sentence", list: [
+      "The spot my partner couldn’t picture:",
+      "My revision:",
+    ] },
+    { kind: "section", t: "Part D — Edit: Two Passes", accentStep: 4, flow: true,
+      example: "Fragment: “Because my hands were shaking.”   Kind: a clause left alone.   Fix: “I dropped the ball because my hands were shaking.”" },
+    { kind: "instr", t: "Pass 1 — fragments. Read your draft once, ONLY looking for the four kinds of fragment: missing subject, missing verb, a clause left alone, a phrase left alone. Fix each one on your draft, and copy two here. (No fragments? Copy two sentences you checked and write “complete”.)" },
+    { kind: "table", head: ["Fragment I found", "Kind", "My fix"], widths: [3600, 2200, 4280], tall: true, rows: [["", "", ""], ["", "", ""]] },
+    { kind: "instr", t: "Pass 2 — conventions. Read your draft again, ONLY for these. Tick each one when it is true." },
+    { kind: "checklist", items: [
+      "Every sentence starts with a capital letter.",
+      "Every sentence ends with a period, question mark or exclamation mark.",
+      "“I” and people’s names have capitals.",
+      "I checked the spelling of any word I wasn’t sure of.",
+    ] },
+    { kind: "support", blocks: [
+      { kind: "instr", t: "Telling words to hunt for: was, felt, is, really, very, so, a lot, happy, sad, scared, nervous, excited. When you see one, ask: what did my body DO, or what did I SEE or HEAR, that shows this?" },
+      { kind: "instr", t: "Showing starters:  My hands…   I could hear…   I couldn’t stop…   My heart…   I stared at…" },
+      { kind: "instr", t: "The four fragments and the fix:  missing subject → add who or what.   Missing verb → add what they did.   A clause left alone (because, when, if, although…) → join it to a full sentence.   A phrase left alone → add a subject and a verb." },
+      { kind: "instr", t: "Edit one thing at a time. Read once just for fragments, again just for capitals and end punctuation, again just for spelling. One read, one job." },
+    ] },
+    { kind: "extension", blocks: [
+      { kind: "instr", t: "Revise for rhythm: put one short, punchy sentence right beside a longer one, at the most important point of your moment. Copy the two sentences here." },
+      { kind: "write", lines: 3 },
+      { kind: "instr", t: "Edit this line, then find the same kind of slip in your own draft:  “when the bell rang we all ran outside. because it was the last day”" },
+      { kind: "write", lines: 2 },
+    ] },
+  ],
+  goodCopy: {
+    title: "My Narrative — Good Copy",
+    how: "Write out your revised and edited paragraph neatly, in pen or dark pencil. Give it a title. Start with your hook and end on your why-it-matters line. Read the rubric on the back, tick the boxes below, then hand this in with your Lesson 11 draft and your worksheet behind it. It must be handed in before you leave.",
+    lines: 11,
+    check: [
+      "My paragraph stays inside one small moment.",
+      "It opens with a hook and ends on why the moment mattered.",
+      "I show the feeling instead of naming it.",
+      "My details let the reader picture it.",
+      "Every sentence is complete, with capitals and end punctuation.",
+      "My name, block and date are at the top.",
+    ],
+    rubric: NARRATIVE_RUBRIC,
+  },
+};
+
+module.exports = { WORKSHEETS, NARRATIVE_RUBRIC };

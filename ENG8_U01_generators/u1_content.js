@@ -421,7 +421,7 @@ const LESSONS = [
 // sections; on the unit test a classmate marks A/B/C and Section D goes to Mr. Reid.
 LESSONS.push({
   n: 15,
-  label: 12, fileTag: "PracticeTest",   // taught as Lesson 12 (Oct 16 2026 order)
+  label: 13, fileTag: "PracticeTest",   // taught as Lesson 13 (Oct 16 2026 order)
   title: "Practice Test & Peer Marking",
   objective: "Students write the Unit 1 practice test, then mark a classmate's test against the answer key and the Section D rubric, so each of them leaves knowing exactly what to review.",
   standards: "Comprehend & Connect: respond to text, showing comprehension and inference. Create & Communicate: assess their own and others' work against criteria. Content: narrative terms, subject/predicate, fragments, showing not telling.",
@@ -430,7 +430,7 @@ LESSONS.push({
     "ENG8_U01_PracticeTest_v2 — one per student (7 pages, duplex; the rubric prints on the back)",
     "ENG8_U01_PracticeTest_AnswerKey_v2 — teacher copy",
     "A second pen in a different colour for marking — students must not mark in the pen they wrote with",
-    "Deck 12 (this deck) — the answers are revealed from it, one at a time",
+    "Deck 13 (this deck) — the answers are revealed from it, one at a time",
   ],
   sequence: [
     "Set up (5 min): hand the practice test out face down and name the deal — this one is not graded, it exists to show you what to review before the test that is graded. Marking pens stay in the bag until the writing is done.",
@@ -451,7 +451,7 @@ LESSONS.push({
 
 LESSONS.push({
   n: 16,
-  label: 13, fileTag: "UnitTest",       // taught as Lesson 13 (Oct 16 2026 order)
+  label: 14, fileTag: "UnitTest",       // taught as Lesson 14 (Oct 16 2026 order)
   title: "Unit 1 Test",
   objective: "Students show independently what Unit 1 taught, then mark Sections A, B and C of a classmate's test; Section D comes to Mr. Reid.",
   standards: "Comprehend & Connect: respond to text, showing comprehension and inference. Create & Communicate: write a personal narrative that shows rather than tells; assess work against criteria.",
@@ -460,10 +460,10 @@ LESSONS.push({
     "ENG8_U01_UnitTest_v2 — one per student (7 pages, duplex; the rubric prints on the back)",
     "ENG8_U01_UnitTest_AnswerKey_v2 — teacher copy",
     "A second pen in a different colour for marking",
-    "Deck 13 (this deck); Deck 12 if practice-test marking still has to be finished",
+    "Deck 14 (this deck); Deck 13 if practice-test marking still has to be finished",
   ],
   sequence: [
-    "Finish the practice-test marking if it ran over (10 min, only if needed): pick up in Deck 12 at the section you stopped at, then the practice tests go back to their owners. Skip this step entirely if Lesson 12 finished.",
+    "Finish the practice-test marking if it ran over (10 min, only if needed): pick up in Deck 13 at the section you stopped at, then the practice tests go back to their owners. Skip this step entirely if Lesson 13 finished.",
     "Set up (3 min): test out face down, marking pens away, phones away. Name the one difference from last class — Section D is not marked in here today.",
     "Write the unit test (45 min): silent, test conditions, all four sections. No coaching. Students who finish early reread Section D against the rubric on the back.",
     "Swap (4 min): marking pens out, tests redistributed so nobody marks a neighbour. The marker signs the panel.",
@@ -477,5 +477,46 @@ LESSONS.push({
   },
   homework: "None.",
 });
+
+
+// ---- L12 REBUILT Oct 16 2026: Revise & Edit, one 80-minute class (Sean) ----
+// Replaces the old L12 Revise; the old L13 Edit and L14 Showcase are not taught.
+// Runs after the merged 8-9 grammar lesson and before the practice test. The
+// Lesson 11 drafts were collected after the grammar lesson and come back today with
+// no comments. The good copy is written and handed in THIS class and Mr. Reid marks
+// it on the narrative rubric printed on the back of the Good Copy sheet.
+LESSONS[LESSONS.findIndex(l => l.n === 12)] = {
+  n: 12,
+  fileTag: "ReviseEdit",
+  short: "Revise & Edit",
+  title: "Revise, Edit and Write the Good Copy",
+  objective: "Students revise their Lesson 11 draft so it shows instead of tells, edit it for complete sentences and conventions, and write a good copy that is handed in for marks.",
+  objBanner: "Revise your Lesson 11 draft, edit it, and hand in a good copy.",
+  standards: "Create & Communicate: use the writing process (revising, editing, publishing); use language conventions with increasing accuracy. Content: showing not telling, sentence fragments.",
+  vocab: ["revise", "edit", "good copy"],
+  materials: [
+    "The Lesson 11 drafts — collected after the grammar lesson, handed back today with no comments",
+    "Worksheet 12 — Revise & Edit (Parts A–D + Check)",
+    "Good Copy sheet 12 — one per student, duplex: the narrative rubric prints on the back",
+    "Support and Stretch companion sheets",
+    "Deck 12 (this deck)",
+  ],
+  sequence: [
+    "Hand back the Lesson 11 drafts (5 min): no comments on them yet. Name the plan for the class: revise, then edit, then write the good copy, and the good copy comes in at the end of class.",
+    "Revising vs. editing (10 min): revising changes WHAT the writing shows (meaning); editing fixes HOW it is written (mechanics). Today is both, in that order. Worksheet Part A: sort five actions as R or E, then reveal one answer at a time.",
+    "Teacher model (5 min): take a telling line and revise it into showing, live, thinking aloud about the action or detail that carries the feeling.",
+    "Telling hunt (12 min), Worksheet Part B: start from the telling line students underlined in Lesson 11 Part C, find one more, and rewrite both into showing on the draft and on the sheet.",
+    "Partner read (8 min), Worksheet Part C: swap drafts, mark ONE place you could not picture, swap back and revise that spot.",
+    "Edit pass 1 and 2 (13 min), Worksheet Part D: fragments first, using the four kinds from the grammar lesson (missing subject, missing verb, a clause left alone, a phrase left alone); then capitals, end punctuation and spelling.",
+    "Write the good copy (22 min): on the Good Copy sheet, neatly, with a title — the revised and edited version, not a recopy of the draft. Students tick the boxes at the bottom against the rubric on the back.",
+    "Exit (5 min): underline the strongest showing line in the good copy; hand in the good copy with the Lesson 11 draft and the worksheet behind it.",
+  ],
+  assessment: "Summative — the good copy is collected at the end of class and marked by Mr. Reid on the narrative rubric (BC 4-point Proficiency Scale), printed on the back of the Good Copy sheet. Worksheet Parts A–D are formative.",
+  diff: {
+    support: "Support sheet: a list of telling words to hunt for, sentence starters for showing, the four fragment types with a fix for each, and an editing pass card — one job per read.",
+    extension: "Stretch sheet: revise for rhythm (a short punchy sentence beside a long one), then edit an error-seeded line and find the same slip in your own draft.",
+  },
+  homework: "None — the good copy is finished and handed in today.",
+};
 
 module.exports = { UNIT, TEACHER, STUDENT, LESSONS };

@@ -151,3 +151,28 @@ Agenda lines that already say "test next class" are dropped so it never prints t
 materials and homework now say practice test next class, unit test in two classes; the
 shape slide carries the countdown pill; next class is Lesson 12: Practice Test & Peer
 Marking; the agenda asks for a second pen in a different colour for marking.
+
+## Oct 16 2026 (later) — L12 rebuilt as one Revise & Edit class; tests become Lessons 13 and 14
+
+**Order.** `ORDER` is now `… 10, 11, 8, 9, 12, 15, 16`. L12 is taught under its own number;
+data L15 and L16 now carry `label` 13 and 14. The old L13 Edit and L14 Showcase are not taught.
+
+**L12 Revise & Edit (Sean, Oct 16 2026).** One 80-minute class. The Lesson 11 drafts come back
+with no comments; Part A sorts revising vs editing, Part B starts from the telling line students
+underlined in Lesson 11 Part C, Part C is a partner read, Part D is two editing passes (fragments,
+then conventions). The good copy is written in class, must be finished and handed in, and Mr. Reid
+marks it. Files carry `fileTag: "ReviseEdit"`.
+
+**Good Copy sheet + narrative rubric.** `W.goodCopy` in u1_worksheets.js makes a separate
+`…_GoodCopy_v1.docx`: one page to write on (11 lines; 12 pushed the Check Part to page 2 in
+LibreOffice) and, after a page break, the rubric — so duplex lands it on the back.
+`NARRATIVE_RUBRIC` (exported) is the single source: five criteria, all four levels, second person.
+The Check Part on the Good Copy sheet restates the rubric criteria.
+
+**Worksheet builder.** A section may set `flow: true`: the Part can cross a page, but each
+question keeps its own writing lines and the heading stays with its instruction and example
+(Oct 16 no-long-page-breaks order). The Check Part heading now stays with its tick boxes.
+Sheets without `flow` behave exactly as before.
+
+**Merged L08–09 deck (hand-built).** Patched to v13: next class is Lesson 12 Revise & Edit,
+countdown "Unit test in three classes", plan note and agenda updated. v12 is superseded.

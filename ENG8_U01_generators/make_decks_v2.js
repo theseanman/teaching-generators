@@ -659,10 +659,11 @@ function noticeSlide(p, L, accent) {
 }
 // NEXT CLASS — follows the TEACHING ORDER, not lesson number + 1.
 // ORDER is the live teaching sequence (Sean's Oct 2 2026 reorder).
-// Oct 16 2026: after the merged 8-9 grammar lesson come the practice test (data
-// L15, taught as Lesson 12) and the unit test (data L16, taught as Lesson 13);
-// then the class moves to Unit 2. L12-L14 (revise / edit / showcase) are not taught.
-const ORDER = [1, 2, 3, 4, 5, 6, 7, 10, 11, 8, 9, 15, 16];
+// Oct 16 2026: after the merged 8-9 grammar lesson come L12 Revise & Edit (rebuilt as
+// one class, good copy handed in), the practice test (data L15, taught as Lesson 13)
+// and the unit test (data L16, taught as Lesson 14); then Unit 2. The old L13 Edit and
+// L14 Showcase are not taught.
+const ORDER = [1, 2, 3, 4, 5, 6, 7, 10, 11, 8, 9, 12, 15, 16];
 // UNIT TEST COUNTDOWN (standing order Oct 16 2026): from four classes out, the
 // shape of the day, the agenda and the next-class slide carry the warning.
 const TEST_LESSON = 16;

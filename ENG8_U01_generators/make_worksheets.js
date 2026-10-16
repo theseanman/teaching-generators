@@ -17,7 +17,7 @@ const fs = require("fs");
 const path = require("path");
 const D = require("docx");
 const { Document, Packer, Paragraph, TextRun, BorderStyle, ShadingType, WidthType,
-        Table, TableRow, TableCell, AlignmentType, TabStopType, LeaderType } = D;
+        Table, TableRow, TableCell, AlignmentType, TabStopType, LeaderType, PageBreak } = D;
 const CONTENT_W = 10080; // true usable width (Letter 12240 - 1080 - 1080 margins)
 const FULL = CONTENT_W;
 const H = require("./docxhelp.js");
@@ -33,6 +33,7 @@ const box = (rows, widths) => new Table({ columnWidths: widths || [FULL], width:
 
 // ---- writing space: underscore-leader tab stops only ----
 let GLUE = false;              // true while emitting the blocks of one Part
+let FLOW = false;              // Part set flow:true — it may cross a page, but each question keeps its own lines (Oct 16 2026 no-long-page-breaks order)
 const keep = (isLast) => (GLUE && !isLast) ? { keepNext: true } : {};
 function ruledLines(n, o = {}) {
   const arr = [];
@@ -47,7 +48,7 @@ function ruledLines(n, o = {}) {
     spacing: { after: o.after ?? 360, before: i === 0 ? (o.before ?? 300) : 360, line: 340 },
     tabStops: [{ type: TabStopType.RIGHT, position: right, leader: LeaderType.UNDERSCORE }],
     indent: o.indent,
-    ...keep(o.last && i === n - 1),
+    ...((o.together && i < n - 1) ? { keepNext: true } : keep(o.last && i === n - 1)),
   }));
   return arr;
 }
@@ -95,7 +96,7 @@ function frames(list, type, o = {}) {
   const out = [];
   list.forEach((q, i) => {
     out.push(new Paragraph({ children: [H.run(q, { bold: true, color: H.C.navy, size: 21 })], spacing: { after: 280, before: 240 }, keepNext: true }));
-    out.push(...ruledLines(linesForType(type || "sentence"), { last: o.last && i === list.length - 1 }));
+    out.push(...ruledLines(linesForType(type || "sentence"), { last: o.last && i === list.length - 1, together: true }));
   });
   return out;
 }
@@ -188,8 +189,9 @@ function checkPart(items, accent) {
       spacing: { after: 110, line: 260 },
     })) : [new Paragraph({ children: [H.run("")] })],
   }));
-  return [H.h2("Check — before you hand this in", accent),
-          H.text("Tick each box only when it is true for your work.", { size: 21, italics: true }),
+  return [new Paragraph({ children: [H.run("Check — before you hand this in", { size: 26, bold: true, color: H.C.white })],
+            shading: { type: ShadingType.CLEAR, color: "auto", fill: accent }, spacing: { after: 120, before: 240, line: 300 }, keepNext: true }),
+          H.text("Tick each box only when it is true for your work.", { size: 21, italics: true, keepNext: true }),
           new Table({ columnWidths: [cw, FULL - cw], width: { size: FULL, type: WidthType.DXA }, borders: noB(),
             rows: [new TableRow({ cantSplit: true, children: cells })] })];
 }
@@ -198,6 +200,7 @@ function checkPart(items, accent) {
 function renderBlocks(blocks, tier = "core") {
   const out = [];
   let partAccent = H.C.blue, pendingExample = null, bankUsed = [];
+  FLOW = false;
   // index of the last renderable block in each Part, so its final paragraph is
   // NOT glued forward (otherwise the whole sheet becomes one unbreakable block)
   const lastOfPart = new Set();
@@ -210,7 +213,7 @@ function renderBlocks(blocks, tier = "core") {
 
   blocks.forEach((b, bi) => {
     const isLast = lastOfPart.has(bi);
-    GLUE = b.kind !== "section";
+    GLUE = b.kind !== "section" && !FLOW;
     const acc = b.accentStep ? H.accentFor(b.accentStep) : H.C.blue;
     switch (b.kind) {
       case "section":
@@ -220,7 +223,7 @@ function renderBlocks(blocks, tier = "core") {
           shading: { type: ShadingType.CLEAR, color: "auto", fill: acc },
           spacing: { after: 120, before: 240, line: 300 }, keepNext: true,
           border: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE } } }));
-        GLUE = true;
+        GLUE = !b.flow; FLOW = !!b.flow;
         pendingExample = b.example || null;       // rendered after the Part's instruction...
         bankUsed = b.exampleUses || [];
         if (pendingExample && !(blocks[bi + 1] && blocks[bi + 1].kind === "instr")) {
@@ -228,7 +231,7 @@ function renderBlocks(blocks, tier = "core") {
         }
         break;
       case "instr":
-        out.push(H.text(b.t, { size: 22, keepNext: GLUE }));
+        out.push(H.text(b.t, { size: 22, keepNext: GLUE || FLOW }));
         if (pendingExample) { out.push(exampleLine(pendingExample, partAccent)); pendingExample = null; }
         break;
       case "note": out.push(new Paragraph({ children: [H.run("✎  " + b.t, { italics: true, color: H.C.midGrey, size: 21 })], spacing: { before: 120, after: 80 }, ...keep(false) })); break;
@@ -335,12 +338,63 @@ function build(W, tier = "core") {
   return new Document({ numbering: H.NUMBERING, sections: [{ properties: sectionProps, children: c }] });
 }
 
+// ---- GOOD COPY sheet (Oct 16 2026) — one page to write on, the rubric on the back ----
+// W.goodCopy = { title, how, lines, check[], rubric{ title, intro, criteria[{name, levels{}}] } }.
+// The rubric is authored once in the data, so the printed page and the mark agree.
+// All four levels print for every criterion, as full-width criterion blocks.
+const LEVELS = ["Emerging", "Developing", "Proficient", "Extending"];
+function rubricPage(R) {
+  const out = [new Paragraph({ children: [new PageBreak()] })];
+  out.push(new Paragraph({ children: [H.run(R.title, { bold: true, color: H.C.navy, size: 32 })], spacing: { after: 80 } }));
+  out.push(new Paragraph({ children: [H.run(R.intro, { italics: true, color: H.C.midGrey, size: 21 })], spacing: { after: 160, line: 288 } }));
+  const labelW = 1900, descW = FULL - labelW;
+  const b = { style: BorderStyle.SINGLE, size: 4, color: H.C.line };
+  R.criteria.forEach((crit, ci) => {
+    out.push(new Paragraph({ children: [H.run(`${ci + 1}.  ${crit.name}`, { bold: true, color: H.C.white, size: 22 })],
+      shading: { type: ShadingType.CLEAR, color: "auto", fill: H.C.navy }, spacing: { before: 140, after: 0, line: 276 }, keepNext: true }));
+    const rows = LEVELS.map((lv, i) => new TableRow({ cantSplit: true, children: [
+      new TableCell({ width: { size: labelW, type: WidthType.DXA },
+        shading: { type: ShadingType.CLEAR, color: "auto", fill: i % 2 ? "E8F0FA" : "F4F6F9" },
+        margins: { top: 70, bottom: 70, left: 140, right: 140 },
+        children: [new Paragraph({ children: [H.run(lv, { bold: true, color: H.C.navy, size: 20 })], spacing: { line: 264 } })] }),
+      new TableCell({ width: { size: descW, type: WidthType.DXA },
+        shading: { type: ShadingType.CLEAR, color: "auto", fill: i % 2 ? "FBFCFE" : "FFFFFF" },
+        margins: { top: 70, bottom: 70, left: 160, right: 160 },
+        children: [new Paragraph({ children: [H.run(crit.levels[lv], { size: 20 })], spacing: { line: 264 } })] }),
+    ] }));
+    out.push(new Table({ columnWidths: [labelW, descW], width: { size: FULL, type: WidthType.DXA },
+      borders: { top: b, bottom: b, left: b, right: b, insideHorizontal: b, insideVertical: b }, rows }));
+  });
+  return out;
+}
+function buildGoodCopy(W) {
+  const L = LESSONS.find(x => x.n === W.n), G = W.goodCopy;
+  const c = [];
+  c.push(new Paragraph({ children: [H.run(`${UNIT.code} · Unit ${UNIT.number} · Lesson ${W.n} — Good Copy`, { size: 18, color: H.C.midGrey })], spacing: { after: 20 } }));
+  c.push(H.h1(G.title));
+  c.push(nameHeader());
+  c.push(H.spacer(120));
+  c.push(panel("How to write it", [new Paragraph({ children: [H.run(G.how, { size: 21 })], spacing: { line: 276 } })], H.C.blue, "EEF3F9"));
+  c.push(new Paragraph({ children: [H.run("Title: ", { bold: true, color: H.C.navy, size: 22 }), new TextRun({ text: "\t", size: 22, font: "Calibri", color: "9AA7B4" })],
+    tabStops: [{ type: TabStopType.RIGHT, position: FULL, leader: LeaderType.UNDERSCORE }], spacing: { before: 280, after: 0, line: 340 } }));
+  c.push(...ruledLines(G.lines, { before: 360 }));
+  c.push(H.spacer(120));
+  c.push(...checkPart(G.check, H.C.blue));
+  c.push(...rubricPage(G.rubric));
+  return new Document({ numbering: H.NUMBERING, sections: [{ properties: sectionProps, children: c }] });
+}
+
 (async () => {
   const only = process.argv[3] ? process.argv[3].split(",").map(Number) : null;
   const missing = [];
   for (const W of WORKSHEETS) {
     if (only && !only.includes(W.n)) continue;
-    const tag = `${UNIT.code}_U0${UNIT.number}_L${String(W.n).padStart(2, "0")}_Worksheet`;
+    const stem = `${UNIT.code}_U0${UNIT.number}_L${String(W.n).padStart(2, "0")}${W.fileTag ? "_" + W.fileTag : ""}`;
+    const tag = `${stem}_Worksheet`;
+    if (W.goodCopy) {
+      fs.writeFileSync(path.join(OUT, `${stem}_GoodCopy_v1.docx`), await Packer.toBuffer(buildGoodCopy(W)));
+      console.log("wrote", `${stem}_GoodCopy_v1.docx`);
+    }
     // core
     fs.writeFileSync(path.join(OUT, `${tag}_v1.docx`), await Packer.toBuffer(build(W, "core")));
     console.log("wrote", `${tag}_v1.docx`);
