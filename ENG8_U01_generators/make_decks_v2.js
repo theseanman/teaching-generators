@@ -187,10 +187,13 @@ function banner(s, L, accent) {
     T(s, c, x, 0.21, 0.6, 0.3, { ref: true, align: "center", valign: "middle", fontFace: BF, fontSize: 11, bold: true, color: on ? WHITE : "5E7285" });
   });
 }
+// Display number: a lesson can teach under a different number than its data key
+// (L.label), e.g. data L15 is taught as Lesson 12 after the Oct 2026 reorder.
+const LBL = L => (L && L.label != null ? L.label : L.n);
 function footer(s, L) {
   T(s, [{ text: `${UNIT.code} · Unit ${UNIT.number}`, options: { color: GREY } },
         { text: "   |   ", options: { color: LINE } },
-        { text: `Lesson ${L.n}: ${L.short || L.title}`, options: { color: GREY } }],
+        { text: `Lesson ${LBL(L)}: ${L.short || L.title}`, options: { color: GREY } }],
     MX, Hh - 0.42, W - 2 * MX, 0.3, { ref: true, fontFace: BF, fontSize: 9, align: "left" });
 }
 // Kicker tag — a reference strip, exempt from the floor.
@@ -325,7 +328,7 @@ R.text = (p, sd, L, accent) => {
 // ---- TITLE / SECTION / EXIT (dark, no banner) ----
 function titleSlide(p, sd, L, accent) {
   const s = p.addSlide(); s.background = { color: NAVY };
-  T(s, `UNIT ${UNIT.number} · LESSON ${L.n}`, MX, 1.5, W - 2 * MX, 0.4,
+  T(s, `UNIT ${UNIT.number} · LESSON ${LBL(L)}`, MX, 1.5, W - 2 * MX, 0.4,
     { ref: true, fontFace: BF, fontSize: 15, bold: true, color: accent, charSpacing: 3 });
   T(s, sd.title, MX, 2.0, W - 2 * MX, 1.8, { fontFace: HF, fontSize: 44, bold: true, color: WHITE, valign: "top" });
   T(s, sd.sub || "", MX, 4.2, W - 2 * MX, 1.4, { fontFace: BF, fontSize: MIN, italic: true, color: ICE, valign: "top" });
@@ -382,7 +385,7 @@ function planSlide(p, L, accent, plan) {
         fill: { color: on ? accent : "20364A" }, line: { color: on ? accent : "33475B", width: 1 } });
       T(s, c, x, 0.06, 0.6, 0.3, { ref: true, align: "center", valign: "middle", fontFace: BF, fontSize: 11, bold: true, color: on ? WHITE : "5E7285" });
     });
-    T(s, `${UNIT.code} — Unit ${UNIT.number} — Lesson ${L.n}: ${L.title} — 80 minutes${part ? `  (${part})` : ""}`,
+    T(s, `${UNIT.code} — Unit ${UNIT.number} — Lesson ${LBL(L)}: ${L.title} — 80 minutes${part ? `  (${part})` : ""}`,
       0.5, 0.5, W - 1, 0.36, { ref: true, fontFace: HF, fontSize: 15, bold: true, color: NAVY, valign: "middle" });
   }
   const s1 = p.addSlide(); header(s1, "1 of 2");
@@ -452,6 +455,12 @@ function shapeSlide(p, L, accent, plan) {
     s.addShape("rect", { x: 0, y: 0, w: W, h: 0.42, fill: { color: accent }, line: { color: accent } });
     T(s, "SHAPE OF THE DAY", 0.3, 0, W - 0.6, 0.42, { ref: true, fontFace: BF, fontSize: 12, bold: true, color: WHITE, charSpacing: 3, valign: "middle" });
     T(s, i === 0 ? "Today" : "Today (cont.)", MX, 0.6, W - 2 * MX, 0.7, { fontFace: HF, fontSize: HEAD, bold: true, color: NAVY });
+    const cdS = i === 0 ? countdownFor(L.n) : null;
+    if (cdS) {
+      const pw = 5.3, px = W - MX - pw;
+      s.addShape("roundRect", { x: px, y: 0.6, w: pw, h: 0.7, rectRadius: 0.1, fill: { color: NAVY }, line: { color: accent, width: 2 } });
+      T(s, cdS, px, 0.6, pw, 0.7, { fontFace: BF, fontSize: MIN, bold: true, color: WHITE, align: "center", valign: "middle" });
+    }
     const top = 1.55, step = Math.min(0.78, ((Hh - top - 0.4)) / grp.length);
     grp.forEach((lab, j) => {
       const y = top + j * step;
@@ -650,14 +659,29 @@ function noticeSlide(p, L, accent) {
 }
 // NEXT CLASS — follows the TEACHING ORDER, not lesson number + 1.
 // ORDER is the live teaching sequence (Sean's Oct 2 2026 reorder).
-const ORDER = [1, 2, 3, 4, 5, 6, 7, 10, 11, 8, 9, 12, 13, 14, 15, 16];
+// Oct 16 2026: after the merged 8-9 grammar lesson come the practice test (data
+// L15, taught as Lesson 12) and the unit test (data L16, taught as Lesson 13);
+// then the class moves to Unit 2. L12-L14 (revise / edit / showcase) are not taught.
+const ORDER = [1, 2, 3, 4, 5, 6, 7, 10, 11, 8, 9, 15, 16];
+// UNIT TEST COUNTDOWN (standing order Oct 16 2026): from four classes out, the
+// shape of the day, the agenda and the next-class slide carry the warning.
+const TEST_LESSON = 16;
+const CD_WORDS = { 2: "two", 3: "three", 4: "four" };
+function countdownFor(n) {
+  const a = ORDER.indexOf(n), b = ORDER.indexOf(TEST_LESSON);
+  if (a < 0 || b < 0) return null;
+  const d = b - a;
+  if (d < 1 || d > 4) return null;
+  return d === 1 ? "Unit test next class" : `Unit test in ${CD_WORDS[d]} classes`;
+}
 function nextClassSlide(p, L, accent) {
   const i = ORDER.indexOf(L.n);
   const nx = i >= 0 && i + 1 < ORDER.length ? ORDER[i + 1] : null;
   if (nx == null) return;
   const items = agendaItems(nx); if (!items.length) return;
   const nl = LESSONS.find(x => x.n === nx);
-  darkList(p, L, accent, "NEXT CLASS", `Lesson ${nx}: ${nl ? nl.title : ""}`, items);
+  const cdn = nx !== TEST_LESSON ? countdownFor(L.n) : null; if (cdn) items.unshift(cdn);
+  darkList(p, L, accent, "NEXT CLASS", `Lesson ${nl ? LBL(nl) : nx}: ${nl ? nl.title : ""}`, items);
 }
 function agendaSlide(p, L, accent) {
   const s = p.addSlide(); s.background = { color: PALE };
@@ -666,7 +690,9 @@ function agendaSlide(p, L, accent) {
   T(s, "Take out your agenda", MX, 0.65, W - 2 * MX, 0.8, { fontFace: HF, fontSize: HEAD, bold: true, color: NAVY, valign: "top" });
   const items = [];
   const plan = DECK_PLAN[L.n] || {};
-  if (plan.agendaExtra) items.push(...plan.agendaExtra);
+  const cd = countdownFor(L.n);
+  if (cd) items.push(cd + ".");
+  if (plan.agendaExtra) items.push(...plan.agendaExtra.filter(t => !(cd && /test is next class|test next class/i.test(t))));
   if (L.homework && !/^none/i.test(L.homework)) items.push("Homework: " + L.homework);
   if (plan.takehome) items.push("A notice goes home today — get it signed if needed.");
   items.push("Write down anything due, and any upcoming assignment or test.");
@@ -721,7 +747,7 @@ function build(L) {
   nextClassSlide(p, L, accent);
   agendaSlide(p, L, accent);
 
-  const name = `${UNIT.code}_U0${UNIT.number}_L${String(L.n).padStart(2, "0")}_Deck_${VERSION}.pptx`;
+  const name = `${UNIT.code}_U0${UNIT.number}_L${String(LBL(L)).padStart(2, "0")}${L.fileTag ? "_" + L.fileTag : ""}_Deck_${VERSION}.pptx`;
   return p.writeFile({ fileName: path.join(OUT, name) }).then(() => console.log("wrote", name));
 }
 

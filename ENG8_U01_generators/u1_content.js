@@ -421,6 +421,7 @@ const LESSONS = [
 // sections; on the unit test a classmate marks A/B/C and Section D goes to Mr. Reid.
 LESSONS.push({
   n: 15,
+  label: 12, fileTag: "PracticeTest",   // taught as Lesson 12 (Oct 16 2026 order)
   title: "Practice Test & Peer Marking",
   objective: "Students write the Unit 1 practice test, then mark a classmate's test against the answer key and the Section D rubric, so each of them leaves knowing exactly what to review.",
   standards: "Comprehend & Connect: respond to text, showing comprehension and inference. Create & Communicate: assess their own and others' work against criteria. Content: narrative terms, subject/predicate, fragments, showing not telling.",
@@ -429,7 +430,7 @@ LESSONS.push({
     "ENG8_U01_PracticeTest_v2 — one per student (7 pages, duplex; the rubric prints on the back)",
     "ENG8_U01_PracticeTest_AnswerKey_v2 — teacher copy",
     "A second pen in a different colour for marking — students must not mark in the pen they wrote with",
-    "Deck 15 (this deck) — the answers are revealed from it, one at a time",
+    "Deck 12 (this deck) — the answers are revealed from it, one at a time",
   ],
   sequence: [
     "Set up (5 min): hand the practice test out face down and name the deal — this one is not graded, it exists to show you what to review before the test that is graded. Marking pens stay in the bag until the writing is done.",
@@ -445,11 +446,12 @@ LESSONS.push({
     support: "Marking partner reads the answer aloud from the screen before the pair decides a mark; Section D marked on the first two criteria only.",
     extension: "After marking, write the one question you would add to this test and the answer you would accept for it.",
   },
-  homework: "Review the two sections you scored lowest on. The Unit 1 test is next class.",
+  homework: "Review the two sections you scored lowest on.",
 });
 
 LESSONS.push({
   n: 16,
+  label: 13, fileTag: "UnitTest",       // taught as Lesson 13 (Oct 16 2026 order)
   title: "Unit 1 Test",
   objective: "Students show independently what Unit 1 taught, then mark Sections A, B and C of a classmate's test; Section D comes to Mr. Reid.",
   standards: "Comprehend & Connect: respond to text, showing comprehension and inference. Create & Communicate: write a personal narrative that shows rather than tells; assess work against criteria.",
@@ -458,10 +460,10 @@ LESSONS.push({
     "ENG8_U01_UnitTest_v2 — one per student (7 pages, duplex; the rubric prints on the back)",
     "ENG8_U01_UnitTest_AnswerKey_v2 — teacher copy",
     "A second pen in a different colour for marking",
-    "Deck 16 (this deck); Deck 15 if practice-test marking still has to be finished",
+    "Deck 13 (this deck); Deck 12 if practice-test marking still has to be finished",
   ],
   sequence: [
-    "Finish the practice-test marking if it ran over (10 min, only if needed): pick up in Deck 15 at the section you stopped at, then the practice tests go back to their owners. Skip this step entirely if Lesson 15 finished.",
+    "Finish the practice-test marking if it ran over (10 min, only if needed): pick up in Deck 12 at the section you stopped at, then the practice tests go back to their owners. Skip this step entirely if Lesson 12 finished.",
     "Set up (3 min): test out face down, marking pens away, phones away. Name the one difference from last class — Section D is not marked in here today.",
     "Write the unit test (45 min): silent, test conditions, all four sections. No coaching. Students who finish early reread Section D against the rubric on the back.",
     "Swap (4 min): marking pens out, tests redistributed so nobody marks a neighbour. The marker signs the panel.",

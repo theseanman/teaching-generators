@@ -1025,7 +1025,7 @@ DECKS.push({ n: 16, slides: [
   { kind: "plain", kicker: "If we ran out of time", title: "Finishing last class's marking",
     bullets: [
       "Practice tests come back out, marking pens out.",
-      "We pick up in the Lesson 15 deck at the section we stopped at.",
+      "We pick up in the Lesson 12 deck at the section we stopped at.",
       "Total the panel, sign it, hand it back — then the unit test starts.",
     ] },
   { kind: "plain", kicker: "One difference today", title: "Section D is not marked in here",
@@ -1078,7 +1078,7 @@ DECK_PLAN[16] = {
     B: revealFor(UNIT_TEST, "B", "Section B — what earns the marks", "Claim plus evidence. One without the other is half."),
     C: revealFor(UNIT_TEST, "C", "Section C — what earns the marks", "Right or wrong. Be strict — this one counts."),
   },
-  agendaExtra: ["Unit 1 is finished. Your test comes back with the writing marked."],
+  agendaExtra: ["Unit 1 is finished. Your test comes back with the writing marked.", "Next class we start Unit 2."],
 };
 
 module.exports = { DECKS, DECK_PLAN, DECK_KEYMAP };

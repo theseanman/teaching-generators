@@ -129,3 +129,25 @@ way, but L09's next-class slide still points at L12.
 Separately: `make_worksheets.js` reports 45 standing-order gaps across the U1
 worksheets (no worked `(example)` on most Parts, several sheets with no Check Part).
 Pre-existing, in the taught sheets, not touched here.
+
+## Oct 16 2026 — practice test and unit test become Lessons 12 and 13; unit-test countdown
+
+**Order (Sean, Oct 16 2026).** After the merged Lessons 8–9 grammar lesson comes the
+practice test, then the unit test, then Unit 2. L12 Revise, L13 Edit and L14 Showcase
+are not taught. `ORDER` is now `… 10, 11, 8, 9, 15, 16`.
+
+**Display numbers.** Data L15 and L16 keep their keys but carry `label` (12, 13) and
+`fileTag` (PracticeTest, UnitTest). The plan slide, title slide, footer and next-class
+slide print the label, and the files are named `ENG8_U01_L12_PracticeTest_Deck_*` and
+`ENG8_U01_L13_UnitTest_Deck_*`. Lessons without a label are unchanged.
+
+**Unit-test countdown (standing order, Oct 16 2026, not retroactive).** `countdownFor()`
+counts classes to `TEST_LESSON` (16) along `ORDER`. From four classes out it puts the
+warning in a pill on the first shape-of-the-day slide, as the first agenda line, and as
+the first line of the next-class slide (skipped when the next class is the test itself).
+Agenda lines that already say "test next class" are dropped so it never prints twice.
+
+**Merged L08–09 deck (hand-built, not in this repo).** Patched to v12 by hand: plan notes,
+materials and homework now say practice test next class, unit test in two classes; the
+shape slide carries the countdown pill; next class is Lesson 12: Practice Test & Peer
+Marking; the agenda asks for a second pen in a different colour for marking.
