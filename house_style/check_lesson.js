@@ -9,7 +9,9 @@ need(L.plan && L.plan.steps && L.plan.steps.length, "plan: steps missing");
 (L.plan.steps || []).forEach((s, i) => need(s.length === 3 && s[2].length > 20, `plan step ${i + 1}: needs [minutes, title, full description]`));
 ["materials", "diff", "assess", "homework", "watch"].forEach(k => need(L.plan[k], `plan.${k} missing`));
 need(L.shape && L.shape.length, "shape of the day missing");
-const parts = L.worksheet.parts; need(parts.length, "worksheet has no Parts");
+// a test-marking deck (L.testDeck, Oct 16 2026) prints no worksheet: the test paper is the sheet
+const parts = L.testDeck ? [] : L.worksheet.parts; if (!L.testDeck) need(parts.length, "worksheet has no Parts");
+if (L.testDeck) need(L.sequence.some(s => s.type === "markq"), "test deck has no marking slides");
 parts.forEach((p, i) => {
   need(KINDS.includes(p.kind), `Part ${p.id}: unknown kind ${p.kind}`);
   need(p.how, `Part ${p.id}: 'how' (walkthrough text) missing`);

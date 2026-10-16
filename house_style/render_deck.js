@@ -13,7 +13,9 @@ const pptxgen = require("pptxgenjs");
 const TH = require("./theme"), C = TH.color, F = TH.font;
 const L = require(path.resolve(process.argv[2])), CO = require(path.resolve(__dirname, "courses", L.course + ".js"));
 const ODIR = process.argv[3], VER = process.argv[4] || "v1", WSD = path.join(ODIR, "ws") + "/", AS = path.join(__dirname, "assets") + "/";
-const PV = JSON.parse(fs.readFileSync(WSD + "previews.json")), SZ = JSON.parse(fs.readFileSync(WSD + "sizes.json"));
+// a test-marking deck (L.testDeck) prints no worksheet, so it has no page images
+const readJ = f => fs.existsSync(WSD + f) ? JSON.parse(fs.readFileSync(WSD + f)) : (L.testDeck ? {} : JSON.parse(fs.readFileSync(WSD + f)));
+const PV = readJ("previews.json"), SZ = readJ("sizes.json");
 const { NAVY, TEAL: ACC, BLUE, PALE, TINT, INK, GREY, WHITE, AMBER, AMBERL, LINE, TLINE, SOFT, SOFTT } = C;
 const M = L.meta, OBJ = L.banner.obj, STD = L.banner.std, COMP = CO.comp, LIT = L.banner.lit || COMP;
 const pres = new pptxgen(); pres.layout = "LAYOUT_16x9";
@@ -109,9 +111,11 @@ function banner(s) {
 }
 let TOP = 1.55, HEADLESS = false; const BOT = 5.25, TOP0 = 1.55;
 function frame(s, tag, heading, next) {
-  if (HEADLESS) { if (heading) tag = `${tag || ""} \u00B7 ${heading}`; heading = null; }   // heading dropped so a whole set fits one slide (Sean, Sep 22 2026); its words move into the tag
+  let small = null;   // test decks (Oct 16 2026): a dropped heading stays readable as a navy line under the banner, so the level always shows
+  if (HEADLESS) { if (heading) { if (L.testDeck) small = heading; else tag = `${tag || ""} \u00B7 ${heading}`; } heading = null; }   // heading dropped so a whole set fits one slide (Sean, Sep 22 2026); its words move into the tag
   banner(s);
-  T(s, `${CO.display || CO.code} \u00B7 Unit ${M.unit} \u00B7 Lesson ${M.lesson}`, 0.4, 0.74, 4, 0.2, { ref: true, fontSize: 9.5, color: GREY });
+  if (small) T(s, small, 0.4, 0.68, 6.4, 0.28, { ref: true, fontSize: 18, bold: true, color: NAVY });
+  else T(s, `${CO.display || CO.code} \u00B7 Unit ${M.unit} \u00B7 Lesson ${M.lesson}`, 0.4, 0.74, 4, 0.2, { ref: true, fontSize: 9.5, color: GREY });
   T(s, (tag || "").toUpperCase(), 4.5, 0.74, 5.1, 0.2, { ref: true, fontSize: 9.5, bold: true, color: ACC, align: "right", charSpacing: 1 });
   if (heading) { budget("heading", heading, 52); T(s, heading, 0.4, 0.95, 9.2, 0.55, { fontSize: HEAD, bold: true, color: NAVY }); }
   if (next) T(s, "Next \u2192 " + next, 5.6, 5.33, 4, 0.2, { ref: true, fontSize: 9.5, italic: true, color: ACC, align: "right" });
@@ -597,6 +601,88 @@ R.text2 = (sp, next, ca, cb, k, of) => { const s = pres.addSlide(); const A = L.
     T(s, `${tx.lvl} \u00B7 ${tx.title}`.toUpperCase(), x + 0.18, TOP + 0.08, 4.2, 0.24, { ref: true, fontSize: 11, bold: true, color: col, charSpacing: 1 });
     if (c) T(s, c, x + 0.18, TOP + 0.38, 4.2, BOT - TOP - 0.46, { fontSize: MIN }); }); };
 
+// ---------- PEER MARKING (Sean, Oct 16 2026): partners swap tests and mark them together ----------
+// markq: one group of a test section, every question on ONE slide with its mark (+1 / +2) at the right; then one answer
+// per slide, cumulative, the next question highlighted in place. Rows are sized to the ANSWERED state so nothing moves.
+// marktotal: the section's score box, its level band and the running Part A total. markpara: a paragraph on one slide
+// ([bracketed] text shown as a blue fix). Lesson data: lessons/<UNIT>_testdata.js, sequence built by marking.js.
+const BLANKRE = /___|\( \? \)/;
+const markStyle = it => BLANKRE.test(it.q) ? "fill" : !it.fix && String(it.a).length <= 12 ? "end" : "fix"; // rewrites read "question  →  answer" and wrap only if they must
+const markLines = (it, done) => { const st = markStyle(it), A = done ? it.a : "______";
+  const main = st === "fix" ? `${it.q}  →  ${A}` : st === "fill" ? it.q.replace(BLANKRE, A) : st === "end" ? `${it.q}   ${A}` : `${it.q}\n→ ${A}`;
+  return done && it.note ? main + "\n" + it.note : main; };
+const markRuns = (it, done) => { const st = markStyle(it), ans = { bold: true, color: BLUE }, gap = { color: "9DB3C7" };
+  const A = done ? { text: it.a, options: ans } : { text: "______", options: gap }; let r;
+  if (st === "fill") { const [p, q] = it.q.split(BLANKRE); r = [{ text: p }, A, { text: q || "" }]; }
+  else if (st === "fix") r = [{ text: it.q }, { text: "  →  ", options: { color: GREY } }, A];
+  else if (st === "end") r = [{ text: it.q + "   " }, A];
+  else r = [{ text: it.q, options: { breakLine: true } }, { text: "→ ", options: { color: GREY } }, A];
+  if (done && it.note) { r[r.length - 1] = { ...r[r.length - 1], options: { ...(r[r.length - 1].options || {}), breakLine: true } };
+    r.push({ text: it.note, options: { italic: true, color: GREY } }); }
+  return r; };
+function markLayout(sp) {
+  const cols = sp.cols || 1, colW = cols === 1 ? 9.2 : (9.2 - 0.15) / 2, tw = colW - (cols === 1 ? 0.8 + 0.82 : 0.6 + 0.66);
+  const per = Math.ceil(sp.items.length / cols);
+  for (let S = BASE; S >= LOWMIN; S--) for (const head of [true, false]) {
+    const top0 = head ? TOP0 : 0.95, ln = S / 72 * 1.2;
+    const rowH = sp.items.map(it => Math.max(...[true, false].map(dn => markLines(it, dn).split("\n").reduce((a, l) => a + mLines(l, tw, S, true), 0))) * ln + 0.13); // tallest of answered / highlighted-unanswered
+    const colH = [...Array(cols).keys()].map(c => rowH.slice(c * per, c * per + per).reduce((a, b) => a + b, 0) + 0.06 * (per - 1));
+    if (top0 + Math.max(...colH) <= BOT) return { S, head, top0, cols, colW, tw, per, rowH, colH }; }
+  return null; }
+R.markq = (sp, next, upto, hi) => { const s = pres.addSlide(), lay = sp.lay;
+  const tag = `Marking · ${sp.lvl}` + (upto < 0 ? " · the questions" : ` · answer ${upto + 1} of ${sp.items.length}`);
+  const hd = `${sp.lvl} · Section ${sp.sec} — ${sp.title}`, hl = HEADLESS; HEADLESS = !!lay && !lay.head;
+  try { frame(s, tag, hd, next); } finally { HEADLESS = hl; }
+  if (!lay) { SMALL.push(`marking ${sp.lvl} Section ${sp.sec}: does not fit one slide at ${LOWMIN} pt`); return; }
+  const { S, cols, colW, tw, per, rowH, colH, top0 } = lay, fl = { floor: S }, tx = cols === 1 ? 0.8 : 0.6, cw = cols === 1 ? 0.66 : 0.54;
+  for (let c = 0; c < cols; c++) { const idx = [...Array(per).keys()].map(k => c * per + k).filter(k => k < sp.items.length);
+    const spare = BOT - top0 - colH[c], gap = 0.06 + Math.min(0.14, spare / Math.max(1, idx.length));
+    const used = idx.reduce((a, k) => a + rowH[k], 0) + gap * (idx.length - 1); let y = top0 + Math.max(0, (BOT - top0 - used) / 2);
+    const x = 0.4 + c * (colW + 0.15);
+    idx.forEach(k => { const it = sp.items[k], h = rowH[k], done = k <= upto, nx = k === hi, d = Math.min(0.46, h - 0.1);
+      card(s, x, y, colW, h, done ? TINT : nx ? AMBER : PALE, done ? TLINE : nx ? AMBERL : LINE);
+      numDot(s, sp.from + k + 1, x + (cols === 1 ? 0.14 : 0.08), y + (h - d) / 2, d, done ? BLUE : nx ? "C98A10" : ACC);
+      T(s, markRuns(it, done), x + tx, y + 0.06, tw, h - 0.1, { ...fl, fontSize: S, bold: nx && !done });
+      const ch = Math.min(0.46, h - 0.12), cx = x + colW - cw - 0.08, cy = y + (h - ch) / 2;
+      s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: cx, y: cy, w: cw, h: ch, rectRadius: 0.06, fill: { color: done ? BLUE : WHITE }, line: { color: done ? BLUE : "9DB3C7", width: 1 } });
+      T(s, `+${it.m || 1}`, cx, cy, cw, ch, { ref: true, fontSize: 18, bold: true, color: done ? WHITE : "7F97AD", align: "center", valign: "middle" });
+      y += h + gap; }); } };
+const MP = { pad: 0.3 };
+const paraRuns = t => t.split(/(\[[^\]]+\])/).filter(Boolean).map(x => x[0] === "[" ? { text: x.slice(1, -1), options: { bold: true, color: BLUE, underline: { style: "sng" } } } : { text: x });
+function paraLayout(sp) { const plain = sp.text.replace(/[\[\]]/g, "");
+  for (let S = BASE; S >= LOWMIN; S--) for (const head of [true, false]) { const top0 = head ? TOP0 : 0.95, ln = S / 72 * 1.2;
+    const nh = sp.note ? mLines(sp.note, 8.7, S, true) * ln + 0.24 : 0, th = mLines(plain, 8.6, S, !!sp.fixed) * ln + MP.pad;
+    if (top0 + (nh ? nh + 0.12 : 0) + th <= BOT) return { S, head, top0, nh, th }; }
+  return null; }
+R.markpara = (sp, next) => { const s = pres.addSlide(), lay = paraLayout(sp);
+  frame(s, sp.tag, lay && lay.head ? sp.head : null, next);
+  if (!lay) { SMALL.push(`paragraph "${sp.head}": does not fit one slide at ${LOWMIN} pt`); return; }
+  const { S, top0, nh } = lay, fl = { floor: S }; let y = top0;
+  if (nh) { card(s, 0.4, y, 9.2, nh, AMBER, AMBERL); T(s, sp.note, 0.65, y + 0.1, 8.7, nh - 0.16, { ...fl, fontSize: S, bold: true, color: NAVY }); y += nh + 0.12; }
+  card(s, 0.4, y, 9.2, BOT - y, sp.fixed ? TINT : "FFFFFF", sp.fixed ? TLINE : LINE);
+  T(s, paraRuns(sp.text), 0.7, y + 0.14, 8.6, BOT - y - 0.2, { ...fl, fontSize: S, lineSpacingMultiple: 1.0 }); };
+R.marktotal = (sp, next) => { const s = pres.addSlide();
+  frame(s, `Marking · ${sp.lvl} · add it up`, `${sp.lvl} · Section ${sp.sec}: add it up`, next);
+  const bandTop = TOP, rowH = 0.54, gap = 0.06, bands = sp.band ? sp.band.filter(b => b[1] !== "—") : null;
+  const bh = bands ? 0.3 + bands.length * (rowH + gap) - gap : 1.4, botY = bandTop + bh + 0.16;
+  // score box
+  card(s, 0.4, bandTop, 3.0, bh, PALE, LINE);
+  T(s, `Section ${sp.sec}`, 0.6, bandTop + 0.15, 2.6, 0.5, { fontSize: 28, bold: true, color: NAVY });
+  T(s, `____ / ${sp.outOf}`, 0.6, bandTop + 0.7, 2.7, 0.75, { fontSize: 40, bold: true, color: BLUE });
+  if (sp.combo) T(s, `C + D  ____ / ${sp.combo}`, 0.6, bandTop + 1.5, 2.7, 0.55, { fontSize: 28, bold: true, color: ACC });
+  // level band
+  if (bands) { T(s, (sp.bandLabel || "LEVEL — write it beside the score").toUpperCase(), 3.6, bandTop, 6, 0.24, { ref: true, fontSize: 11, bold: true, color: ACC, charSpacing: 2 });
+    bands.forEach((b, i) => { const y = bandTop + 0.3 + i * (rowH + gap); card(s, 3.6, y, 6.0, rowH, i % 2 ? TINT : PALE, i % 2 ? TLINE : LINE);
+      T(s, b[0], 3.8, y, 3.9, rowH, { fontSize: 28, bold: true, color: NAVY, valign: "middle" });
+      T(s, b[1], 7.6, y, 1.85, rowH, { fontSize: 28, bold: true, color: BLUE, valign: "middle", align: "right" }); }); }
+  else { card(s, 3.6, bandTop, 6.0, bh, AMBER, AMBERL);
+    T(s, sp.waitNote || "The level comes after the next section.", 3.85, bandTop + 0.1, 5.5, bh - 0.2, { fontSize: 28, bold: true, color: NAVY, valign: "middle" }); }
+  // running total, or the instruction on the first section
+  const h = BOT - botY; card(s, 0.4, botY, 9.2, h, TINT, TLINE);
+  const txt = sp.runTo ? [{ text: `Part A so far (A–${sp.sec}):   `, options: { bold: true, color: NAVY } }, { text: `____ / ${sp.runTo}`, options: { bold: true, color: BLUE } }]
+    : [{ text: "Count the ticks. Write the score and the level in the box.", options: { bold: true, color: NAVY } }];
+  T(s, txt, 0.65, botY, 8.7, h, { fontSize: 28, valign: "middle" }); };
+
 const pageList = () => PV.sheets ? PV.sheets.flatMap(sh => sh.pages.map((f, i) => ({ file: f, n: i + 1, of: sh.pages.length, lvl: sh.lvl })))
   : PV.pages.map((f, i) => ({ file: f, n: i + 1, of: PV.pages.length }));
 // ---------- expand the lesson sequence into slides ----------
@@ -710,6 +796,11 @@ function expand(sp) {
       push(`Part ${sp.part} answers`, n => withSize(Sr, () => R.reveal({ ...sp, slice: sl, from, hi: 0 }, n, -1)), null);
       sl.forEach((_, i) => push(`Part ${sp.part} answers`, n => withSize(Sr, () => R.reveal({ ...sp, slice: sl, from, hi: i + 1 < sl.length ? i + 1 : -1 }, n, i)),
         i < sl.length - 1 || !last ? null : undefined)); }); }
+  if (sp.type === "markq") { const g = { ...sp, lay: markLayout(sp) }, n = sp.items.length, lab = `${sp.lvl} Section ${sp.sec} answers`;
+    if (g.lay && (g.lay.S < BASE || !g.lay.head)) ONESIZES.push(`marking ${sp.lvl} Section ${sp.sec} ${sp.title}: ${g.lay.S}${g.lay.head ? "" : " (heading dropped)"}`);
+    push(lab, nx => R.markq(g, nx, -1, 0), null);
+    sp.items.forEach((_, i) => push(lab, nx => R.markq(g, nx, i, i + 1 < n ? i + 1 : -1), i < n - 1 ? null : undefined)); return; }
+  if (sp.type === "markpara" || sp.type === "marktotal") return push(sp.label, n => R[sp.type](sp, n));
   if (sp.type === "match") { const bank = sp.bank || sp.words.map(w => w[0]), m = { ...sp, bank };
     // question slide (first definition highlighted), then one reveal per word; only the last carries the Next cue
     push("Match the word", n => R.match(m, n), null);
