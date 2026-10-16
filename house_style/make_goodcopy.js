@@ -23,7 +23,7 @@ const base = THEME.fileName(COURSE, M, "GoodCopy", VER);
 Promise.all(LESSON.goodCopy.map(g => {
   const body = [
     P([R(`${g.lvl} · Unit ${M.unit} · ${M.unitTitle}`, { bold: true, color: BLUE, size: 24 })], { spacing: { after: 0 } }),
-    P([R("My Place: Good Copy", { bold: true, color: NAVY, size: 40 })], { spacing: { after: 100 } }),
+    P([R(g.title || "My Place: Good Copy", { bold: true, color: NAVY, size: 40 })], { spacing: { after: 100 } }),
     P([R("Name: ", { bold: true }), R("\t"), R("   Date: ", { bold: true }), R("\t")],
       { tabStops: [{ type: TabStopType.RIGHT, position: 6500, leader: LeaderType.UNDERSCORE }, { type: TabStopType.RIGHT, position: W, leader: LeaderType.UNDERSCORE }], spacing: { before: 80, after: 200 } }),
     box([P([R("How to write it:  ", { bold: true, color: NAVY, size: 24 }), R(g.steps, { size: 24 })])]),
@@ -41,5 +41,5 @@ Promise.all(LESSON.goodCopy.map(g => {
     sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 900, bottom: 700, left: 1080, right: 1080, header: 450, footer: 400 } } },
       headers: { default: new Header({ children: [P([R(`${g.lvl} · Unit ${M.unit} · Lesson ${M.lesson} Good Copy  ·  Room ${COURSE.room}`, { size: 18, color: GREY })], { alignment: AlignmentType.RIGHT })] }) },
       children: body }] });
-  return Packer.toBuffer(doc).then(b => { const f = `${out}/${base}_${g.suffix}.docx`; fs.writeFileSync(f, b); console.log("good copy", path.basename(f)); });
+  return Packer.toBuffer(doc).then(b => { const f = `${out}/${base}${g.suffix ? "_" + g.suffix : ""}.docx`; fs.writeFileSync(f, b); console.log("good copy", path.basename(f)); });
 }));

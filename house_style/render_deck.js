@@ -182,7 +182,7 @@ R.plan = (sp, next, part, steps, first, total) => { const s = pres.addSlide(); s
     T(s, [{ text: stp[1] + " \u2014 ", options: { bold: true, color: NAVY } }, { text: stp[2] }], 1.35, y + 0.03, 8.25, rowH - 0.1, { ref: true, fontSize: 8.5, valign: "middle" });
     y += rowH; });
   if (part === total) { y += 0.08;
-    const boxes = [["Differentiation", P.diff], ["Assessment (formative)", P.assess], ["Homework", P.homework], ["Watch for", P.watch]];
+    const boxes = [["Differentiation", P.diff], [P.assessLabel || "Assessment (formative)", P.assess], ["Homework", P.homework], ["Watch for", P.watch]];
     const bw = 4.62; boxes.forEach((b, i) => { const x = 0.3 + (i % 2) * (bw + 0.16), yy = y + Math.floor(i / 2) * 0.86; budget("plan box " + b[0], b[1], 330);
       card(s, x, yy, bw, 0.8, i === 3 ? AMBER : PALE, i === 3 ? AMBERL : LINE);
       T(s, [{ text: b[0] + "   ", options: { bold: true, color: NAVY, breakLine: true } }, { text: b[1] || "\u2014" }], x + 0.1, yy + 0.06, bw - 0.2, 0.7, { ref: true, fontSize: 8.5 }); }); } };
@@ -759,7 +759,7 @@ function expand(sp) {
   if (sp.type === "nextshape") { let at = 0; return pack(sp.items, needShape, BOT - TOP).forEach((sl, i, a) => { const from = at; at += sl.length;
       push(sp.label || "Next class", n => R.shape({ slice: sl, from, cont: i > 0, tag: "Next class", head: sp.head }, n), i < a.length - 1 ? null : undefined); }); }
   if (sp.type === "walk") { const p = part(sp.part), NEW = !!CO.levels, blank = NEW && p.kind === "cloze" ? "  ________" : "";
-    const its = !NEW ? wsItems(p) : p.kind === "check" ? p.checks.map((c, k) => ({ q: c, n: "\u2713" }))
+    const its = p.kind === "check" ? p.checks.map((c, k) => ({ q: c, n: "\u2713" })) : !NEW ? wsItems(p)
       : [...(p.example && sp.withExample ? [{ q: `(example)  ${p.example.text}${p.kind === "cloze" ? "  " + p.example.ans : (/\u2192\s*$/.test(p.example.text) ? "  " : "  \u2192  ") + p.example.ans}`, n: "Ex" }] : []),
          ...wsItems(p).map((it, k) => ({ ...it, q: it.q + blank, n: k + 1 }))];
     { const ni = p.instr ? needText(p.instr, 8.7, MIN) + 0.1 : 0, nh = needText(p.how, 8.7, MIN) + 0.6;
