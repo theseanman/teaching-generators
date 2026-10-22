@@ -171,12 +171,15 @@ R.plan = (sp, next, part, steps, first, total) => { const s = pres.addSlide(); s
   if (part === 1) {
     T(s, [{ text: "Objective  ", options: { bold: true, color: ACC } }, { text: P.objective + "   " }, { text: "Outcomes  ", options: { bold: true, color: ACC } }, { text: P.outcomes }], 0.3, 0.7, 9.4, 0.36, { ref: true, fontSize: 9 });
     T(s, [{ text: "Materials  ", options: { bold: true, color: ACC } }, { text: P.materials }], 0.3, 1.07, 9.4, 0.36, { ref: true, fontSize: 9 });
-    budget("plan objective+outcomes", P.objective + P.outcomes, 260); budget("plan materials", P.materials, 250); y = 1.5; }
+    budget("plan objective+outcomes", P.objective + P.outcomes, 260); budget("plan materials", P.materials, 250); y = 1.5;
+    // SCHWERPUNKT (standing order Oct 17 2026): teacher-only highlighted callout directly under the objective. Opt-in: plan.schwerpunkt
+    if (P.schwerpunkt) { budget("plan schwerpunkt", P.schwerpunkt, 170); card(s, 0.3, 1.45, 9.4, 0.36, AMBER, AMBERL);
+      T(s, [{ text: "Schwerpunkt = ", options: { bold: true, color: "B07A00" } }, { text: P.schwerpunkt, options: { bold: true, color: NAVY } }], 0.42, 1.47, 9.2, 0.32, { ref: true, fontSize: 9.5, valign: "middle" }); y = 1.87; } }
   if (steps.length) {
     T(s, "TIMED SEQUENCE" + (part > 1 ? " (continued)" : "") + (P.timing ? "  \u00B7  " + P.timing : ""), 0.3, y, 9, 0.2, { ref: true, fontSize: 8.5, bold: true, color: GREY, charSpacing: 1 }); y += 0.24; }
   const rowH = part === 1 ? 0.56 : 0.50;
-  steps.forEach((stp, i) => { const n = first + i + 1; budget(`plan step ${n}`, stp[1] + stp[2], 390);
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.3, y, w: 9.4, h: rowH - 0.05, rectRadius: 0.04, fill: { color: WHITE }, line: { color: "C9DCEE", width: 0.75 } });
+  steps.forEach((stp, i) => { const n = first + i + 1, sw = P.schwerStep === first + i; budget(`plan step ${n}`, stp[1] + stp[2], 390);
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.3, y, w: 9.4, h: rowH - 0.05, rectRadius: 0.04, fill: { color: sw ? AMBER : WHITE }, line: { color: sw ? AMBERL : "C9DCEE", width: sw ? 1.5 : 0.75 } });
     numDot(s, n, 0.38, y + (rowH - 0.05 - 0.3) / 2, 0.3);
     T(s, stp[0] + " min", 0.75, y + 0.04, 0.6, 0.2, { ref: true, fontSize: 9, bold: true, color: ACC });
     T(s, [{ text: stp[1] + " \u2014 ", options: { bold: true, color: NAVY } }, { text: stp[2] }], 1.35, y + 0.03, 8.25, rowH - 0.1, { ref: true, fontSize: 8.5, valign: "middle" });
@@ -187,8 +190,13 @@ R.plan = (sp, next, part, steps, first, total) => { const s = pres.addSlide(); s
       card(s, x, yy, bw, 0.8, i === 3 ? AMBER : PALE, i === 3 ? AMBERL : LINE);
       T(s, [{ text: b[0] + "   ", options: { bold: true, color: NAVY, breakLine: true } }, { text: b[1] || "\u2014" }], x + 0.1, yy + 0.06, bw - 0.2, 0.7, { ref: true, fontSize: 8.5 }); }); } };
 
+// UNIT TEST COUNTDOWN (standing order Oct 16 2026): opt-in L.countdown, an amber strip at the foot of every shape-of-the-day slide
+const CDH = () => L.countdown ? textH(L.countdown, 8.2, MIN) + 0.1 : 0;
+function countdown(s) { if (!L.countdown) return; const h = CDH(), y = BOT - h; card(s, 0.4, y, 9.2, h, AMBER, AMBERL);
+  s.addImage({ path: imgPath("icon-calendar.png"), x: 0.55, y: y + (h - 0.42) / 2, w: 0.42, h: 0.42 });
+  T(s, L.countdown, 1.2, y, 8.2, h, { fontSize: MIN, bold: true, color: NAVY, valign: "middle" }); }
 R.shape = (sp, next) => { const s = pres.addSlide(); frame(s, sp.tag || "Shape of the day", (sp.head || "Today") + (sp.cont ? " (continued)" : ""), next);
-  const items = sp.slice, box = stack(items.map(it => needShape(it)), TOP, BOT);
+  const cd = sp.noCountdown ? 0 : CDH(), items = sp.slice, box = stack(items.map(it => needShape(it)), TOP, BOT - (cd ? cd + 0.08 : 0)); if (cd) countdown(s);
   items.forEach((it, i) => { const { y, h } = box[i];
     numDot(s, sp.from + i + 1, 0.45, y + (h - 0.54) / 2, 0.54);
     T(s, [{ text: it[0], options: { bold: true, color: NAVY } }, { text: `  (${it[1]})`, options: { color: GREY } }], 1.2, y, 8.3, h, { fontSize: MIN, valign: "middle" }); }); };
@@ -425,7 +433,7 @@ R.cards = (sp, next) => { const s = pres.addSlide(); frame(s, sp.tag + (sp.cont 
 
 R.textpage = (sp, next, i, pages) => { const tx = L.texts[sp.text], pg = pages[i], s = pres.addSlide();
   frame(s, `${tx.title} \u00B7 ${i + 1} of ${pages.length}`, null, next);
-  T(s, `${tx.title}  \u00B7  ${pg.length > 1 ? `lines ${pg[0] + 1}\u2013${pg[pg.length - 1] + 1}` : `line ${pg[0] + 1}`}`, 0.4, 0.95, 9.2, 0.5, { fontSize: 32, bold: true, color: NAVY });
+  const un = tx.unit || "line"; T(s, `${tx.title}  \u00B7  ${pg.length > 1 ? `${un}s ${pg[0] + 1}\u2013${pg[pg.length - 1] + 1}` : `${un} ${pg[0] + 1}`}`, 0.4, 0.95, 9.2, 0.5, { fontSize: 32, bold: true, color: NAVY });
   const runs = []; pg.forEach((k, j) => { runs.push({ text: String(k + 1).padStart(2, " ") + "   ", options: { bold: true, color: ACC } });
     runs.push({ text: tx.lines[k], options: { breakLine: j < pg.length - 1 } }); });
   card(s, 0.4, TOP, 9.2, BOT - TOP, "FAFCFE", "C9DCEE");
@@ -662,12 +670,12 @@ R.markpara = (sp, next) => { const s = pres.addSlide(), lay = paraLayout(sp);
   card(s, 0.4, y, 9.2, BOT - y, sp.fixed ? TINT : "FFFFFF", sp.fixed ? TLINE : LINE);
   T(s, paraRuns(sp.text), 0.7, y + 0.14, 8.6, BOT - y - 0.2, { ...fl, fontSize: S, lineSpacingMultiple: 1.0 }); };
 R.marktotal = (sp, next) => { const s = pres.addSlide();
-  frame(s, `Marking · ${sp.lvl} · add it up`, `${sp.lvl} · Section ${sp.sec}: add it up`, next);
+  frame(s, `Marking · ${sp.lvl} · add it up`, sp.head || `${sp.lvl} · Section ${sp.sec}: add it up`, next);
   const bandTop = TOP, rowH = 0.54, gap = 0.06, bands = sp.band ? sp.band.filter(b => b[1] !== "—") : null;
   const bh = bands ? 0.3 + bands.length * (rowH + gap) - gap : 1.4, botY = bandTop + bh + 0.16;
   // score box
   card(s, 0.4, bandTop, 3.0, bh, PALE, LINE);
-  T(s, `Section ${sp.sec}`, 0.6, bandTop + 0.15, 2.6, 0.5, { fontSize: 28, bold: true, color: NAVY });
+  T(s, sp.boxLabel || `Section ${sp.sec}`, 0.6, bandTop + 0.15, 2.6, 0.5, { fontSize: 28, bold: true, color: NAVY });
   T(s, `____ / ${sp.outOf}`, 0.6, bandTop + 0.7, 2.7, 0.75, { fontSize: 40, bold: true, color: BLUE });
   if (sp.combo) T(s, `C + D  ____ / ${sp.combo}`, 0.6, bandTop + 1.5, 2.7, 0.55, { fontSize: 28, bold: true, color: ACC });
   // level band
@@ -679,8 +687,8 @@ R.marktotal = (sp, next) => { const s = pres.addSlide();
     T(s, sp.waitNote || "The level comes after the next section.", 3.85, bandTop + 0.1, 5.5, bh - 0.2, { fontSize: 28, bold: true, color: NAVY, valign: "middle" }); }
   // running total, or the instruction on the first section
   const h = BOT - botY; card(s, 0.4, botY, 9.2, h, TINT, TLINE);
-  const txt = sp.runTo ? [{ text: `Part A so far (A–${sp.sec}):   `, options: { bold: true, color: NAVY } }, { text: `____ / ${sp.runTo}`, options: { bold: true, color: BLUE } }]
-    : [{ text: "Count the ticks. Write the score and the level in the box.", options: { bold: true, color: NAVY } }];
+  const txt = sp.runTo ? [{ text: (sp.runLabel || `Part A so far (A–${sp.sec})`) + ":   ", options: { bold: true, color: NAVY } }, { text: `____ / ${sp.runTo}`, options: { bold: true, color: BLUE } }]
+    : [{ text: sp.firstNote || "Count the ticks. Write the score and the level in the box.", options: { bold: true, color: NAVY } }];
   T(s, txt, 0.65, botY, 8.7, h, { fontSize: 28, valign: "middle" }); };
 
 const pageList = () => PV.sheets ? PV.sheets.flatMap(sh => sh.pages.map((f, i) => ({ file: f, n: i + 1, of: sh.pages.length, lvl: sh.lvl })))
@@ -697,7 +705,7 @@ const push = (label, draw, next) => slides.push({ label, draw, next });
     if (!ok) notes.push(`Warm-up Part ${sp.part} is on separate slides per level: ` + (lay ? lay.per.map((p, i) => `${sp.lvls[i].lvl} ${p.S} pt`).join(", ") + " side by side" : "too long to share a slide") + " (floor 20).");
   });
   if (notes.length) { L.plan.watch = "SLIDE NOTE: " + notes.join(" ") + " " + (L.plan.watch || ""); console.log("  side-by-side fallback: " + notes.join(" ")); } }
-const P = L.plan, st = P.steps, pages = [st.slice(0, 7)]; for (let i = 7; i < st.length; i += 6) pages.push(st.slice(i, i + 6));
+const P = L.plan, st = P.steps, P1 = P.schwerpunkt ? 6 : 7, pages = [st.slice(0, P1)]; for (let i = P1; i < st.length; i += 6) pages.push(st.slice(i, i + 6));
 if (pages.length === 1 || pages[pages.length - 1].length > 5) pages.push([]);
 let first = 0; pages.forEach((pg, k) => { const f = first; push("Lesson plan", () => R.plan({}, null, k + 1, pg, f, pages.length), null); first += pg.length; });
 
@@ -715,7 +723,7 @@ const LISTOF = { goals: sp => sp.items, warmup: sp => sp.prompts, rows: sp => sp
   vocab: sp => sp.words, routine: sp => sp.items, imagesteps: sp => sp.steps, imagebullets: sp => sp.bullets,
   wordlist: sp => L.texts[sp.text].words.slice(0, 10), speaking: sp => sp.frames };
 
-{ let at = 0; pack(L.shape, needShape, BOT - TOP).forEach((sl, i, a) => { const from = at; at += sl.length;
+{ let at = 0; pack(L.shape, needShape, BOT - TOP - (CDH() ? CDH() + 0.08 : 0)).forEach((sl, i, a) => { const from = at; at += sl.length;
   push("Shape of the day", n => R.shape({ slice: sl, from, cont: i > 0 }, n), i < a.length - 1 ? null : undefined); }); }
 
 function expand(sp) {
@@ -756,8 +764,8 @@ function expand(sp) {
     return ch.forEach((c, i) => push(sp.label || tx.title, n => R.prose(sp, n, c, i + 1, ch.length), i < ch.length - 1 ? null : undefined)); }
   if (sp.type === "text2") { const room = BOT - TOP - 0.5, a = splitWords(L.texts[sp.a].body, 4.2, room), b = splitWords(L.texts[sp.b].body, 4.2, room), m = Math.max(a.length, b.length);
     for (let i = 0; i < m; i++) push(sp.label || "Side by side", n => R.text2(sp, n, a[i], b[i], i + 1, m), i < m - 1 ? null : undefined); return; }
-  if (sp.type === "nextshape") { let at = 0; return pack(sp.items, needShape, BOT - TOP).forEach((sl, i, a) => { const from = at; at += sl.length;
-      push(sp.label || "Next class", n => R.shape({ slice: sl, from, cont: i > 0, tag: "Next class", head: sp.head }, n), i < a.length - 1 ? null : undefined); }); }
+  if (sp.type === "nextshape") { const cd = sp.noCountdown ? 0 : CDH(); let at = 0; return pack(sp.items, needShape, BOT - TOP - (cd ? cd + 0.08 : 0)).forEach((sl, i, a) => { const from = at; at += sl.length;
+      push(sp.label || "Next class", n => R.shape({ slice: sl, from, cont: i > 0, tag: "Next class", head: sp.head, noCountdown: sp.noCountdown }, n), i < a.length - 1 ? null : undefined); }); }
   if (sp.type === "walk") { const p = part(sp.part), NEW = !!CO.levels, blank = NEW && p.kind === "cloze" ? "  ________" : "";
     const its = p.kind === "check" ? p.checks.map((c, k) => ({ q: c, n: "\u2713" })) : !NEW ? wsItems(p)
       : [...(p.example && sp.withExample ? [{ q: `(example)  ${p.example.text}${p.kind === "cloze" ? "  " + p.example.ans : (/\u2192\s*$/.test(p.example.text) ? "  " : "  \u2192  ") + p.example.ans}`, n: "Ex" }] : []),
