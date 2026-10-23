@@ -27,7 +27,7 @@ function partB(test, pb, RUB, opts = {}) {
     out.push({ type: "rows", label: `${T.lvl} Part B task`, tag: `Part B · ${T.lvl}`, head: `${T.lvl} · Part B: what the writer had to do`,
       rows: P.musts.map((m, i) => [String(i + 1), m]) });
     out.push({ type: "markpara", label: `${T.lvl} Part B good answer`, tag: `Part B · ${T.lvl} · one good answer`,
-      head: `${T.lvl} · ${P.task}: one good answer`, text: P.good }); });
+      head: `${T.lvl} · ${P.short || P.task}: one good answer`, text: P.good }); });
   const n = Math.max(...LV.map(l => pb[l].crit.length));
   for (let k = 0; k < n; k++) LV.forEach(l => { const T = test[l], P = pb[l], key = P.crit[k]; if (!key) return; const [name, desc] = RUB[key];
     out.push({ type: "rows", label: `${T.lvl} Part B ${name}`, tag: `Part B · ${T.lvl} · line ${k + 1} of ${P.crit.length}`,

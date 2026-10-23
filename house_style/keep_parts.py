@@ -14,7 +14,7 @@ Usage:  python3 keep_parts.py <out-dir> <soffice.py>      (run after the workshe
 import sys, os, re, glob, zipfile, shutil, subprocess, tempfile
 import pymupdf
 
-HEAD = re.compile(r"^Part [A-Z]\s+—\s+")           # "Part B — Where the word goes"
+HEAD = re.compile(r"^(Part|Section) [A-Z]\s+—\s+")           # "Part B — Where the word goes"
 ITEM = re.compile(r"^(Ex\.|\d+\.|☐|_{5,})")         # a worked example, a numbered item, a tick box or a writing line
 
 
@@ -27,7 +27,8 @@ def render(docx, soffice):
 
 
 NUM = re.compile(r"^\d+\.")
-HEADER = re.compile(r"\u00B7 Unit \d+ \u00B7 Lesson")                   # the running header line
+RULE = re.compile(r"^_{5,}$")
+HEADER = re.compile(r"\u00B7 Unit \d+ \u00B7 |^Page \d+$")                   # the running header line
 
 
 def stranded(pdf):
@@ -40,12 +41,19 @@ def stranded(pdf):
             continue
         last, after = heads[-1], lines[heads[-1] + 1:]
         if not any(ITEM.match(l) for l in after):
-            out.append(lines[last]); continue
+            out.append((n, lines[last])); continue
         nxt = [l for l in pages[n + 1] if not HEADER.search(l)] if n + 1 < len(pages) else []
-        continues = bool(nxt) and NUM.match(nxt[0])
+        continues = bool(nxt) and not HEAD.match(nxt[0])          # the same Part/Section carries on overleaf
         if continues and sum(1 for l in after if NUM.match(l)) < 2:
-            out.append(lines[last])
-    return out
+            out.append((n, lines[last]))
+    # a question at the foot of a page whose writing lines went overleaf (LibreOffice drops keep-with-next here too)
+    for n, lines in enumerate(pages[:-1]):
+        body = [l for l in lines if not HEADER.search(l)]
+        nxt = [l for l in pages[n + 1] if not HEADER.search(l)]
+        if body and nxt and RULE.match(nxt[0]) and not RULE.match(body[-1]) and not HEAD.match(body[-1]):
+            out.append((n, "PROMPT::" + body[-1]))
+    # earliest page first: fixing one break moves everything after it, so the caller fixes ONE per pass
+    return [h for _, h in sorted(out, key=lambda x: x[0])]
 
 
 def add_breaks(docx, headings):
@@ -58,7 +66,10 @@ def add_breaks(docx, headings):
     done = 0
     for p in re.finditer(r"<w:p\b.*?</w:p>", xml, re.S):
         text = "".join(re.findall(r"<w:t[^>]*>([^<]*)", p.group(0)))
-        if text.strip() in headings and "<w:pageBreakBefore" not in p.group(0):
+        # match on the start: a test heading carries its "____ / 8" score box on the same line in the .docx
+        hit = any(text.strip().startswith(h) for h in headings if not h.startswith("PROMPT::")) or \
+            any(h[8:] in text for h in headings if h.startswith("PROMPT::"))
+        if hit and "<w:pageBreakBefore" not in p.group(0):
             para = p.group(0)
             # schema order inside w:pPr: pStyle, keepNext, keepLines, pageBreakBefore, ...
             m = re.search(r"<w:keepLines[^>]*/>", para) or re.search(r"<w:keepNext[^>]*/>", para)
@@ -76,15 +87,16 @@ def add_breaks(docx, headings):
     return done
 
 
-def main(out, soffice):
-    for docx in sorted(glob.glob(os.path.join(out, "*_Worksheet_*.docx"))):
+def main(out, soffice, pattern="*_Worksheet_*.docx"):
+    for docx in sorted(glob.glob(os.path.join(out, pattern))):
         name = os.path.basename(docx)
-        for _ in range(4):                      # each pass can push later Parts down, so re-check
-            heads = stranded(render(docx, soffice))
+        for _ in range(20):                     # ONE break per pass, earliest page first: a break moves everything after it,
+            heads = stranded(render(docx, soffice))   # so fixing all at once over-breaks and leaves half-empty pages
             if not heads:
                 break
+            heads = heads[:1]
             add_breaks(docx, set(heads))
-            print(f"  {name}: moved to a new page — " + "; ".join(heads))
+            print(f"  {name}: moved to a new page — " + "; ".join(h.replace("PROMPT::", "question: ") for h in heads))
         else:
             render(docx, soffice)
         left = stranded(os.path.splitext(docx)[0] + ".pdf")
@@ -94,4 +106,4 @@ def main(out, soffice):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], *(sys.argv[3:4]))
