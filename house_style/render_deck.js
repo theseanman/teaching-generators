@@ -16,7 +16,10 @@ const ODIR = process.argv[3], VER = process.argv[4] || "v1", WSD = path.join(ODI
 // a test-marking deck (L.testDeck) prints no worksheet, so it has no page images
 const readJ = f => fs.existsSync(WSD + f) ? JSON.parse(fs.readFileSync(WSD + f)) : (L.testDeck ? {} : JSON.parse(fs.readFileSync(WSD + f)));
 const PV = readJ("previews.json"), SZ = readJ("sizes.json");
-const { NAVY, TEAL: ACC, BLUE, PALE, TINT, INK, GREY, WHITE, AMBER, AMBERL, LINE, TLINE, SOFT, SOFTT } = C;
+const { NAVY, BLUE, PALE, TINT, INK, GREY, WHITE, AMBER, AMBERL, LINE, TLINE, SOFT, SOFTT } = C;
+// COURSE LOOK (Sean, Oct 23 2026): English 8 keeps its Unit 1 look — the accent rotates by lesson number (CO.accentCycle) and
+// headings are set in CO.headFont (Cambria). Courses without these settings keep teal and Calibri.
+const ACC = CO.accentCycle ? CO.accentCycle[((parseInt(L.meta.lesson, 10) || 1) - 1) % CO.accentCycle.length] : C.TEAL, HF = CO.headFont || F;
 const M = L.meta, OBJ = L.banner.obj, STD = L.banner.std, COMP = CO.comp, LIT = L.banner.lit || COMP;
 const pres = new pptxgen(); pres.layout = "LAYOUT_16x9";
 const WARN = [], SMALL = [];
@@ -117,7 +120,7 @@ function frame(s, tag, heading, next) {
   if (small) T(s, small, 0.4, 0.68, 6.4, 0.28, { ref: true, fontSize: 18, bold: true, color: NAVY });
   else T(s, `${CO.display || CO.code} \u00B7 Unit ${M.unit} \u00B7 Lesson ${M.lesson}`, 0.4, 0.74, 4, 0.2, { ref: true, fontSize: 9.5, color: GREY });
   T(s, (tag || "").toUpperCase(), 4.5, 0.74, 5.1, 0.2, { ref: true, fontSize: 9.5, bold: true, color: ACC, align: "right", charSpacing: 1 });
-  if (heading) { budget("heading", heading, 52); T(s, heading, 0.4, 0.95, 9.2, 0.55, { fontSize: HEAD, bold: true, color: NAVY }); }
+  if (heading) { budget("heading", heading, 52); T(s, heading, 0.4, 0.95, 9.2, 0.55, { fontSize: HEAD, bold: true, color: NAVY, fontFace: HF }); }
   if (next) T(s, "Next \u2192 " + next, 5.6, 5.33, 4, 0.2, { ref: true, fontSize: 9.5, italic: true, color: ACC, align: "right" });
 }
 function fit(file, bx, by, bw, bh) { const [w, h] = sizeOf(file); const r = Math.min(bw / w, bh / h); const W = w * r, H = h * r;
@@ -204,7 +207,7 @@ R.shape = (sp, next) => { const s = pres.addSlide(); frame(s, sp.tag || "Shape o
 R.section = (sp, next) => { const s = pres.addSlide(); s.background = { color: NAVY };
   if (sp.icon) s.addImage({ path: imgPath(sp.icon), x: 0.8, y: 1.6, w: 1.9, h: 1.9 });
   T(s, (sp.sub || "").toUpperCase(), 3.2, 1.6, 6.3, 0.3, { ref: true, fontSize: 13, bold: true, color: SOFTT, charSpacing: 3 });
-  T(s, sp.title, 3.2, 1.95, 6.3, 1.2, { fontSize: 40, bold: true, color: WHITE });
+  T(s, sp.title, 3.2, 1.95, 6.3, 1.2, { fontSize: 40, bold: true, color: WHITE, fontFace: HF });
   if (next) T(s, "Next \u2192 " + next, 3.2, 4.6, 6, 0.3, { ref: true, fontSize: 13, italic: true, color: SOFT }); };
 
 R.routine = (sp, next) => { const s = pres.addSlide(); frame(s, sp.tag + (sp.cont ? " \u00B7 cont." : ""), sp.head, next); const [fill, line] = tone(sp.tone);

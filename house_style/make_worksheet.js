@@ -49,7 +49,8 @@ if (D.vocab) { const cw = W / 2, rows = [];
 // Reading text printed on the sheet (worksheet.text = key into LESSON.texts): title, line-numbered lines, word list.
 if (D.text && LESSON.texts && LESSON.texts[D.text]) { const tx = LESSON.texts[D.text];
   body.push(P([R(tx.title, { bold: true, color: BLUE, size: 32 })], { spacing: { before: 240, after: 20 }, keepNext: true }));
-  body.push(P([R("Read it twice. Line numbers are there so you can say where you found an answer.", { italics: true, color: GREY, size: 22 })], { spacing: { after: 100 }, keepNext: true }));
+  const un = tx.unit || "line";
+  body.push(P([R(`Read it twice. ${un[0].toUpperCase() + un.slice(1)} numbers are there so you can say where you found an answer.`, { italics: true, color: GREY, size: 22 })], { spacing: { after: 100 }, keepNext: true }));
   tx.lines.forEach((ln, i) => body.push(P([R(String(i + 1) + "\t", { color: GREY, size: 18 }), R(ln, { size: 23 })],
     { indent: { left: 500, hanging: 500 }, tabStops: [{ type: TabStopType.LEFT, position: 500 }], spacing: { after: 40, line: 300 }, keepNext: i < tx.lines.length - 1 })));
   if (tx.words && tx.words.length) body.push(P(tx.words.flatMap((w, i) => [R((i ? "   \u00B7   " : "Words:  ") , { color: GREY, size: 20 }), R(w[0], { bold: true, color: NAVY, size: 20 }), R(" \u2014 " + w[1], { size: 20 })]), { spacing: { before: 80, after: 60 } }));
@@ -133,6 +134,23 @@ for (const part of D.parts) {
   blocks.push(...ps);
 }
 body.push(...blocks);
+// RUBRIC ON THE BACK (standing order Oct 12 2026, extended to worksheets Oct 23 2026): a worksheet with a collected, marked Part
+// prints its rubric — all four levels with every descriptor — on its own last page. Data: worksheet.rubric = { title, intro,
+// levels: [4 labels, low to high], criteria: [{ code, name, d: [4 descriptors] }] }.
+if (D.rubric) { const rb = D.rubric, lvW = 2300, LVFILL = ["F6E3E3", "FBF0DA", "E3F0FB", "D7ECEA"];
+  const ed = { style: BorderStyle.SINGLE, size: 8, color: "90B4D8" };
+  body.push(P([R(rb.title || "How this is marked", { bold: true, color: NAVY, size: 34 })], { pageBreakBefore: true, spacing: { after: 60 } }));
+  if (rb.intro) body.push(P([R(rb.intro, { italics: true, color: GREY, size: 22 })], { spacing: { after: 160 } }));
+  rb.criteria.forEach(c => {
+    body.push(P([R(`${c.code ? c.code + "  \u00B7  " : ""}${c.name}`, { bold: true, color: BLUE, size: 24 })], { keepNext: true, spacing: { before: 200, after: 80 } }));
+    body.push(new Table({ width: { size: W, type: WidthType.DXA }, columnWidths: [lvW, W - lvW],
+      rows: c.d.map((desc, k) => new TableRow({ cantSplit: true, children: [
+        new TableCell({ width: { size: lvW, type: WidthType.DXA }, shading: { type: ShadingType.CLEAR, fill: LVFILL[k], color: "auto" },
+          margins: { top: 70, bottom: 70, left: 120, right: 100 }, borders: { top: ed, bottom: ed, left: ed, right: ed },
+          children: [P([R(rb.levels[k], { bold: true, size: 20, color: NAVY })], { keepNext: true })] }),
+        new TableCell({ width: { size: W - lvW, type: WidthType.DXA }, margins: { top: 70, bottom: 70, left: 140, right: 120 },
+          borders: { top: ed, bottom: ed, left: ed, right: ed },
+          children: [P([R(desc, { size: 21 })], { keepNext: k < c.d.length - 1 })] }) ] })) })); }); }
 if (D.helpLine) body.push(P([R(D.helpLine, { italics: true, color: GREY, size: 22 })], { spacing: { before: 240 } }));
 if (!D.helpLine) body.push(P([], { spacing: { after: 0 } })); // the help line already ends the document; an extra empty paragraph can spill onto a blank page
 const doc = new Document({

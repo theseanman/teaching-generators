@@ -43,7 +43,7 @@ def stranded(pdf):
         if not any(ITEM.match(l) for l in after):
             out.append((n, lines[last])); continue
         nxt = [l for l in pages[n + 1] if not HEADER.search(l)] if n + 1 < len(pages) else []
-        continues = bool(nxt) and not HEAD.match(nxt[0])          # the same Part/Section carries on overleaf
+        continues = bool(nxt) and bool(ITEM.match(nxt[0]))       # the same Part/Section carries on overleaf (a question, line or box)
         # an open writing Part (a draft) may run overleaf once it has real writing room on this page
         # a reading text may also run overleaf once two of its numbered paragraphs sit under the heading
         if continues and sum(1 for l in after if NUM.match(l)) < 2 and sum(1 for l in after if RULE.match(l)) < 6 \
