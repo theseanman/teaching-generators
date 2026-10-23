@@ -10,6 +10,8 @@ node check_lesson.js "$LESSON"                        # 2 content checks
 node make_worksheet.js "$LESSON" "$OUT" "$WSV"        # 3 worksheet .docx + blank manifest
 (cd "$OUT" && python "$SOFF" --headless --convert-to pdf *_Worksheet_*.docx >/dev/null 2>&1)
 python3 keep_parts.py "$OUT" "$SOFF"                 # keep each Part heading with its first question (LibreOffice drops keep-with-next)
+node make_text.js "$LESSON" "$OUT" "$WSV"             # printed class text, numbered paragraphs (only if the lesson sets printText)
+(cd "$OUT" && ls *_Story_*.docx >/dev/null 2>&1 && python "$SOFF" --headless --convert-to pdf *_Story_*.docx >/dev/null 2>&1 || true)
 python3 previews.py "$LESSON" "$OUT"                  # 4 page images, Part crops, cumulative answer reveals
 COURSE=$(node -e "console.log(require('./$LESSON').course)")
 node make_helpslip.js "$COURSE" "$OUT" >/dev/null     # 5 help slip printable + slide images
