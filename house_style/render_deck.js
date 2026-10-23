@@ -334,7 +334,10 @@ R.matchreveal = (sp, next, i) => { const s = pres.addSlide();
 
 const part = id => { const p = L.worksheet.parts.find(x => (x.key || x.id) === id); if (!p) throw new Error("No worksheet Part " + id); return p; };
 const lv = p => p.lvl ? " \u00B7 " + p.lvl : "";
-const wsItems = p => (p.items || []).map(it => ({ q: it.text, a: it.ans != null && it.ans !== "" ? it.ans : (it.reveal || "") }));
+// a cloze item carries the words AFTER its blank in it.tail; they belong on the slide too (fixed Oct 23 2026 — the
+// slides had been showing "We have a math ____" for "We have a math ____ on Friday.")
+const clozeQ = it => it.tail == null ? it.text : `${it.text ? it.text + " " : ""}________${/^[.,;:!?)]/.test(it.tail) || !it.tail ? "" : " "}${it.tail}`;
+const wsItems = p => (p.items || []).map(it => ({ q: clozeQ(it), a: it.ans != null && it.ans !== "" ? it.ans : (it.reveal || "") }));
 
 R.howto = (sp, next) => { const p = part(sp.part), s = pres.addSlide();
   frame(s, "Worksheet walkthrough" + lv(p), `Part ${p.id} \u2014 ${p.title}`, next);
@@ -371,7 +374,10 @@ R.reveal = (sp, next, i) => { const p = part(sp.part), items = sp.slice, s = pre
     items.forEach((it, k) => { const { y, h } = bx[k], done = k <= i, nx = k === hi, d = Math.min(0.5, h - 0.08);
       card(s, 0.4, y, 9.2, h, done ? TINT : nx ? AMBER : PALE, done ? TLINE : nx ? AMBERL : LINE);
       numDot(s, sp.from + k + 1, 0.62, y + (h - d) / 2, d, done ? BLUE : "9DB3C7");
-      T(s, [{ text: it.q + "  " }, { text: done ? it.a : "________", options: done ? { bold: true, color: BLUE, fontSize: sp.size ? SZ + 2 : ANS } : { color: "9DB3C7" } }], 1.3, y, 8.0, h, { ...fl, fontSize: SZ, valign: "middle" }); });
+      const A = { text: done ? it.a : "________", options: done ? { bold: true, color: BLUE, fontSize: sp.size ? SZ + 2 : ANS } : { color: "9DB3C7" } };
+      // the answer fills the blank in place when the sentence carries one (Oct 23 2026); otherwise it follows the question
+      const runs = /_{3,}/.test(it.q) ? (([pre, post]) => [{ text: pre }, A, { text: post || "" }])(it.q.split(/_{3,}/)) : [{ text: it.q + "  " }, A];
+      T(s, runs, 1.3, y, 8.0, h, { ...fl, fontSize: SZ, valign: "middle" }); });
     strip(s, sp.strip); return; }
   items.forEach((it, k) => { const { y, h } = box[k], done = k <= i, nx = k === hi, qh = needText(it.q, 8.0) - PAD;
     card(s, 0.4, y, 9.2, h, done ? TINT : nx ? AMBER : PALE, done ? TLINE : nx ? AMBERL : LINE);
@@ -768,8 +774,8 @@ function expand(sp) {
       push(sp.label || "Next class", n => R.shape({ slice: sl, from, cont: i > 0, tag: "Next class", head: sp.head, noCountdown: sp.noCountdown }, n), i < a.length - 1 ? null : undefined); }); }
   if (sp.type === "walk") { const p = part(sp.part), NEW = !!CO.levels, blank = NEW && p.kind === "cloze" ? "  ________" : "";
     const its = p.kind === "check" ? p.checks.map((c, k) => ({ q: c, n: "\u2713" })) : !NEW ? wsItems(p)
-      : [...(p.example && sp.withExample ? [{ q: `(example)  ${p.example.text}${p.kind === "cloze" ? "  " + p.example.ans : (/\u2192\s*$/.test(p.example.text) ? "  " : "  \u2192  ") + p.example.ans}`, n: "Ex" }] : []),
-         ...wsItems(p).map((it, k) => ({ ...it, q: it.q + blank, n: k + 1 }))];
+      : [...(p.example && sp.withExample ? [{ q: `(example)  ${p.kind === "cloze" ? clozeQ(p.example).replace("________", p.example.ans) : p.example.text + ((/\u2192\s*$/.test(p.example.text) ? "  " : "  \u2192  ") + p.example.ans)}`, n: "Ex" }] : []),
+         ...wsItems(p).map((it, k) => ({ ...it, q: BLANKRE.test(it.q) ? it.q : it.q + blank, n: k + 1 }))];
     { const ni = p.instr ? needText(p.instr, 8.7, MIN) + 0.1 : 0, nh = needText(p.how, 8.7, MIN) + 0.6;
       if (p.instr && ni + nh + 0.18 > BOT - TOP) {
         push(`Part ${p.id} \u2014 ${p.title}`, n => R.howto({ ...sp, only: "instr" }, n), null);
