@@ -52,7 +52,7 @@ if (D.text && LESSON.texts && LESSON.texts[D.text]) { const tx = LESSON.texts[D.
   const un = tx.unit || "line";
   body.push(P([R(`Read it twice. ${un[0].toUpperCase() + un.slice(1)} numbers are there so you can say where you found an answer.`, { italics: true, color: GREY, size: 22 })], { spacing: { after: 100 }, keepNext: true }));
   tx.lines.forEach((ln, i) => body.push(P([R(String(i + 1) + "\t", { color: GREY, size: 18 }), R(ln, { size: 23 })],
-    { indent: { left: 500, hanging: 500 }, tabStops: [{ type: TabStopType.LEFT, position: 500 }], spacing: { after: 40, line: 300 }, keepNext: i < tx.lines.length - 1 })));
+    { indent: { left: 500, hanging: 500 }, tabStops: [{ type: TabStopType.LEFT, position: 500 }], spacing: { after: 40, line: 300 }, keepNext: i < 2, keepLines: true })));   // glue only the opening lines to the title, so a long story can start on page 1
   if (tx.words && tx.words.length) body.push(P(tx.words.flatMap((w, i) => [R((i ? "   \u00B7   " : "Words:  ") , { color: GREY, size: 20 }), R(w[0], { bold: true, color: NAVY, size: 20 }), R(" \u2014 " + w[1], { size: 20 })]), { spacing: { before: 80, after: 60 } }));
 }
 if (D.remember) { body.push(P([], { spacing: { after: 60 } }));
