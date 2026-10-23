@@ -34,6 +34,8 @@ module.exports = {
  plan: {
   objective: "Students read a two-voice text about the new phone rule, learn eight school-day words, and write present-tense sentences about their own school day. They meet both sides today and take a side in Lesson 3.",
   outcomes: "ELL 1: W1 · W8. ELL 2: W1 · W5.",
+  schwerpunkt: "true present-tense sentences about your OWN school day in Part C — every line has a verb; ELL 2 keeps the s on he / she / it.",
+  schwerStep: 6,
   materials: "Deck · ELL 1 and ELL 2 Lesson 1 worksheets · duotangs · exercise books for the warm-up · the bell-schedule times on the board if you want them visible",
   timing: "80 minutes",
   steps: [
