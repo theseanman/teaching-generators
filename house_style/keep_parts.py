@@ -15,7 +15,7 @@ import sys, os, re, glob, zipfile, shutil, subprocess, tempfile
 import pymupdf
 
 HEAD = re.compile(r"^(Part|Section) [A-Z]\s+—\s+")           # "Part B — Where the word goes"
-ITEM = re.compile(r"^(Ex\.|\d+\.|☐|_{5,})")         # a worked example, a numbered item, a tick box or a writing line
+ITEM = re.compile(r"^(Ex\.|\d+\.|☐|_{5,}|\d{1,2}$)")   # a worked example, a numbered item, a tick box, a writing line, or a numbered story paragraph
 
 
 def render(docx, soffice):
@@ -45,7 +45,9 @@ def stranded(pdf):
         nxt = [l for l in pages[n + 1] if not HEADER.search(l)] if n + 1 < len(pages) else []
         continues = bool(nxt) and not HEAD.match(nxt[0])          # the same Part/Section carries on overleaf
         # an open writing Part (a draft) may run overleaf once it has real writing room on this page
-        if continues and sum(1 for l in after if NUM.match(l)) < 2 and sum(1 for l in after if RULE.match(l)) < 6:
+        # a reading text may also run overleaf once two of its numbered paragraphs sit under the heading
+        if continues and sum(1 for l in after if NUM.match(l)) < 2 and sum(1 for l in after if RULE.match(l)) < 6 \
+                and sum(1 for l in after if re.match(r"^\d{1,2}$", l)) < 2:
             out.append((n, lines[last]))
     # a question at the foot of a page whose writing lines went overleaf (LibreOffice drops keep-with-next here too)
     for n, lines in enumerate(pages[:-1]):

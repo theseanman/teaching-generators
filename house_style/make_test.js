@@ -6,7 +6,9 @@
 //        node make_test.js lessons/<UNIT>_testdata.js key <out-dir> [version] [unitNo] [unitTitle]
 const fs = require("fs"), path = require("path");
 const D = require(path.resolve(process.argv[2])), WHICH = process.argv[3], out = process.argv[4] || "out", VER = process.argv[5] || "v1";
-const UNO = process.argv[6] || "2", UTITLE = process.argv[7] || "My School Day";
+const UNO = process.argv[6] || D.unitNo || "2", UTITLE = process.argv[7] || D.unitTitle || "My School Day";
+// One-level courses (ELL3, Oct 23 2026): D.levels = ["ELL3"], D.course = "ELL3". Two-level ELL12 stays the default.
+const LEVELS = D.levels || ["1A", "2A"], COURSE = D.course || "ELL12", KEYHEAD = D.keyHead || `ELL 1/2 · Unit ${UNO} · Test Answer Key · teacher copy`;
 const THEME = require("./theme");
 const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, ShadingType, BorderStyle,
   TabStopType, LeaderType, Header, Footer, AlignmentType, PageNumber } = require("docx");
@@ -37,7 +39,17 @@ const secHead = (s, label) => P([R(`Section ${s.sec} — ${s.title}`, { bold: tr
   { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 320, after: 40 }, keepNext: true });
 
 function section(s, key) {
-  const ps = [secHead(s)]; let base = 0;   // numbering runs on across a section's groups
+  const ps = []; let base = 0;   // numbering runs on across a section's groups
+  // Part B starts at its first section (one-level papers whose Part B is sections, not one task)
+  if (s.partBHead) ps.push(P([R(`Part B — ${s.partBHead}`, { bold: true, color: NAVY, size: 34 }), R(`\t____ / ${s.partBOut}`, { bold: true, color: NAVY, size: 26 })],
+    { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 360, after: 0 }, keepNext: true }));
+  ps.push(secHead(s));
+  // a reading text printed before the section's questions, paragraphs numbered so answers can cite "paragraph 6"
+  if (s.text) { if (s.text.instr) ps.push(P([R(s.text.instr, { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }));
+    ps.push(P([R(s.text.title, { bold: true, color: NAVY, size: 28 })], { spacing: { before: 60, after: 80 }, keepNext: true }));
+    s.text.paras.forEach((t, i) => ps.push(P([R(String(i + 1), { bold: true, color: BLUE, size: 22 }), R("\t" + t, { size: 25 })],
+      { indent: { left: IND, hanging: IND }, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { after: 110, line: 290 } })));
+    ps.push(P([], { spacing: { after: 120 } })); }
   s.groups.forEach(g => { const off = base; base += g.items.length;
     if (g.instr) ps.push(P([R(g.instr, { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }));
     if (g.bank) ps.push(box([P([R("Word box:  ", { bold: true, color: NAVY, size: 24 }), R(g.bank.join("   ·   "), { size: 26 })])], PALE),
@@ -64,24 +76,49 @@ function section(s, key) {
 }
 
 function partB(pb, key) {
-  const ps = [P([R("Part B — Writing", { bold: true, color: NAVY, size: 34 }), R(`\t____ / ${pb.out}`, { bold: true, color: NAVY, size: 26 })],
-      { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 360, after: 80 }, keepNext: true }),
+  const head = pb.sec ? P([R(`Section ${pb.sec} — ${pb.title}`, { bold: true, color: BLUE, size: 30 }), R(`\t____ / ${pb.out}`, { bold: true, color: NAVY, size: 26 })],
+      { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 320, after: 60 }, keepNext: true })
+    : P([R("Part B — Writing", { bold: true, color: NAVY, size: 34 }), R(`\t____ / ${pb.out}`, { bold: true, color: NAVY, size: 26 })],
+      { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 360, after: 80 }, keepNext: true });
+  const ps = [head,
     P([R(pb.task, { bold: true, color: BLUE, size: 30 })], { spacing: { after: 80 }, keepNext: true }),
-    P([R("Write ONE paragraph that answers the question. Choose one side.", { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }),
-    box([P([R("Your paragraph must have:", { bold: true, color: NAVY, size: 24 })], { spacing: { after: 40 } }),
+    P([R(pb.instr || "Write ONE paragraph that answers the question. Choose one side.", { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }),
+    box([P([R(pb.mustsLabel || "Your paragraph must have:", { bold: true, color: NAVY, size: 24 })], { spacing: { after: 40 } }),
       ...pb.musts.map(m => P([R("☐  ", { color: BLUE, size: 28 }), R(m, { size: 24 })], { indent: { left: 380, hanging: 380 }, spacing: { after: 30 } }))]) ];
   if (key) ps.push(P([R("One good answer: ", { bold: true, color: NAVY }), R(pb.good, { color: BLUE })], { spacing: { before: 200, line: 320 } }));
   else for (let i = 0; i < pb.lines; i++) ps.push(rule(i === 0, i < 2, 0));
   return ps;
 }
 
+// "Check your work" tick boxes after the paragraph (one-level papers), and the rubric printed as the paper's last page
+function checkBox(checks) {
+  return [P([R("Check your work", { bold: true, color: BLUE, size: 26 })], { spacing: { before: 240, after: 60 }, keepNext: true }),
+    box(checks.map(c => P([R("☐  ", { color: BLUE, size: 28 }), R(c, { size: 23 })], { indent: { left: 380, hanging: 380 }, spacing: { after: 30 } })))];
+}
+function rubricPage(rb, pb) {
+  const lvW = 2300, LVFILL = ["F6E3E3", "FBF0DA", "E3F0FB", "D7ECEA"], ps = [];
+  ps.push(P([R(rb.title || "How your paragraph is marked", { bold: true, color: NAVY, size: 34 })], { pageBreakBefore: true, spacing: { after: 60 } }));
+  if (rb.intro) ps.push(P([R(rb.intro.replace("{out}", pb.out), { italics: true, color: GREY, size: 22 })], { spacing: { after: 140 } }));
+  rb.criteria.forEach(c => {
+    ps.push(P([R(`${c.code}  \u00B7  ${c.name}`, { bold: true, color: BLUE, size: 24 })], { keepNext: true, spacing: { before: 180, after: 70 } }));
+    ps.push(new Table({ width: { size: W, type: WidthType.DXA }, columnWidths: [lvW, W - lvW],
+      rows: c.d.map((desc, k) => new TableRow({ cantSplit: true, children: [
+        new TableCell({ width: { size: lvW, type: WidthType.DXA }, shading: { type: ShadingType.CLEAR, fill: LVFILL[k], color: "auto" },
+          margins: { top: 60, bottom: 60, left: 120, right: 100 }, borders: { top: edge, bottom: edge, left: edge, right: edge },
+          children: [P([R(`${rb.levels[k]}${rb.points ? "  ·  " + rb.points[k] : ""}`, { bold: true, size: 20, color: NAVY })], { keepNext: true })] }),
+        new TableCell({ width: { size: W - lvW, type: WidthType.DXA }, margins: { top: 60, bottom: 60, left: 140, right: 120 },
+          borders: { top: edge, bottom: edge, left: edge, right: edge },
+          children: [P([R(desc, { size: 21 })], { keepNext: k < c.d.length - 1 })] }) ] })) })); });
+  return ps;
+}
+
 function paper(T, pb, title, key) {
   const body = [...header(T.lvl, title, T.total),
-    box([P([R(`Part A — Words and grammar  (${T.partA} marks)   ·   Part B — Writing  (${T.partB} marks)`, { bold: true, color: NAVY, size: 24 })]),
-      P([R("Pencil only. Work alone. Read each section and look at the example first.", { size: 22, color: GREY })])]),
-    P([R("Part A — Words and grammar", { bold: true, color: NAVY, size: 34 }), R(`\t____ / ${T.partA}`, { bold: true, color: NAVY, size: 26 })],
+    box([P([R(`Part A — ${D.partALabel || "Words and grammar"}  (${T.partA} marks)   ·   Part B — ${D.partBLabel || "Writing"}  (${T.partB} marks)`, { bold: true, color: NAVY, size: 24 })]),
+      P([R(D.intro || "Pencil only. Work alone. Read each section and look at the example first.", { size: 22, color: GREY })])]),
+    P([R(`Part A — ${D.partALabel || "Words and grammar"}`, { bold: true, color: NAVY, size: 34 }), R(`\t____ / ${T.partA}`, { bold: true, color: NAVY, size: 26 })],
       { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 280, after: 0 }, keepNext: true }),
-    ...T.sections.flatMap(s => section(s, key)), ...partB(pb, key)];
+    ...T.sections.flatMap(s => section(s, key)), ...partB(pb, key), ...(pb.checks ? checkBox(pb.checks) : []), ...(D.rubric ? rubricPage(D.rubric, pb) : [])];
   return body;
 }
 
@@ -96,19 +133,20 @@ function doc(body, headText) {
 fs.mkdirSync(out, { recursive: true });
 const NAME = { practice: "PracticeTest", unit: "UnitTest" }, TITLE = { practice: "Practice Test", unit: "Unit Test" };
 // sanity: every section's printed out-of equals the marks of its items; Part A + Part B = total
-for (const t of ["practice", "unit"]) for (const l of ["1A", "2A"]) { const T = D[t][l];
+for (const t of ["practice", "unit"]) for (const l of LEVELS) { const T = D[t][l];
   T.sections.forEach(s => { if (sum(s) !== s.outOf) throw new Error(`${t} ${l} Section ${s.sec}: items add to ${sum(s)}, printed /${s.outOf}`); });
-  const a = T.sections.reduce((x, s) => x + s.outOf, 0); if (a !== T.partA || a + D.partB[t][l].out !== T.total) throw new Error(`${t} ${l}: totals do not add up`); }
+  const a = T.sections.filter(s => !s.partB).reduce((x, s) => x + s.outOf, 0), b = T.sections.filter(s => s.partB).reduce((x, s) => x + s.outOf, 0) + D.partB[t][l].out;
+  if (a !== T.partA || b !== T.partB || a + b !== T.total) throw new Error(`${t} ${l}: totals do not add up (A ${a}, B ${b})`); }
 const jobs = [];
 if (WHICH === "key") {
   const body = [];
-  ["practice", "unit"].forEach((t, ti) => ["1A", "2A"].forEach((l, li) => { const T = D[t][l];
+  ["practice", "unit"].forEach((t, ti) => LEVELS.forEach((l, li) => { const T = D[t][l];
     if (ti + li > 0) body.push(P([], { pageBreakBefore: true }));
     body.push(...paper(T, D.partB[t][l], `${TITLE[t]} — Answer Key`, true)); }));
-  jobs.push(Packer.toBuffer(doc(body, `ELL 1/2 · Unit ${UNO} · Test Answer Key · teacher copy`)).then(b => { const f = `${out}/ELL12_U0${UNO}_TestKeys_${VER}.docx`; fs.writeFileSync(f, b); console.log("key", path.basename(f)); }));
+  jobs.push(Packer.toBuffer(doc(body, KEYHEAD)).then(b => { const f = `${out}/${COURSE}_U0${UNO}_TestKeys_${VER}.docx`; fs.writeFileSync(f, b); console.log("key", path.basename(f)); }));
 } else {
-  ["1A", "2A"].forEach(l => { const T = D[WHICH][l];
+  LEVELS.forEach(l => { const T = D[WHICH][l];
     jobs.push(Packer.toBuffer(doc(paper(T, D.partB[WHICH][l], TITLE[WHICH], false), `${T.lvl} · Unit ${UNO} · ${TITLE[WHICH]}  ·  Room 148`))
-      .then(b => { const f = `${out}/ELL12_U0${UNO}_${NAME[WHICH]}_${VER}_${l}.docx`; fs.writeFileSync(f, b); console.log("paper", path.basename(f)); })); });
+      .then(b => { const f = `${out}/${COURSE}_U0${UNO}_${NAME[WHICH]}_${VER}${LEVELS.length > 1 ? "_" + l : ""}.docx`; fs.writeFileSync(f, b); console.log("paper", path.basename(f)); })); });
 }
 Promise.all(jobs);
