@@ -60,5 +60,17 @@ Promise.all(LESSON.goodCopy.map(g => {
     sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 900, bottom: 700, left: 1080, right: 1080, header: 450, footer: 400 } } },
       headers: { default: new Header({ children: [P([R(`${g.lvl} · Unit ${M.unit} · Lesson ${M.lesson} Good Copy  ·  Room ${COURSE.room}`, { size: 18, color: GREY })], { alignment: AlignmentType.RIGHT })] }) },
       children: body }] });
-  return Packer.toBuffer(doc).then(b => { const f = `${out}/${base}${g.suffix ? "_" + g.suffix : ""}.docx`; fs.writeFileSync(f, b); console.log("good copy", path.basename(f)); });
+  const main = Packer.toBuffer(doc).then(b => { const f = `${out}/${base}${g.suffix ? "_" + g.suffix : ""}.docx`; fs.writeFileSync(f, b); console.log("good copy", path.basename(f)); });
+  // SECOND SHEET (Sean, Oct 23 2026, ELL3 U2): opt-in g.extraLines prints a separate "continued" page of lines for students
+  // who write past the first page — kept off the main sheet so the rubric still duplexes onto the back of page 1.
+  if (!g.extraLines) return main;
+  const xdoc = new Document({ styles: { default: { document: { run: { font: FONT, size: 28 } } } },
+    sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 900, bottom: 700, left: 1080, right: 1080, header: 450, footer: 400 } } },
+      headers: { default: new Header({ children: [P([R(`${g.lvl} · Unit ${M.unit} · Lesson ${M.lesson} Good Copy, second sheet  ·  Room ${COURSE.room}`, { size: 18, color: GREY })], { alignment: AlignmentType.RIGHT })] }) },
+      children: [
+        P([R((g.title || "Good Copy") + " (continued)", { bold: true, color: NAVY, size: 36 })], { spacing: { after: 100 } }),
+        P([R("Name: ", { bold: true }), R("\t")], { tabStops: [{ type: TabStopType.RIGHT, position: 6500, leader: LeaderType.UNDERSCORE }], spacing: { before: 60, after: 120 } }),
+        box([P([R("Keep writing from the last line of your first sheet. Staple this sheet behind it before you hand it in.", { size: 24 })])]),
+        ...Array.from({ length: g.extraLines }, () => line(g.gap || 330)) ] }] });
+  return Promise.all([main, Packer.toBuffer(xdoc).then(b => { const f = `${out}/${base}${g.suffix ? "_" + g.suffix : ""}_SecondSheet.docx`; fs.writeFileSync(f, b); console.log("good copy second sheet", path.basename(f)); })]);
 }));
