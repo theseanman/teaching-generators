@@ -774,7 +774,7 @@ function expand(sp) {
       push(sp.label || "Next class", n => R.shape({ slice: sl, from, cont: i > 0, tag: "Next class", head: sp.head, noCountdown: sp.noCountdown }, n), i < a.length - 1 ? null : undefined); }); }
   if (sp.type === "walk") { const p = part(sp.part), NEW = !!CO.levels, blank = NEW && p.kind === "cloze" ? "  ________" : "";
     const its = p.kind === "check" ? p.checks.map((c, k) => ({ q: c, n: "\u2713" })) : !NEW ? wsItems(p)
-      : [...(p.example && sp.withExample ? [{ q: `(example)  ${p.kind === "cloze" ? clozeQ(p.example).replace("________", p.example.ans) : p.example.text + ((/\u2192\s*$/.test(p.example.text) ? "  " : "  \u2192  ") + p.example.ans)}`, n: "Ex" }] : []),
+      : [...(p.example && sp.withExample ? [{ q: `(example)  ${p.kind === "cloze" ? clozeQ(p.example).replace("________", p.example.ans) : (p.example.text ? p.example.text + (/\u2192\s*$/.test(p.example.text) ? "  " : "  \u2192  ") : "") + p.example.ans}`, n: "Ex" }] : []),
          ...wsItems(p).map((it, k) => ({ ...it, q: BLANKRE.test(it.q) ? it.q : it.q + blank, n: k + 1 }))];
     { const ni = p.instr ? needText(p.instr, 8.7, MIN) + 0.1 : 0, nh = needText(p.how, 8.7, MIN) + 0.6;
       if (p.instr && ni + nh + 0.18 > BOT - TOP) {
