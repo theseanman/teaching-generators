@@ -44,7 +44,8 @@ def stranded(pdf):
             out.append((n, lines[last])); continue
         nxt = [l for l in pages[n + 1] if not HEADER.search(l)] if n + 1 < len(pages) else []
         continues = bool(nxt) and not HEAD.match(nxt[0])          # the same Part/Section carries on overleaf
-        if continues and sum(1 for l in after if NUM.match(l)) < 2:
+        # an open writing Part (a draft) may run overleaf once it has real writing room on this page
+        if continues and sum(1 for l in after if NUM.match(l)) < 2 and sum(1 for l in after if RULE.match(l)) < 6:
             out.append((n, lines[last]))
     # a question at the foot of a page whose writing lines went overleaf (LibreOffice drops keep-with-next here too)
     for n, lines in enumerate(pages[:-1]):
