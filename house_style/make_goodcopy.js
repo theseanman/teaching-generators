@@ -37,6 +37,25 @@ Promise.all(LESSON.goodCopy.map(g => {
       children: [P(t ? [R("☐  ", { size: 30, color: BLUE }), R(t, { size: 22 })] : [], { indent: { left: 380, hanging: 380 } })] }); }) }));
   body.push(P([R("Before you hand it in", { bold: true, color: BLUE, size: 26 })], { spacing: { before: 260, after: 40 }, keepNext: true }));
   body.push(new Table({ width: { size: W, type: WidthType.DXA }, columnWidths: [cw, cw], rows }));
+  // RUBRIC ON THE BACK (Sean's standing order, Oct 12 2026): an evaluated good copy prints its rubric — ALL FOUR levels with
+  // every descriptor — as criterion blocks at full page width on its own page, so it duplexes onto the reverse of the sheet.
+  // Data: g.rubric = { title, intro, levels: [4 labels, low to high], criteria: [{ code, name, d: [4 descriptors] }] }.
+  if (g.rubric) {
+    const rb = g.rubric, lvW = 2300, LVFILL = ["F6E3E3", "FBF0DA", "E3F0FB", "D7ECEA"];
+    body.push(P([R(rb.title || "How your good copy is marked", { bold: true, color: NAVY, size: 34 })], { pageBreakBefore: true, spacing: { after: 60 } }));
+    if (rb.intro) body.push(P([R(rb.intro, { italics: true, color: GREY, size: 22 })], { spacing: { after: 160 } }));
+    rb.criteria.forEach(c => {
+      body.push(P([R(`${c.code}  \u00B7  ${c.name}`, { bold: true, color: BLUE, size: 24 })], { keepNext: true, spacing: { before: 200, after: 80 } }));
+      body.push(new Table({ width: { size: W, type: WidthType.DXA }, columnWidths: [lvW, W - lvW],
+        rows: c.d.map((desc, k) => new TableRow({ cantSplit: true, children: [
+          new TableCell({ width: { size: lvW, type: WidthType.DXA }, shading: { type: ShadingType.CLEAR, fill: LVFILL[k], color: "auto" },
+            margins: { top: 70, bottom: 70, left: 120, right: 100 }, borders: { top: edge, bottom: edge, left: edge, right: edge },
+            children: [P([R(rb.levels[k], { bold: true, size: 20, color: NAVY })], { keepNext: true })] }),
+          new TableCell({ width: { size: W - lvW, type: WidthType.DXA }, margins: { top: 70, bottom: 70, left: 140, right: 120 },
+            borders: { top: edge, bottom: edge, left: edge, right: edge },
+            children: [P([R(desc, { size: 21 })], { keepNext: k < c.d.length - 1 })] }) ] })) }));
+    });
+  }
   const doc = new Document({ styles: { default: { document: { run: { font: FONT, size: 28 } } } },
     sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 900, bottom: 700, left: 1080, right: 1080, header: 450, footer: 400 } } },
       headers: { default: new Header({ children: [P([R(`${g.lvl} · Unit ${M.unit} · Lesson ${M.lesson} Good Copy  ·  Room ${COURSE.room}`, { size: 18, color: GREY })], { alignment: AlignmentType.RIGHT })] }) },
