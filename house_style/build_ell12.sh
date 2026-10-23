@@ -10,6 +10,7 @@ node check_lesson.js "$LESSON"
 N=$(node -e "console.log(require('./$LESSON').sheets.length)")
 for ((i=0;i<N;i++)); do node make_worksheet.js "$LESSON" "$OUT" "$WSV" "$i"; done
 (cd "$OUT" && python3 "$SOFF" --headless --convert-to pdf *_Worksheet_*.docx >/dev/null 2>&1)
+python3 keep_parts.py "$OUT" "$SOFF"                 # keep each Part heading with its first question (LibreOffice drops keep-with-next)
 if [ "$(node -e "console.log(!!require('./$LESSON').goodCopy)")" = "true" ]; then
   node make_goodcopy.js "$LESSON" "$OUT" "$WSV"
   (cd "$OUT" && python3 "$SOFF" --headless --convert-to pdf *_GoodCopy_*.docx >/dev/null 2>&1)
