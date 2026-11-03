@@ -1,6 +1,8 @@
 // ENG8 U2 L02 — Point of View. ALL content here; the renderer holds the design.
 // Merges August L4–5. Story 2 "The Fog Line" (ENG8_U02_stories.js): third person limited, external conflict.
-// The warm-up points back to "Send", read in Lesson 1, by name. Formative: Lesson 1 Part C was the marked reading piece.
+// The warm-up points back to "Send", read in Lesson 1, by name. ★ Nov 3 2026 (Sean): Part C is now COLLECTED AND MARKED as the
+// unit's Term 1 reading evidence, on the point-of-view rubric printed on the back of the worksheet. It replaces Lesson 1 Part C,
+// which was gone over as a class. Part C answers are revealed only AFTER the worksheet is handed in.
 // Taught Thu Nov 5 (F and H). Five classes from the unit test: no countdown yet. Accent: amber (lesson 2 in the cycle).
 // Build: bash build.sh lessons/ENG8_U02_L02.js v1 v1
 const { FOG, FOG_WORDS } = require("./ENG8_U02_stories.js");
@@ -26,7 +28,7 @@ module.exports = {
   outcomes: "Comprehend & Connect: point of view · Create & Communicate: chosen point of view",
   schwerpunkt: "point of view decides what the reader knows — change it, and notice what you gain and lose. Won or lost in Parts D and E.",
   schwerStep: 10,
-  materials: "Deck · Lesson 2 worksheet with “The Fog Line” printed on it, one per student plus spares · exercise books · pencils",
+  materials: "Deck · Lesson 2 worksheet with “The Fog Line” printed on it, one per student plus spares (Part C rubric on the back) · exercise books · pencils",
   timing: "80 minutes",
   steps: [
    ["5", "Warm-up", "In the exercise book: paragraph 6 of “Send”, the story from Lesson 1 — “I opened the group chat. I pasted the photo.” Rewrite it starting “She opened the group chat.” What changed? Take two answers: the pronouns, and how close we feel."],
@@ -38,14 +40,14 @@ module.exports = {
    ["10", "Read “The Fog Line”", "Students follow on the worksheet while you read aloud, in full, once. Then one question: whose thoughts do we hear?"],
    ["5", "Part A — vocabulary", "Six blanks from a nine-word bank, the example done, two words left over. Reveal one at a time."],
    ["6", "Part B — first or third?", "Five lines labelled FIRST or THIRD. Look outside the quotation marks — dialogue uses I in every point of view. Reveal one at a time."],
-   ["10", "Part C — point of view in The Fog Line", "Five answers with evidence: the point of view and its proof, whose thoughts we know, whose we never learn, the want and the obstacle, and why “Four-fifteen” lands harder because we cannot hear the uncle’s thoughts. One example answer revealed for each."],
+   ["10", "Part C — point of view in The Fog Line", "Five answers with evidence: the point of view and its proof, whose thoughts we know, whose we never learn, the want and the obstacle, and why “Four-fifteen” lands harder because we cannot hear the uncle’s thoughts. ★ Say first: Part C is marked, so they work alone. No reveals until after hand-in."],
    ["10", "Parts D and E — change the point of view", "Part D: rewrite paragraph 14 (“She tried to steer…”) in first person as Mara — every she becomes I, every her becomes my, and keep the past tense. Part E: one thing the reader now knows or feels more closely, and one thing that was lost. This is where the Schwerpunkt is won."],
    ["5", "Speaking — tell it, then retell it", "Partner A tells a small moment from their day in first person. Partner B retells it to A in third person: “She walked in and…”. Then swap."],
    ["2", "Part F — check your work", "Six tick boxes in two columns. The box to insist on: no she or her left in the Part D rewrite, except for other people."],
-   ["3", "Exit ticket", "Part G: which point of view will you use for your own story, and why? Hand in the exit ticket; the worksheet goes in the duotang."],
+   ["3", "Exit ticket and hand in", "Part G: which point of view will you use for your own story, and why? Collect the whole worksheet — Part C is marked. Then reveal the Part C good answers."],
    ["2", "Next class and agendas", "Next class is the plot arc and planning your story. Next class starts the countdown: unit test in four classes. Bring the Lesson 1 story seeds."]],
   diff: "Support: Part C questions 1, 2 and 4; Part D rewrites only the first three sentences of paragraph 14. Extension: rewrite paragraph 19 as omniscient, adding one line of the uncle’s thoughts.",
-  assess: "Formative. Nothing is collected but the exit ticket. Read the Part D rewrites over shoulders: a stray she or her, or a slip into present tense, is the thing to catch before students write their own stories.",
+  assess: "★ Part C is collected and marked on the rubric on the back (point of view · evidence · explaining). It is the unit's reading evidence, replacing L1 Part C. Read Part D rewrites over shoulders: a stray she or her, or a slip into present tense, is the thing to catch before students write their own stories.",
   homework: "Bring your Lesson 1 worksheet next class: your Part D story seeds are where your plan starts.",
   watch: "Students labelling first person because of I inside dialogue. Part D rewrites that change Theo’s pronouns too (Theo stays he). Answers to “whose thoughts” that guess what Theo or the uncle thinks — the story never tells us." },
  shape: [["Send, from the outside", "warm-up, in your exercise book"], ["Today’s goals", "reading together"],
@@ -54,7 +56,7 @@ module.exports = {
    ["The Fog Line", "reading together"], ["Part A — vocabulary", "worksheet"],
    ["Part B — first or third?", "worksheet"], ["Part C — point of view in The Fog Line", "worksheet"],
    ["Parts D and E — change the point of view", "independent writing"], ["Tell it, then retell it", "partner speaking"],
-   ["Part F — check your work", "tick boxes"], ["Exit ticket", "quick write"]],
+   ["Part F — check your work", "tick boxes"], ["Exit ticket and hand in", "quick write"]],
  sequence: [
   { type: "title", label: "Today’s lesson" },
   { type: "warmup", label: "Warm-up", head: "Warm-up — in your exercise book",
@@ -87,13 +89,12 @@ module.exports = {
   { type: "wordlist", text: "fog", label: "Words in this story", note: "Use the list only for a word that stops you while we read." },
   { type: "text", text: "fog", label: "The Fog Line", continues: "The Fog Line continues", budget: 360 },
   { type: "handout", label: "Your worksheet", note: "“The Fog Line” is printed on your sheet, with paragraph numbers.",
-    foot: "The exit ticket is the last Part. The worksheet goes in your duotang." },
+    foot: "Part C is collected and marked; the rubric is on the back. The whole worksheet is handed in at the end." },
   { type: "walk", part: "A" },
   { type: "reveals", part: "A" },
   { type: "walk", part: "B", note: "Look outside the quotation marks." },
   { type: "reveals", part: "B" },
-  { type: "walk", part: "C", note: "Quote the words and give the paragraph number." },
-  { type: "reveals", part: "C", good: true },
+  { type: "walk", part: "C", note: "This Part is marked — work on your own. Quote the words, give the paragraph number. The rubric is on the back." },
   { type: "walk", part: "D", note: "Every she becomes I, every her becomes my. Theo stays he. Keep the past tense." },
   { type: "reveals", part: "D", good: true },
   { type: "walk", part: "E" },
@@ -103,7 +104,8 @@ module.exports = {
     prompt: "Partner A tells a small moment from their day in first person. Partner B retells it in third person. Then swap.",
     frames: ["I walked in and ______.", "She walked in and ______.", "In third person, I could not say ______."] },
   { type: "walk", part: "F", note: "Six boxes on your sheet. Tick one only when it is true." },
-  { type: "exit", label: "Exit ticket", part: "G", note: "Hand me your exit ticket. The worksheet stays in your duotang." },
+  { type: "exit", label: "Exit ticket", part: "G", note: "Hand in the whole worksheet. Part C is marked — the rubric is on the back." },
+  { type: "reveals", part: "C", good: true },
   { type: "nextshape", label: "Next class", head: "Next class: The Plot Arc", noCountdown: true, items: [
     ["Unit test in four classes", "countdown"], ["The plot arc", "instruction"],
     ["Map The Fog Line", "worksheet"], ["Plan your own story", "planning"]] },
@@ -142,7 +144,7 @@ module.exports = {
       { text: "Nobody told me the bus had left.", ans: "FIRST", tail: "" }],
      how: "Cover the dialogue with your finger. Then look at the pronouns that are left: I and me mean FIRST; she, he and they mean THIRD." },
    { id: "C", title: "Point of view in The Fog Line", kind: "lines", weight: 10, lines: 2,
-     instr: "Answer in complete sentences. Quote words from the story and give the paragraph number.",
+     instr: "Answer in complete sentences. Quote words from the story and give the paragraph number. This Part is handed in and marked.",
      example: { text: "Who is the main character?", ans: "Mara is the main character: “Mara had promised two things” (paragraph 1)." },
      items: [
       { text: "What is the point of view? Prove it.", ans: "Third person: “She did not know” (paragraph 10)." },
@@ -172,8 +174,24 @@ module.exports = {
        "My rewrite stayed in the past tense."],
      how: "Tick a box only when it is true. Fix anything you cannot tick before the exit ticket." },
    { id: "G", title: "Exit ticket", kind: "exit", lines: 2,
-     instr: "Answer, then hand this part to me.",
+     instr: "Answer, then hand in the whole worksheet.",
      items: [
       { text: "Which point of view will you use for your own story? Why?" }],
-     how: "One choice and one reason. Hand me this part only." }] }
+     how: "One choice and one reason. Then hand in the whole worksheet — Part C is marked." }],
+  rubric: { title: "How Part C is marked", intro: "Part C is marked on its own. Mr. Reid circles one level on each line.", levels: ["Emerging", "Developing", "Proficient", "Extending"], criteria: [
+    { code: "Point of view", name: "Naming the point of view", d: [
+      "The point of view is missing or wrong, or the answer retells what happens.",
+      "You name the point of view, but do not say clearly whose thoughts we know and whose we never learn.",
+      "You name the point of view and say whose thoughts we know and whose we never learn.",
+      "You name the point of view precisely and show how what it keeps from the reader builds tension."] },
+    { code: "Evidence", name: "Using evidence", d: [
+      "No words from the story, or words that do not fit the answer.",
+      "Some quotations, but they are missing paragraph numbers or do not quite prove the point.",
+      "A fitting quotation with its paragraph number in most answers.",
+      "The strongest quotation for each answer, with its paragraph number, every time."] },
+    { code: "Inference", name: "Explaining what the words show", d: [
+      "The answer repeats the quotation without explaining it.",
+      "Some explanation, but it stays close to the surface.",
+      "You explain what the words show about Mara and the point of view.",
+      "You explain what the words show and what the writer leaves unsaid, with insight."] } ] } }
 };
