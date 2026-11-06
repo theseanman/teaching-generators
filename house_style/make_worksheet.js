@@ -153,11 +153,20 @@ if (D.rubric) { const rb = D.rubric, lvW = 2300, LVFILL = ["F6E3E3", "FBF0DA", "
           children: [P([R(desc, { size: 21 })], { keepNext: k < c.d.length - 1 })] }) ] })) })); }); }
 if (D.helpLine) body.push(P([R(D.helpLine, { italics: true, color: GREY, size: 22 })], { spacing: { before: 240 } }));
 if (!D.helpLine) body.push(P([], { spacing: { after: 0 } })); // the help line already ends the document; an extra empty paragraph can spill onto a blank page
+// NAME ON EVERY COLLECTED PAGE (standing order Nov 6 2026, every course): Sean photo-marks stapled packets and cannot match a back page to
+// its front when only page 1 carries a name. A worksheet with a collected, marked Part (D.rubric) therefore prints "Name: ____" in the
+// running header of every page after the first (page 1 already has the Name/Date line in the body). It shares the one-line header, so it
+// takes no writing space. Worksheets with no rubric are not collected for marks and keep the plain header.
+const HDR_LABEL = `${LABEL} \u00B7 Unit ${D.unit} \u00B7 Lesson ${D.lesson} Worksheet  \u00B7  Room ${COURSE.room}`;
+const plainHeader = () => new Header({ children: [P([R(HDR_LABEL, { size: 18, color: GREY })], { alignment: AlignmentType.RIGHT })] });
+const nameHeader = () => new Header({ children: [P([R("Name: ", { bold: true, size: 20 }), R("\t", { size: 20 }), R("\t" + HDR_LABEL, { size: 18, color: GREY })],
+  { tabStops: [{ type: TabStopType.RIGHT, position: 4800, leader: LeaderType.UNDERSCORE }, { type: TabStopType.RIGHT, position: W }] })] });
+const pageFooter = () => new Footer({ children: [P([R("Page ", { size: 18, color: GREY }), new TextRun({ children: [PageNumber.CURRENT], size: 18, color: GREY, font: FONT })], { alignment: AlignmentType.CENTER })] });
 const doc = new Document({
   styles: { default: { document: { run: { font: FONT, size: SZ } } } },
-  sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 1000, bottom: 900, left: 1080, right: 1080, header: 500, footer: 450 } } },
-    headers: { default: new Header({ children: [P([R(`${LABEL} \u00B7 Unit ${D.unit} \u00B7 Lesson ${D.lesson} Worksheet  \u00B7  Room ${COURSE.room}`, { size: 18, color: GREY })], { alignment: AlignmentType.RIGHT })] }) },
-    footers: { default: new Footer({ children: [P([R("Page ", { size: 18, color: GREY }), new TextRun({ children: [PageNumber.CURRENT], size: 18, color: GREY, font: FONT })], { alignment: AlignmentType.CENTER })] }) },
+  sections: [{ properties: { titlePage: !!D.rubric, page: { size: { width: 12240, height: 15840 }, margin: { top: 1000, bottom: 900, left: 1080, right: 1080, header: 500, footer: 450 } } },
+    headers: D.rubric ? { default: nameHeader(), first: plainHeader() } : { default: plainHeader() },
+    footers: D.rubric ? { default: pageFooter(), first: pageFooter() } : { default: pageFooter() },
     children: body }] });
 Packer.toBuffer(doc).then(b => { fs.writeFileSync(`${out}/${THEME.fileName(COURSE, M, "Worksheet", VER)}${D.suffix ? "_" + D.suffix : ""}.docx`, b);
   fs.writeFileSync(`${out}/manifest${D.suffix ? "_" + D.suffix : ""}.json`, JSON.stringify(manifest)); console.log("ok", manifest.length); });
