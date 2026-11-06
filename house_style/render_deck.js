@@ -647,7 +647,7 @@ function markLayout(sp) {
     if (top0 + Math.max(...colH) <= BOT) return { S, head, top0, cols, colW, tw, per, rowH, colH }; }
   return null; }
 R.markq = (sp, next, upto, hi) => { const s = pres.addSlide(), lay = sp.lay;
-  const tag = `Marking · ${sp.lvl}` + (upto < 0 ? " · the questions" : ` · answer ${upto + 1} of ${sp.items.length}`);
+  const tag = `Marking · ${sp.lvl}` + (upto < 0 ? " · the questions" : sp.whole ? " · all the answers" : ` · answer ${upto + 1} of ${sp.items.length}`);
   const hd = `${sp.lvl} · Section ${sp.sec} — ${sp.title}`, hl = HEADLESS; HEADLESS = !!lay && !lay.head;
   try { frame(s, tag, hd, next); } finally { HEADLESS = hl; }
   if (!lay) { SMALL.push(`marking ${sp.lvl} Section ${sp.sec}: does not fit one slide at ${LOWMIN} pt`); return; }
@@ -815,7 +815,10 @@ function expand(sp) {
         i < sl.length - 1 || !last ? null : undefined)); }); }
   if (sp.type === "markq") { const g = { ...sp, lay: markLayout(sp) }, n = sp.items.length, lab = `${sp.lvl} Section ${sp.sec} answers`;
     if (g.lay && (g.lay.S < BASE || !g.lay.head)) ONESIZES.push(`marking ${sp.lvl} Section ${sp.sec} ${sp.title}: ${g.lay.S}${g.lay.head ? "" : " (heading dropped)"}`);
-    push(lab, nx => R.markq(g, nx, -1, 0), null);
+    push(lab, nx => R.markq(g, nx, -1, sp.whole ? -1 : 0), null);
+    // sp.whole (Nov 6 2026, option (c) for the 60-minute order): the questions, then EVERY answer on one slide — pairs mark at
+    // their own pace instead of waiting for one answer per slide.
+    if (sp.whole) { push(lab, nx => R.markq(g, nx, n - 1, -1)); return; }
     sp.items.forEach((_, i) => push(lab, nx => R.markq(g, nx, i, i + 1 < n ? i + 1 : -1), i < n - 1 ? null : undefined)); return; }
   if (sp.type === "markpara" || sp.type === "marktotal") return push(sp.label, n => R[sp.type](sp, n));
   if (sp.type === "match") { const bank = sp.bank || sp.words.map(w => w[0]), m = { ...sp, bank };

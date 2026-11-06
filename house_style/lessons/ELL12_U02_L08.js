@@ -2,7 +2,8 @@
 // Students write the unit test, swap with a same-level partner and mark Part A and Part B together.
 // Data: ELL12_U02_testdata.js (one source for the printed papers, the key and this deck). Built Oct 23 2026.
 // Part B is marked with the good-copy rubric lines from L06 (Sean approved them Oct 23).
-// Nov 6 2026 (marking-time rule): 42-minute write; ELL 2 Section D fixed ON the paragraph; core-competency self-reflection
+// Nov 6 2026 — 60-minute standing order, option (c): 40-minute write, Part A marked from whole-section answer slides
+// (10 min) and Part B in 5, so writing + marking = 60; light trims (ELL 1 /56, ELL 2 /58). Earlier the same day: 42-minute write; ELL 2 Section D fixed ON the paragraph; core-competency self-reflection
 // written in the same period after marking (practice test cut Nov 3).
 const D = require("./ELL12_U02_testdata.js"), MK = require("../marking.js");
 const T = D.unit;
@@ -12,19 +13,20 @@ module.exports = {
  banner: { obj: "Show what you learned in Unit 2, then mark a partner's test together.",
    std: "ELL 1: W4 paragraph · W3 because · W5 capitals · W8 present tense  •  ELL 2: W3 · W4 transitions · W2 connecting · W7 punctuation", lit: ["COM", "TH", "PS"] },
  plan: {
-  objective: "Students write the Unit 2 test (/60, it counts), then swap with a same-level partner and mark Parts A and B together. Tests come to you.",
+  objective: "Students write the Unit 2 test (ELL 1 /56, ELL 2 /58, it counts) in 40 minutes, then swap with a same-level partner and mark Parts A and B together. Tests come to you.",
   outcomes: "ELL 1: W4 · W3 · W5 · W8. ELL 2: W3 · W4 · W2 · W7.",
   schwerpunkt: "the opinion paragraph written alone under test conditions: opinion, three because-reasons, closing (ELL 2: with details and transitions).",
   schwerStep: 1,
   materials: "Deck · ELL 1 and ELL 2 unit tests (ELL12_U02_UnitTest) · a coloured pen for every student · the answer key (ELL12_U02_TestKeys) for you · core-competency self-reflection sheets (district template), one each",
   timing: "80 minutes",
   steps: [
-   ["3", "How the test works", "60 marks; it counts. Pencil only, work alone, no phones or translators, no talking. 42 minutes. Hand out the ELL 1 and ELL 2 papers."],
-   ["42", "Write the unit test", "Part A, then Part B (Should students have homework every day?). ELL 2 Section D is fixed ON the paragraph. Finished students tick the Part B checklist, turn the paper over and read quietly. Circulate; answer questions about instructions only."],
+   ["3", "How the test works", "It counts. Pencil only, work alone, no phones or translators, no talking. 40 minutes. Hand out the ELL 1 and ELL 2 papers."],
+   ["40", "Write the unit test", "Part A, then Part B (Should students have homework every day?). ELL 2 Section D is fixed ON the paragraph. Finished students tick the Part B checklist, turn the paper over and read quietly. Circulate; answer questions about instructions only. Call ten and five minutes left."],
    ["2", "Swap papers", "Pencils away, coloured pens out. Swap with a partner at the SAME level (ELL 1 with ELL 1, ELL 2 with ELL 2). The marker writes Marked by and their name at the top."],
-   ["17", "Mark Part A together", "Section by section, ELL 1 and ELL 2 alternating. Each answer shows its mark; because items are 2 marks (+1 because, +1 a full sentence after it). Where the key shows “also right”, that answer gets the mark. ELL 2 Section D: +1 for each of the ten spots fixed on the paragraph, nothing else marked. Each total slide gives the level band and the running Part A total."],
-   ["8", "Mark Part B together", "For each level: what the writer had to do and one good answer. Then one rubric line at a time, levels alternating: the marker circles the level and writes its mark. Nothing written scores 0."],
-   ["8", "Add it up, hand it in, self-reflection", "Markers add Part A and Part B, write the total out of 60 and sign; all tests come to you. Then the core-competency self-reflection sheets, done alone, collected for copying."] ],
+   ["10", "Mark Part A together", "Section by section, levels alternating: the questions, then ALL the answers on one slide; pairs mark at their own pace. Because items: +1 because, +1 a full sentence after it. “Also right” answers get the mark. ELL 2 Section D: +1 per spot fixed on the paragraph. Total slides give the band and running Part A total."],
+   ["5", "Mark Part B together", "For each level: what the writer had to do and one good answer. Then one rubric line at a time, levels alternating: the marker circles the level and writes its mark. Nothing written scores 0."],
+   ["4", "Add it up and hand it in", "Markers add Part A and Part B, write the total and sign; all tests come to you."],
+   ["8", "Core-competency self-reflection", "Hand out the self-reflection sheets; students complete them alone, in full sentences. Collect them for copying."] ],
   diff: "Support: read the Part B checklist aloud to ELL 1 before they write. Extension: none during the test; ELL 2 early finishers check every comma after a transition.",
   assess: "Summative. Check the peer marking against the key (ELL12_U02_TestKeys) before entering: the section levels go in the Gradebook, and the Part B rubric levels are the levels for those outcomes. The Nov 26 MyEd deadline follows.",
   homework: "None. Unit 3 starts next class.",
@@ -34,8 +36,8 @@ module.exports = {
  sequence: [
   { type: "title", label: "Today's lesson" },
   { type: "rows", label: "How it works", tag: "Unit 2 test", head: "How the test works", rows: [
-    ["Two parts", "Part A (words and grammar), then Part B (writing)."], ["60 marks", "This test counts."],
-    ["Alone", "Pencil only. No phones. No talking."], ["Time", "42 minutes."]] },
+    ["Two parts", "Part A (words and grammar), then Part B (writing)."], ["Marks", "ELL 1: 56. ELL 2: 58. This test counts."],
+    ["Alone", "Pencil only. No phones. No talking."], ["Time", "40 minutes."]] },
   { type: "rows", label: "Write now", tag: "Unit 2 test", head: "Write the unit test now", rows: [
     ["Part A", "Read each section. Look at the example first."], ["Part B", "Should students have homework every day? Follow the checklist."],
     ["Finished?", "Tick the checklist. Turn your paper over. Read quietly."]] },
@@ -47,13 +49,13 @@ module.exports = {
     ["+2", "Two marks: give one mark for each part that is right."], ["Box", "Count the ticks. Write the score in the section box."],
     ["Also right", "If the slide says also right, that answer gets the mark too."],
     ["Never", "Never change your partner's writing."]] },
-  ...MK.partA(T),
+  ...MK.partA(T, { whole: true }),
   { type: "rows", label: "Mark Part B together", tag: "Part B", head: "Mark Part B together", rows: [
     ["1", "Read your partner's paragraph once, all the way through."], ["2", "We look at ONE rubric line at a time."],
     ["3", "Circle the level that fits best. Write its mark beside it."], ["0", "Nothing written? The mark is 0."]] },
   ...MK.partB(T, D.partB.unit, D.RUB),
   { type: "rows", label: "Hand it in", tag: "Before you go", head: "Sign it and hand it in", rows: [
-    ["1", "Write the total out of 60 at the top."], ["2", "Sign it: Marked by + your name."], ["3", "Give the test to Mr. Reid."]] },
+    ["1", "Write the total at the top."], ["2", "Sign it: Marked by + your name."], ["3", "Give the test to Mr. Reid."]] },
   { type: "rows", label: "Self-reflection", tag: "Core competencies", head: "Your self-reflection", rows: [
     ["1", "Take one sheet. Work alone."], ["2", "Answer every part in full sentences."],
     ["3", "Hand it to Mr. Reid when you finish."]] },

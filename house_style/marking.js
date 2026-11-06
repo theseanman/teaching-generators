@@ -3,7 +3,7 @@
 // answer per slide with its mark, then a section total with the level band and the running Part A total.
 // Part B is marked together: what the writer had to do, one good answer, then one rubric line at a time, levels alternating.
 const LV = ["1A", "2A"];
-function partA(test) {
+function partA(test, opts = {}) {
   const out = [], run = { "1A": 0, "2A": 0 };
   const letters = [...new Set(LV.flatMap(l => test[l].sections.map(s => s.sec)))].sort();
   letters.forEach(L => LV.forEach(l => { const T = test[l], s = T.sections.find(x => x.sec === L); if (!s) return;
@@ -11,7 +11,7 @@ function partA(test) {
     if (s.para) out.push({ type: "markpara", label: `${T.lvl} Section ${s.sec} paragraph`, tag: `Marking · ${T.lvl} · the paragraph`,
       head: `${T.lvl} · Section ${s.sec} — the paragraph`, text: s.para, note: s.paraNote });
     let from = 0;
-    s.groups.forEach(g => { out.push({ type: "markq", lvl: T.lvl, sec: s.sec, title: g.title || s.title, items: g.items.map(it => g.fix ? { ...it, fix: true } : it), from,
+    s.groups.forEach(g => { out.push({ type: "markq", lvl: T.lvl, sec: s.sec, title: g.title || s.title, items: g.items.map(it => g.fix ? { ...it, fix: true } : it), from, whole: !!opts.whole,
       cols: g.fix && g.items.length > 5 ? 2 : 1 }); from += g.items.length; });
     if (s.fixed) out.push({ type: "markpara", fixed: true, label: `${T.lvl} Section ${s.sec} fixed`, tag: `Marking · ${T.lvl} · every fix`,
       head: `${T.lvl} · Section ${s.sec} — all fixed`, text: s.fixed,
