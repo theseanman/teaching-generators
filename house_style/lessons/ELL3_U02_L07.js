@@ -1,7 +1,7 @@
 // ELL3 U2 L07 — Unit 2 Test, PART A PEER-MARKED in the same class (the U1 L14 routine). Taught Tue Nov 17 (C) / Wed Nov 18 (G)
 // (practice test cut Nov 3; L06 is not taught), before the Nov 20 suggested marks cut-off (MyEd Nov 26).
-// Nov 6 2026 (marking-time rule): 50-minute write; Part A is now Sections A–D (/32, D fixed in place); Mr. Reid marks E and F
-// (/28); the core-competency self-reflection is written in the same period, after the marking. Data: ELL3_U02_testdata.js.
+// Nov 6 2026 (60-minute standing order: writing + peer-marking fit 60): 44-minute write on the trimmed /50 paper; Part A is
+// Sections A–D (/25, D fixed in place) marked in 12; Mr. Reid marks E and F (/25); the core-competency self-reflection is written in the same period, after the marking. Data: ELL3_U02_testdata.js.
 // Next class starts Unit 3 (Sean, Oct 23: G's Fri Nov 20 class begins the next unit); its shape goes here once Unit 3 is built.
 // Build: node check_lesson.js lessons/ELL3_U02_L07.js && node render_deck.js lessons/ELL3_U02_L07.js out/ELL3_U02_L07 v1
 const D = require("./ELL3_U02_testdata.js");
@@ -12,31 +12,31 @@ module.exports = {
  banner: { obj: "Show what you learned in Unit 2, then mark a partner’s Part A together.",
    std: "W3 · W2 · W6 · W12 · W14  ·  reading: comparisons and evidence  —  the outcomes on the unit test", lit: ["COM", "TH", "PS"] },
  plan: {
-  objective: "Students write the Unit 2 test (/60) in 50 minutes, swap and mark Part A (/32, Sections A–D) together, then write the core-competency self-reflection. You mark Part B (E and F).",
+  objective: "Students write the Unit 2 test (/50) in 44 minutes, swap and mark Part A (/25, Sections A–D) together, then write the core-competency self-reflection. You mark Part B (E and F).",
   outcomes: "W3 · W2 · W6 · W12/W14 · reading: what a comparison does, with paragraph evidence",
   schwerpunkt: "every student writes the whole test under test conditions; marking Part A afterward is a bonus, never taken out of writing time.",
   schwerStep: 1,
   materials: "Deck · ELL3_U02_UnitTest, one each plus spares · pencils and erasers · a coloured pen for every student · ELL3_U02_TestKeys for you · core-competency self-reflection sheets (district template), one each · a tray for finished tests",
   timing: "80 minutes",
   steps: [
-   ["2", "How the unit test works", "60 marks, and it counts. Pencil only, work alone, no phones or translators. 50 minutes. Hand out the tests."],
-   ["50", "Write the Unit 2 test", "Part A, then Part B; they read The Radio in the Garage twice before Section E. Section D is fixed ON the paragraph. Finished students tick the Section F checklist, turn the paper over and read quietly. Circulate; answer questions about instructions only. Call ten and five minutes left."],
+   ["2", "How the unit test works", "50 marks, and it counts. Pencil only, work alone, no phones or translators. 44 minutes. Hand out the tests."],
+   ["44", "Write the Unit 2 test", "Part A, then Part B; they read The Radio in the Garage twice before Section E. Section D is fixed ON the paragraph. Finished students tick the Section F checklist, turn the paper over and read quietly. Circulate; answer questions about instructions only. Call ten and five minutes left."],
    ["2", "Swap papers", "Pencils away, coloured pens out. Swap with a partner. The marker writes “Marked by” and their name at the top, and marks beside the writer’s answers, never over them."],
-   ["14", "Mark Part A together", "Sections A–D, one answer per slide with its mark. Section C is 2 per item, two checks: no like / as … as / feeling word, and something the writer did or their body did. Section D: +1 for each of the eight spots fixed on the paragraph, nothing else marked. Circled answers are yours to decide. Part A out of 32 with its level band."],
+   ["12", "Mark Part A together", "Sections A–D, one answer per slide with its mark. Section C is 2 per item, two checks: no like / as … as / feeling word, and something the writer did or their body did. Section D: +1 for each of the six spots fixed on the paragraph, nothing else marked. Circled answers are yours to decide. Part A out of 25 with its level band."],
    ["2", "Part B: Mr. Reid marks it", "Markers do NOT touch Part B. Show how Sections E and F will be judged; the full Section F rubric is on the last page of their test."],
    ["8", "Core-competency self-reflection", "Tests back to their owners to check the Part A adding, then into the tray. Hand out the self-reflection sheets; students complete them alone. Collect them to copy."],
    ["2", "Agendas", "Next class slide, then agendas."] ],
   diff: "Support: none during the test beyond reading an instruction aloud. During marking, partners may read each answer on the screen aloud together before marking it. Extension: early finishers re-read Section F against its checklist.",
   assess: "Summative. Check the Part A peer marking against the key before entering, especially the circled Section C answers. Mark Part B yourself: E claim / evidence (the right paragraph number with words from it) / explanation, F on the four-line rubric with a level per criterion for the report.",
   homework: "None tonight. Unit 3 starts next class.",
-  watch: "Students who finish early distracting others before the swap. Markers writing over answers. Section C answers with like or a feeling word given the first mark. Markers writing anything on Part B. Time: start the self-reflection by minute 70." },
+  watch: "Students who finish early distracting others before the swap. Markers writing over answers. Section C answers with like or a feeling word given the first mark. Markers writing anything on Part B. Time: writing and Part A marking end by minute 60; the self-reflection starts by minute 64." },
  shape: [["How the unit test works", "instructions"], ["Write the Unit 2 test", "test"], ["Swap papers", "partner marking"],
    ["Mark Part A together", "partner marking"], ["How Part B is marked", "rubric"], ["Self-reflection", "independent writing"]],
  sequence: [
   { type: "title", label: "Today’s lesson" },
   { type: "rows", label: "How it works", tag: "Unit 2 test", head: "How the unit test works", rows: [
-    ["Two parts", "Part A (language), then Part B (reading and writing)."], ["60 marks", "This test counts."],
-    ["Alone", "Pencil only. No phones. No translators. Try every question."], ["Time", "50 minutes today."]] },
+    ["Two parts", "Part A (language), then Part B (reading and writing)."], ["50 marks", "This test counts."],
+    ["Alone", "Pencil only. No phones. No translators. Try every question."], ["Time", "44 minutes today."]] },
   { type: "rows", label: "Write now", tag: "Unit 2 test", head: "Write the Unit 2 test now", rows: [
     ["Part A", "Read each box. Look at the example first. Section D: fix the mistakes ON the paragraph."], ["Part B", "Read The Radio in the Garage twice before Section E."],
     ["Finished?", "Tick the Section F checklist. Turn your paper over. Read quietly."]] },

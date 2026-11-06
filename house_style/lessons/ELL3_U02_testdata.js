@@ -70,7 +70,7 @@ const practice = {
     { q: "In paragraph 7, the writer says “Her hand was not steady.” Why does the writer not just say the mother is worried?", a: "The writer shows the worry instead of explaining it. In paragraph 7, her hand is not steady, so the reader understands the feeling without being told.", m: 3, note: CEE }] }] } ] } };
 
 const unit = {
- "ELL3": { lvl: "ELL 3", partA: 32, partB: 28, total: 60, sections: [
+ "ELL3": { lvl: "ELL 3", partA: 25, partB: 25, total: 50, sections: [
   { sec: "A", title: "Vocabulary", outOf: 8, band: null, groups: [{ kind: "blank", bank: ["motif", "earn", "comparison", "literal", "decoration", "metaphor", "cliché", "simile", "mixed", "figurative"],
     instr: "Write the right word from the box on the line. Each word is used once. One word is extra.", ex: { q: "Showing how one thing is like another is a ___.", a: "comparison" }, items: [
     { q: "Words that mean exactly what they say are ___.", a: "literal" },
@@ -81,45 +81,40 @@ const unit = {
     { q: "Words that say one thing to mean something else are ___.", a: "figurative" },
     { q: "Two comparisons that do not fit together are ___.", a: "mixed" },
     { q: "A good comparison must ___ its place by doing a job.", a: "earn" }] }] },
-  { sec: "B", title: "Name it", outOf: 8, band: null, groups: [{ kind: "blank", bank: NAMEBANK,
+  // Nov 6 2026 — 60-MINUTE STANDING ORDER: writing + Part A peer-marking must fit 60 minutes, so the paper is trimmed to a
+  // ~44-minute write: B 8→5, C 4→3, D 8→6, E 4→3, paragraph 5–8 sentences. Test is now /50 (Part A 25 · Part B 25).
+  { sec: "B", title: "Name it", outOf: 5, band: null, groups: [{ kind: "blank", bank: NAMEBANK,
     instr: "Write LITERAL, SIMILE or METAPHOR on the line.", ex: { q: "___  My stomach was a bag of rocks.", a: "METAPHOR" }, items: [
     { q: "___  My voice shook like a cup on a train table.", a: "SIMILE" },
     { q: "___  I opened the letter and read it twice.", a: "LITERAL" },
     { q: "___  The waiting room was a fridge.", a: "METAPHOR" },
-    { q: "___  My cheeks were as hot as a pan of rice.", a: "SIMILE" },
-    { q: "___  My friend was a wall between me and the crowd.", a: "METAPHOR" },
-    { q: "___  I sat down and put my bag under the chair.", a: "LITERAL" },
     { q: "___  The relief went through me like warm water.", a: "SIMILE" },
     { q: "___  My worry was a shadow that stayed after dark.", a: "METAPHOR" }] }] },
-  { sec: "C", title: "Fix the cliché", outOf: 8, band: null, groups: [{ kind: "rewrite", lines: 2,
+  { sec: "C", title: "Fix the cliché", outOf: 6, band: null, groups: [{ kind: "rewrite", lines: 2,
     instr: "Replace each cliché with a fact. 1 mark: no like, no as … as, and no feeling word (happy, scared, nervous…). 1 mark: it says what you did, or what your body did. (2 marks each)",
     ex: { q: "I was on cloud nine.", a: "I ran the whole way home and forgot my bus pass on the bench." }, items: [
     { q: "I was scared stiff.", a: "My fingers would not let go of the door handle.", m: 2, note: FACT2 },
     { q: "My heart skipped a beat.", a: "I stopped halfway up the stairs and held the rail.", m: 2, note: FACT2 },
-    { q: "I was over the moon.", a: "I read the message out loud to everyone at the table.", m: 2, note: FACT2 },
-    { q: "I went as white as a ghost.", a: "I had to sit down on the bottom stair.", m: 2, note: FACT2 }] }] },
+    { q: "I was over the moon.", a: "I read the message out loud to everyone at the table.", m: 2, note: FACT2 }] }] },
   // Nov 6 2026: Section D is fixed IN PLACE and peer-marked with Part A (single answers, all in the key). Part A 24 → 32, Part B 36 → 28.
-  { sec: "D", title: "Eight fixes", outOf: 8, band: null,
-    para: "When I opened the envelope my hands were shaking. I read the first line twice. Because the words did not make sense. Then I see my name at the top of the list I could not believe it. My sister runs into the room. She asks what happened I showed her the paper. After she read it she screamed. We jumped up and down in the kitchen.",
-    fixed: "When I opened the [envelope, my] hands were shaking. I read the first line [twice because] the words did not make sense. Then I [saw] my name at the top of the [list. I] could not believe it. My sister [ran] into the room. She [asked] what [happened. I] showed her the paper. After she read [it, she] screamed. We jumped up and down in the kitchen.",
+  { sec: "D", title: "Six fixes", outOf: 6, band: null,
+    para: "When I opened the envelope my hands were shaking. I read the first line twice. Because the words did not make sense. Then I see my name at the top of the list I could not believe it. My sister runs into the room. She asked what happened I showed her the paper.",
+    fixed: "When I opened the [envelope, my] hands were shaking. I read the first line [twice because] the words did not make sense. Then I [saw] my name at the top of the [list. I] could not believe it. My sister [ran] into the room. She asked what [happened. I] showed her the paper.",
     paraNote: "Eight mistakes. Careful: “I read the first line twice” and the last sentence are already right.",
-    groups: [{ kind: "edit", title: "The eight fixes", fix: true, inPlace: true, instr: "This paragraph has EIGHT mistakes. Fix each one ON the paragraph: cross it out and write the fix above it. One mark for each mistake you fix.", items: [
+    groups: [{ kind: "edit", title: "The six fixes", fix: true, inPlace: true, instr: "This paragraph has SIX mistakes. Fix each one ON the paragraph: cross it out and write the fix above it. One mark for each mistake you fix.", items: [
     { q: "envelope my hands", a: "envelope, my hands", note: "comma after the opening clause" },
     { q: "twice. Because the words", a: "twice because the words", note: "fragment joined to the sentence before" },
     { q: "I see", a: "I saw", note: "past tense" },
     { q: "list I could", a: "list. I could", note: "run-on: a period, or a comma and and" },
     { q: "My sister runs", a: "My sister ran", note: "past tense" },
-    { q: "She asks", a: "She asked", note: "past tense" },
-    { q: "happened I showed", a: "happened. I showed", note: "run-on: a period, or a comma and so" },
-    { q: "read it she", a: "read it, she", note: "comma after the opening clause" }] }] },
+    { q: "happened I showed", a: "happened. I showed", note: "run-on: a period, or a comma and so" }] }] },
   // Nov 6 2026: no paragraph numbers in the questions — finding the paragraph IS the evidence mark (one right answer).
-  { sec: "E", title: "The Radio in the Garage", outOf: 12, band: null, partB: true, partBHead: "Reading and writing", partBOut: 28,
+  { sec: "E", title: "The Radio in the Garage", outOf: 9, band: null, partB: true, partBHead: "Reading and writing", partBOut: 25,
     text: { title: RADIO.title, paras: RADIO.paras, instr: "Read the story twice. Then answer. Find the paragraph yourself: the paragraph number is part of the mark." },
     groups: [{ kind: "rewrite", lines: 3,
     instr: "Answer in complete sentences. 1 mark: your answer. 1 mark: the right paragraph number with words from it. 1 mark: why. (3 marks each)",
     ex: { q: "Why does the narrator tell us the family is not Portuguese?", a: "It makes the radio strange. In paragraph 2, nobody in the family speaks Portuguese, so the reader wonders why the father plays it." }, items: [
     { q: "The Portuguese goes on above the father “like weather.” What job is this comparison doing?", a: "It describes the sound. In paragraph 3, the radio is like weather because it is always there in the background and the father does not have to listen to it.", m: 3, note: CEE2(3) },
-    { q: "The radio fills the room “like people.” Why does the narrator then say it is not company?", a: "The radio is the sound of a street, not a friend. In paragraph 11, the narrator says it is “the sound of a street,” like the busy street where the father worked for twenty-two years in paragraph 7.", m: 3, note: CEE2("11 (or 10)") },
     { q: "The father turns the radio off when his daughter speaks Portuguese to him. Why?", a: "The radio only works when he does not understand it. In paragraph 13, he turns it off because the language has become a joke from home, not the sound of a street.", m: 3, note: CEE2("13 (with 12)") },
     { q: "What does the last sentence of the story tell you about the father?", a: "The radio is private. In paragraph 16, he never turns it up when the family walks in, because it belongs to the life he misses, not to them.", m: 3, note: CEE2(16) }] }] } ] } };
 
@@ -131,8 +126,8 @@ const partB = {
  practice: { "ELL3": { sec: "F", title: "Your paragraph", task: "Write about a moment you were proud.", out: 16, lines: 15, musts: MUSTS,
    instr: "Write ONE paragraph of 6 to 10 sentences about one small moment. Open on a detail, use one comparison, and end without explaining.",
    good: "The scoreboard still said 4–4 when the coach called my number. I stepped onto the ice and my skates felt too tight. The puck came to me off the boards, and I did not think. I shot it low, between the goalie’s pads. For a second the rink went quiet, like a television with the sound turned off. Then my teammates hit my helmet so hard my ears rang. On the bench, the coach did not say anything. He just moved me to the front of the line." } },
- unit: { "ELL3": { sec: "F", title: "Your paragraph", task: "Write about a moment you felt relieved, or a moment you were surprised.", out: 16, lines: 15, musts: MUSTS,
-   instr: "Choose ONE. Write one paragraph of 6 to 10 sentences about one small moment. Open on a detail, use one comparison, and end without explaining.",
+ unit: { "ELL3": { sec: "F", title: "Your paragraph", task: "Write about a moment you felt relieved, or a moment you were surprised.", out: 16, lines: 12, musts: MUSTS,
+   instr: "Choose ONE. Write one paragraph of 5 to 8 sentences about one small moment. Open on a detail, use one comparison, and end without explaining.",
    good: "The nurse closed the door behind my grandfather, and the waiting room clock clicked to 2:15. My mother held her phone face down on her knee. Every time the door moved, she sat up straight. I counted the fish in the tank by the window, then counted them again. At 3:40 the door opened, and my grandfather came out holding his hat. He was smiling the way he smiles at a good card game. My mother stood up so fast her phone fell on the floor. Nobody picked it up." } } };
 
 const RB = L5.goodCopy[0].rubric;
@@ -170,6 +165,6 @@ module.exports = { course: "ELL3", levels: ["ELL3"], unitNo: "2", unitTitle: "Sa
   keyHead: "ELL 3 · Unit 2 · Test Answer Key · teacher copy",
   partALabel: "Language", partBLabel: "Reading and writing",
   intro: "Pencil only. Work alone. Read each section and look at the example first. The rubric for Section F is on the last page.",
-  bands: { practice: BAND("13–14", "11–12", "9–10", "0–8"), unit: BAND("28–32", "24–27", "20–23", "0–19") },
+  bands: { practice: BAND("13–14", "11–12", "9–10", "0–8"), unit: BAND("22–25", "19–21", "15–18", "0–14") },
   practice, unit, partB, rubric, BUSPASS, RADIO,
-  markBlocks: (which, parts) => markBlocks(which, parts, { practice: BAND("13–14", "11–12", "9–10", "0–8"), unit: BAND("28–32", "24–27", "20–23", "0–19") }) };
+  markBlocks: (which, parts) => markBlocks(which, parts, { practice: BAND("13–14", "11–12", "9–10", "0–8"), unit: BAND("22–25", "19–21", "15–18", "0–14") }) };
