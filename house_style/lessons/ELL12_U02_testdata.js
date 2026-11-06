@@ -9,6 +9,8 @@ const L6 = require("./ELL12_U02_L06.js");
 const BAND = (fm, m, mm, nym) => [["Fully Meeting", fm], ["Meeting", m], ["Minimally Meeting", mm], ["Not Yet Meeting", nym]];
 const B5 = BAND("5", "4", "3", "0–2"), B6 = BAND("6", "5", "4", "0–3"), B8 = BAND("7–8", "6", "5", "0–4"), B10 = BAND("9–10", "8", "6–7", "0–5");
 const BEC = "+1 because · +1 a full sentence after it (who + verb)";
+// Nov 6 2026: a because-first answer is also right — "Because it is Friday, I am happy." Accept it (comma needed).
+const BEC2 = BEC + " · also right: Because … , …";
 
 const practice = {
  "1A": { lvl: "ELL 1", partA: 28, partB: 12, total: 40, sections: [
@@ -71,7 +73,7 @@ const practice = {
 const unit = {
  "1A": { lvl: "ELL 1", partA: 40, partB: 20, total: 60, sections: [
   { sec: "A", title: "School words", outOf: 8, band: B8, groups: [{ kind: "blank", bank: ["homework", "opinion", "reason", "quiz", "early", "notebook", "closing", "bell", "agree"],
-    instr: "Write the right word from the box on the line.", ex: { q: "School work you do at home is ___.", a: "homework" }, items: [
+    instr: "Write the right word from the box on the line. Each word is used once.", ex: { q: "School work you do at home is ___.", a: "homework" }, items: [
     { q: "A short, small test is a ___.", a: "quiz" }, { q: "Before the usual time is ___.", a: "early" },
     { q: "The last sentence is the ___.", a: "closing" }, { q: "Why you think something is a ___.", a: "reason" },
     { q: "A book you write notes in is a ___.", a: "notebook" }, { q: "To think the same as another person is to ___.", a: "agree" },
@@ -79,20 +81,23 @@ const unit = {
   { sec: "B", title: "The right verb", outOf: 8, band: B8, groups: [{ kind: "blank", bank: ["am", "is", "are", "go", "have", "eat"],
     instr: "Write the right verb on the line. Use the box. You may use a word more than once.", ex: { q: "We ___ in Grade 9.", a: "are" }, items: [
     { q: "I ___ a new student.", a: "am" }, { q: "The library ___ quiet.", a: "is" }, { q: "We ___ math in first period.", a: "have" },
-    { q: "My classes ___ in Room 148.", a: "are" }, { q: "I ___ home at three.", a: "go" }, { q: "They ___ lunch in the cafeteria.", a: "eat" },
+    { q: "My classes ___ in Room 148.", a: "are" }, { q: "I ___ home on the bus.", a: "go" }, { q: "They ___ with chopsticks.", a: "eat" },
     { q: "It ___ cold today.", a: "is" }, { q: "You ___ my friend.", a: "are" }] }] },
   { sec: "C", title: "How often", outOf: 8, band: B8, groups: [{ kind: "rewrite", lines: 1,
     instr: "Write the sentence again. Put the word in ( ) in the right place.", ex: { q: "(usually) I take the bus.", a: "I usually take the bus." }, items: [
+    // Nov 6 2026: always / never have ONE right place; usually and sometimes may also start (or end) the sentence, so only two
+    // items use them, with every right place in the key.
     { q: "(always) I do my homework.", a: "I always do my homework." }, { q: "(never) I am late.", a: "I am never late." },
-    { q: "(often) We talk in the hallway.", a: "We often talk in the hallway." }, { q: "(sometimes) I forget my notebook.", a: "I sometimes forget my notebook." },
-    { q: "(usually) My friends are at the library.", a: "My friends are usually at the library." }, { q: "(always) I eat breakfast.", a: "I always eat breakfast." },
-    { q: "(never) The bell is late.", a: "The bell is never late." }, { q: "(sometimes) We have a quiz.", a: "We sometimes have a quiz." }] }] },
+    { q: "(never) We talk in class.", a: "We never talk in class." }, { q: "(always) My friends are at the library.", a: "My friends are always at the library." },
+    { q: "(sometimes) I forget my notebook.", a: "I sometimes forget my notebook.", note: "also right: Sometimes I forget my notebook. · I forget my notebook sometimes." },
+    { q: "(always) The bell is loud.", a: "The bell is always loud." },
+    { q: "(never) I eat breakfast.", a: "I never eat breakfast." }, { q: "(usually) We have a quiz on Friday.", a: "We usually have a quiz on Friday.", note: "also right: Usually we have a quiz on Friday." }] }] },
   { sec: "D", title: "Join with because", outOf: 8, band: B8, groups: [{ kind: "rewrite", lines: 2,
     instr: "Join the two sentences with because. Write ONE sentence. (2 marks each)", ex: { q: "I like art. It is fun.", a: "I like art because it is fun." }, items: [
-    { q: "I am happy. It is Friday.", a: "I am happy because it is Friday.", m: 2, note: BEC },
-    { q: "I go to the library. It is quiet.", a: "I go to the library because it is quiet.", m: 2, note: BEC },
-    { q: "I am hungry. I do not eat breakfast.", a: "I am hungry because I do not eat breakfast.", m: 2, note: BEC },
-    { q: "We wear coats. It is cold.", a: "We wear coats because it is cold.", m: 2, note: BEC }] }] },
+    { q: "I am happy. It is Friday.", a: "I am happy because it is Friday.", m: 2, note: BEC2 },
+    { q: "I go to the library. It is quiet.", a: "I go to the library because it is quiet.", m: 2, note: BEC2 },
+    { q: "I am hungry. I do not eat breakfast.", a: "I am hungry because I do not eat breakfast.", m: 2, note: BEC2 },
+    { q: "We wear coats. It is cold.", a: "We wear coats because it is cold.", m: 2, note: BEC2 }] }] },
   { sec: "E", title: "Capitals and end marks", outOf: 8, band: B8, groups: [{ kind: "rewrite", lines: 1,
     instr: "Write the sentence again with capitals and an end mark.", ex: { q: "i have math today", a: "I have math today." }, items: [
     { q: "we have a quiz on friday", a: "We have a quiz on Friday." }, { q: "do you like your school", a: "Do you like your school?" },
@@ -101,7 +106,8 @@ const unit = {
     { q: "we go to school on tuesday", a: "We go to school on Tuesday." }, { q: "what is your opinion", a: "What is your opinion?" }] }] } ] },
  "2A": { lvl: "ELL 2", partA: 36, partB: 24, total: 60, sections: [
   { sec: "A", title: "Words and transitions", outOf: 8, band: B8, groups: [{ kind: "blank", bank: ["topic sentence", "detail", "First", "For example", "In addition", "Finally", "For these reasons", "believe", "reason"],
-    instr: "Write the right word or transition from the box on the line.", ex: { q: "The first sentence, which gives your opinion, is the ___.", a: "topic sentence" }, items: [
+    // Nov 6 2026: the five transition sentences are ONE paragraph in order, each transition used once — so only one order works.
+    instr: "Write the right word or transition from the box on the line. Each one is used once. Sentences 1 to 5 are one paragraph, in order.", ex: { q: "The first sentence, which gives your opinion, is the ___.", a: "topic sentence" }, items: [
     { q: "___, homework helps students practise.", a: "First", note: "the first reason" },
     { q: "___, I finish my math faster after practice at home.", a: "For example", note: "a detail" },
     { q: "___, homework teaches students to plan their time.", a: "In addition", note: "another reason" },
@@ -112,25 +118,27 @@ const unit = {
     { q: "An example that supports a reason is a ___.", a: "detail" },
     { q: "Why you think something is a ___.", a: "reason" }] }] },
   { sec: "B", title: "The right form", outOf: 8, band: B8, groups: [{ kind: "blank",
-    instr: "Write the verb in ( ) in the right form. Watch the s on he, she and it, and the plain verb after does not.", ex: { q: "Sofia ___ her homework at the library. (do)", a: "does" }, items: [
+    instr: "Write the verb in ( ) in the present tense. Watch the s on he, she and it, and the plain verb after does not.", ex: { q: "Sofia ___ her homework at the library. (do)", a: "does" }, items: [
     { q: "My sister ___ her homework after dinner. (finish)", a: "finishes" }, { q: "We ___ math homework every day. (have)", a: "have" },
     { q: "He does not ___ his notebook to class. (bring)", a: "bring" }, { q: "The teacher ___ our homework on Monday. (check)", a: "checks" },
     { q: "Arman ___ his phone in his bag. (keep)", a: "keeps" }, { q: "She does not ___ the answer. (know)", a: "know" },
     { q: "My friends ___ together after school. (study)", a: "study" }, { q: "It ___ me one hour. (take)", a: "takes" }] }] },
   { sec: "C", title: "How often", outOf: 10, band: B10, groups: [{ kind: "rewrite", lines: 1,
     instr: "Write the sentence again with the word or phrase in ( ) in the right place.", ex: { q: "(often) Arman finishes early.", a: "Arman often finishes early." }, items: [
-    { q: "(hardly ever) She is absent.", a: "She is hardly ever absent." }, { q: "(once a week) We have a spelling quiz.", a: "We have a spelling quiz once a week." },
-    { q: "(rarely) He forgets his homework.", a: "He rarely forgets his homework." }, { q: "(usually) I don't study on Friday.", a: "I don't usually study on Friday." },
-    { q: "(every day) Sofia reads in English.", a: "Sofia reads in English every day." }] },
+    // Nov 6 2026: one-place words (always, never, rarely, hardly ever) replace usually/sometimes and the don't + usually items, which
+    // have two right places. The how-often PHRASES are the skill, so they stay — with the front position accepted in the key.
+    { q: "(hardly ever) She is absent.", a: "She is hardly ever absent." }, { q: "(once a week) We have a spelling quiz.", a: "We have a spelling quiz once a week.", note: "also right: Once a week, we have a spelling quiz." },
+    { q: "(rarely) He forgets his homework.", a: "He rarely forgets his homework." }, { q: "(always) She is tired after gym.", a: "She is always tired after gym." },
+    { q: "(every day) Sofia reads in English.", a: "Sofia reads in English every day.", note: "also right: Every day, Sofia reads in English." }] },
    { kind: "rewrite", lines: 1, title: "How often (continued)", items: [
     { q: "(always) The teacher is on time.", a: "The teacher is always on time." },
-    { q: "(sometimes) My brother helps me.", a: "My brother sometimes helps me." }, { q: "(twice a day) I check my schedule.", a: "I check my schedule twice a day." },
-    { q: "(never) We are late for gym.", a: "We are never late for gym." }, { q: "(usually) She doesn't take the bus.", a: "She doesn't usually take the bus." }] }] },
+    { q: "(never) My brother helps me.", a: "My brother never helps me." }, { q: "(twice a day) I check my schedule.", a: "I check my schedule twice a day.", note: "also right: Twice a day, I check my schedule." },
+    { q: "(never) We are late for gym.", a: "We are never late for gym." }, { q: "(rarely) Our teacher gives homework on Friday.", a: "Our teacher rarely gives homework on Friday." }] }] },
   { sec: "D", title: "Edit the paragraph", outOf: 10, band: B10,
     para: "In my opinion students should have homework every day. First homework help students remember the lesson. for example, my math gets better when I practise at home. In addition, homework teach us to plan our time. Because we must finish it before class. finally, families can see what we are learning. They knows when we need help. For these reasons I believe daily homework is useful",
     fixed: "In my [opinion, students] should have homework every day. [First, homework helps] students remember the lesson. [For example,] my math gets better when I practise at home. In addition, homework [teaches] us to plan our [time because] we must finish it before class. [Finally,] families can see what we are learning. They [know] when we need help. [For these reasons, I] believe daily homework is [useful.]",
     paraNote: "Ten mistakes. Careful: “In addition,” is already right.",
-    groups: [{ kind: "edit", title: "The ten fixes", fix: true, lines: 9, instr: "This paragraph has TEN mistakes. Write it again with all ten fixed.", items: [
+    groups: [{ kind: "edit", title: "The ten fixes", fix: true, inPlace: true, instr: "This paragraph has TEN mistakes. Fix each one ON the paragraph: cross it out and write the fix above it. One mark for each mistake you fix.", items: [
     { q: "opinion students", a: "opinion, students", note: "comma after the transition" }, { q: "First homework", a: "First, homework", note: "comma after the transition" },
     { q: "homework help", a: "homework helps" }, { q: "for example,", a: "For example,", note: "the capital" },
     { q: "homework teach", a: "homework teaches" }, { q: "time. Because we", a: "time because we" },

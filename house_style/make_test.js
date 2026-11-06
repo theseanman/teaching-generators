@@ -54,9 +54,11 @@ function section(s, key) {
     if (g.instr) ps.push(P([R(g.instr, { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }));
     if (g.bank) ps.push(box([P([R("Word box:  ", { bold: true, color: NAVY, size: 24 }), R(g.bank.join("   ·   "), { size: 26 })])], PALE),
       P([], { spacing: { after: 60 }, keepNext: true }));
-    if (s.para) { ps.push(box([P([R(s.para, { size: 26 })], { spacing: { line: 360 } })]), P([], { spacing: { after: 60 }, keepNext: true }));
+    // g.inPlace (Nov 6 2026, Sean's marking-time rule): the paragraph is printed with room between the lines and students fix
+    // each mistake ON it — cross out, write the fix above. One mark sits in one place; no rewrite, no new-error deductions.
+    if (s.para) { ps.push(box([P([R(s.para, { size: 26 })], { spacing: { line: g.inPlace && !key ? 840 : 360 } })]), P([], { spacing: { after: 60 }, keepNext: true }));
       if (key) ps.push(P([R("Fixed: ", { bold: true, color: NAVY }), R(s.fixed.replace(/[\[\]]/g, ""), { color: BLUE })], { spacing: { after: 120 } }));
-      else for (let i = 0; i < (g.lines || 6); i++) ps.push(rule(i === 0, i < 1, 0));
+      else if (!g.inPlace) for (let i = 0; i < (g.lines || 6); i++) ps.push(rule(i === 0, i < 1, 0));
       if (key) g.items.forEach((it, k) => ps.push(P([R(`${k + 1}.\t`, { bold: true }), R(`${it.q}  →  `), R(it.a, { bold: true, color: BLUE }), ...(it.note ? [R(`   (${it.note})`, { italics: true, color: GREY, size: 22 })] : [])],
         { indent: { left: IND, hanging: IND }, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { after: 60 } })));
       return; }

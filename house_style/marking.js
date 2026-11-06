@@ -14,7 +14,8 @@ function partA(test) {
     s.groups.forEach(g => { out.push({ type: "markq", lvl: T.lvl, sec: s.sec, title: g.title || s.title, items: g.items.map(it => g.fix ? { ...it, fix: true } : it), from,
       cols: g.fix && g.items.length > 5 ? 2 : 1 }); from += g.items.length; });
     if (s.fixed) out.push({ type: "markpara", fixed: true, label: `${T.lvl} Section ${s.sec} fixed`, tag: `Marking · ${T.lvl} · every fix`,
-      head: `${T.lvl} · Section ${s.sec} — all fixed`, text: s.fixed });
+      head: `${T.lvl} · Section ${s.sec} — all fixed`, text: s.fixed,
+      ...(s.groups.some(g => g.inPlace) ? { note: "+1 for each mistake fixed on the paragraph. Nothing else is marked." } : {}) });
     out.push({ type: "marktotal", label: `${T.lvl} Section ${s.sec} total`, lvl: T.lvl, sec: s.sec, outOf: s.outOf,
       band: s.w11 && s.w11 !== "after" ? s.w11 : s.band, bandLabel: s.w11 && s.w11 !== "after" ? "Level — C + D together, out of 12" : null,
       combo: s.w11 && s.w11 !== "after" ? 12 : null, waitNote: s.w11 === "after" ? "Level: after Section D. Add C and D together." : null,
