@@ -35,8 +35,9 @@ function header(lvl, title, total) {
       { tabStops: [{ type: TabStopType.RIGHT, position: 5200, leader: LeaderType.UNDERSCORE }, { type: TabStopType.RIGHT, position: 6600, leader: LeaderType.UNDERSCORE }, { type: TabStopType.RIGHT, position: W, leader: LeaderType.UNDERSCORE }], spacing: { before: 120, after: 120 } }),
     P([R("Marked by: ", { bold: true, color: GREY, size: 22 }), R("\t")], { tabStops: [{ type: TabStopType.RIGHT, position: 5200, leader: LeaderType.UNDERSCORE }], spacing: { after: 160 } }) ];
 }
+// s.newPage (Nov 10 2026, Sean): start the section on a fresh page so its word box and questions sit together
 const secHead = (s, label) => P([R(`Section ${s.sec} — ${s.title}`, { bold: true, color: BLUE, size: 30 }), R(`\t____ / ${s.outOf}`, { bold: true, color: NAVY, size: 26 })],
-  { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 320, after: 40 }, keepNext: true });
+  { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 320, after: 40 }, keepNext: true, pageBreakBefore: !!s.newPage });
 
 function section(s, key) {
   const ps = []; let base = 0;   // numbering runs on across a section's groups
@@ -62,6 +63,15 @@ function section(s, key) {
       if (key) g.items.forEach((it, k) => ps.push(P([R(`${k + 1}.\t`, { bold: true }), R(`${it.q}  →  `), R(it.a, { bold: true, color: BLUE }), ...(it.note ? [R(`   (${it.note})`, { italics: true, color: GREY, size: 22 })] : [])],
         { indent: { left: IND, hanging: IND }, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { after: 60 } })));
       return; }
+    // g.kind "parablank" (Nov 10 2026, Sean): blanks printed INSIDE one paragraph, so students see the sentences belong together.
+    // g.lead is a sentence printed first for context (the opinion). Numbering runs on with the section.
+    if (g.kind === "parablank") {
+      const runs = g.lead ? [R(g.lead + " ")] : [];
+      g.items.forEach((it, k) => { const [x, y] = it.q.split("___");   // non-breaking blank so it never splits from its comma at a line end
+        runs.push(R(`(${off + k + 1})\u00A0`, { bold: true, color: NAVY }), R(x),
+          key ? R(`\u00A0${it.a}\u00A0`, { bold: true, color: BLUE, underline: {} }) : R("\u00A0".repeat(34), { underline: {} }), R((y || "") + " ")); });
+      ps.push(box([P(runs, { spacing: { line: key ? 360 : 560 } })]), P([], { spacing: { after: 60 }, keepNext: true }));
+      return; }
     const ex = g.ex;
     if (ex) { const exTag = R("(example)  ", { italics: true, color: "0F7B6C", bold: true, size: 22 });
       if (g.kind === "blank") ps.push(P([R("Ex.\t", { bold: true }), exTag, ...blankRuns(ex.q, ex.a)], { indent: { left: IND, hanging: IND }, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { before: 160, after: 0 }, keepNext: true }));
@@ -81,7 +91,7 @@ function partB(pb, key) {
   const head = pb.sec ? P([R(`Section ${pb.sec} — ${pb.title}`, { bold: true, color: BLUE, size: 30 }), R(`\t____ / ${pb.out}`, { bold: true, color: NAVY, size: 26 })],
       { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 320, after: 60 }, keepNext: true })
     : P([R("Part B — Writing", { bold: true, color: NAVY, size: 34 }), R(`\t____ / ${pb.out}`, { bold: true, color: NAVY, size: 26 })],
-      { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 360, after: 80 }, keepNext: true });
+      { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 360, after: 80 }, keepNext: true, pageBreakBefore: !!pb.newPage });
   const ps = [head,
     P([R(pb.task, { bold: true, color: BLUE, size: 30 })], { spacing: { after: 80 }, keepNext: true }),
     P([R(pb.instr || "Write ONE paragraph that answers the question. Choose one side.", { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }),
@@ -114,13 +124,22 @@ function rubricPage(rb, pb) {
   return ps;
 }
 
+// Two-level papers (Nov 10 2026, Sean: "students need to know how they will be marked"): Part B's rubric lines (pb.crit, looked
+// up in D.RUB — the good-copy rubric) print as the paper's last page, with the marks each level earns on that line.
+function rubricFrom(pb) {
+  return { title: "How your paragraph is marked", levels: ["Not Yet Meeting", "Minimally Meeting", "Meeting", "Fully Meeting"],
+    points: pb.marks.map(m => `${m} marks`),
+    intro: `Part B is out of {out}. Mr. Reid circles one level on each line. Add the ${["", "one", "two", "three", "four", "five", "six"][pb.crit.length] || pb.crit.length} lines together.${pb.zero ? " If you write nothing, you get 0." : ""}`,
+    criteria: pb.crit.map(k => { const [label, d] = D.RUB[k], i = label.indexOf(" · "); return { code: label.slice(0, i), name: label.slice(i + 3), d }; }) };
+}
 function paper(T, pb, title, key) {
   const body = [...header(T.lvl, title, T.total),
     box([P([R(`Part A — ${D.partALabel || "Words and grammar"}  (${T.partA} marks)   ·   Part B — ${D.partBLabel || "Writing"}  (${T.partB} marks)`, { bold: true, color: NAVY, size: 24 })]),
       P([R(D.intro || "Pencil only. Work alone. Read each section and look at the example first.", { size: 22, color: GREY })])]),
     P([R(`Part A — ${D.partALabel || "Words and grammar"}`, { bold: true, color: NAVY, size: 34 }), R(`\t____ / ${T.partA}`, { bold: true, color: NAVY, size: 26 })],
       { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 280, after: 0 }, keepNext: true }),
-    ...T.sections.flatMap(s => section(s, key)), ...partB(pb, key), ...(pb.checks ? checkBox(pb.checks) : []), ...(D.rubric ? rubricPage(D.rubric, pb) : [])];
+    ...T.sections.flatMap(s => section(s, key)), ...partB(pb, key), ...(pb.checks ? checkBox(pb.checks) : []), ...(D.rubric ? rubricPage(D.rubric, pb) : []),
+    ...(!D.rubric && pb.crit && D.RUB && !key ? rubricPage(rubricFrom(pb), pb) : [])];
   return body;
 }
 

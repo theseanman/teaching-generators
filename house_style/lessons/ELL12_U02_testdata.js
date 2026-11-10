@@ -73,72 +73,88 @@ const practice = {
 const unit = {
  // Nov 6 2026 — 60-MINUTE STANDING ORDER, option (c): whole-section answer slides for peer-marking, plus light trims so
   // writing (40 min) + marking A and B fit 60: ELL 1 C and E 8 → 6, ELL 2 C 10 → 8.
- "1A": { lvl: "ELL 1", partA: 36, partB: 20, total: 56, sections: [
-  { sec: "A", title: "School words", outOf: 8, band: B8, groups: [{ kind: "blank", bank: ["homework", "opinion", "reason", "quiz", "early", "notebook", "closing", "bell", "agree"],
-    instr: "Write the right word from the box on the line. Each word is used once.", ex: { q: "School work you do at home is ___.", a: "homework" }, items: [
+ // Nov 10 2026 — Sean: the ELL 1 unit test "looks a little easy". A gets an extra word; B uses names and two-part subjects;
+ // C uses longer subjects; D puts the reason first in two items; E becomes an EIGHT-mistake paragraph fixed in place (Sean chose 8 over 10).
+ // Third-person s stays OUT of ELL 1 — the U2 lessons teach it to ELL 2 only.
+ "1A": { lvl: "ELL 1", partA: 38, partB: 20, total: 58, sections: [
+  { sec: "A", title: "School words", outOf: 8, band: B8, groups: [{ kind: "blank", bank: ["homework", "opinion", "schedule", "reason", "quiz", "early", "notebook", "closing", "bell", "agree"],
+    instr: "Write the right word from the box on the line. One word in the box is not used.", ex: { q: "School work you do at home is ___.", a: "homework" }, items: [
     { q: "A short, small test is a ___.", a: "quiz" }, { q: "Before the usual time is ___.", a: "early" },
     { q: "The last sentence is the ___.", a: "closing" }, { q: "Why you think something is a ___.", a: "reason" },
     { q: "A book you write notes in is a ___.", a: "notebook" }, { q: "To think the same as another person is to ___.", a: "agree" },
     { q: "What you think is your ___.", a: "opinion" }, { q: "The sound that starts and ends a class is the ___.", a: "bell" }] }] },
-  { sec: "B", title: "The right verb", outOf: 8, band: B8, groups: [{ kind: "blank", bank: ["am", "is", "are", "go", "have", "eat"],
-    instr: "Write the right verb on the line. Use the box. You may use a word more than once.", ex: { q: "We ___ in Grade 9.", a: "are" }, items: [
-    { q: "I ___ a new student.", a: "am" }, { q: "The library ___ quiet.", a: "is" }, { q: "We ___ math in first period.", a: "have" },
-    { q: "My classes ___ in Room 148.", a: "are" }, { q: "I ___ home on the bus.", a: "go" }, { q: "They ___ with chopsticks.", a: "eat" },
-    { q: "It ___ cold today.", a: "is" }, { q: "You ___ my friend.", a: "are" }] }] },
-  { sec: "C", title: "How often", outOf: 6, band: B6, groups: [{ kind: "rewrite", lines: 1,
-    instr: "Write the sentence again. Put the word in ( ) in the right place.", ex: { q: "(usually) I take the bus.", a: "I usually take the bus." }, items: [
-    // Nov 6 2026: always / never have ONE right place; usually and sometimes may also start (or end) the sentence, so only two
-    // items use them, with every right place in the key.
-    { q: "(always) I do my homework.", a: "I always do my homework." }, { q: "(never) I am late.", a: "I am never late." },
-    { q: "(always) My friends are at the library.", a: "My friends are always at the library." },
-    { q: "(sometimes) I forget my notebook.", a: "I sometimes forget my notebook.", note: "also right: Sometimes I forget my notebook. · I forget my notebook sometimes." },
-    { q: "(never) I eat breakfast.", a: "I never eat breakfast." }, { q: "(usually) We have a quiz on Friday.", a: "We usually have a quiz on Friday.", note: "also right: Usually we have a quiz on Friday." }] }] },
+  // B: no word box — find the wrong verb (5 wrong, 3 right, mixed). C: put the words in order, always/never only (one right
+  // place), one mark per sentence that is fully right incl. capital and end mark. D: no hint, three of four reason-first.
+  { sec: "B", title: "Find the wrong verb", outOf: 8, band: B8, newPage: true, groups: [{ kind: "blank",
+    instr: "Some sentences have the wrong verb. If the verb is right, write ✓ on the line. If it is wrong, write the right verb on the line.", ex: { q: "___   We is in Grade 9.", a: "are" }, items: [
+    { q: "___   Arman and Sofia is my friends.", a: "are" }, { q: "___   My notebook is in my bag.", a: "✓" },
+    { q: "___   Sofia and I am in math class.", a: "are" }, { q: "___   My classes are in Room 148.", a: "✓" },
+    { q: "___   I am go home on the bus.", a: "go", note: "no am before go" }, { q: "___   My friends eat with chopsticks.", a: "✓" },
+    { q: "___   The hallway are busy at lunch.", a: "is" }, { q: "___   I is in ELL 1.", a: "am" }] }] },
+  { sec: "C", title: "Put the words in order", outOf: 6, band: B6, groups: [{ kind: "rewrite", lines: 1,
+    instr: "Put the words in order. Write the sentence with a capital and an end mark. One mark for each sentence that is all right.", ex: { q: "walk  /  always  /  to school  /  I", a: "I always walk to school." }, items: [
+    { q: "my homework  /  I  /  always  /  do", a: "I always do my homework." },
+    { q: "late  /  am  /  never  /  I", a: "I am never late." },
+    { q: "are  /  always  /  my friends  /  at the library", a: "My friends are always at the library." },
+    { q: "never  /  eat  /  my brother and I  /  breakfast", a: "My brother and I never eat breakfast." },
+    { q: "the hallway  /  busy  /  is  /  always", a: "The hallway is always busy." },
+    { q: "on time  /  the bus  /  never  /  is", a: "The bus is never on time." }] }] },
   { sec: "D", title: "Join with because", outOf: 8, band: B8, groups: [{ kind: "rewrite", lines: 2,
-    instr: "Join the two sentences with because. Write ONE sentence. (2 marks each)", ex: { q: "I like art. It is fun.", a: "I like art because it is fun." }, items: [
-    { q: "I am happy. It is Friday.", a: "I am happy because it is Friday.", m: 2, note: BEC2 },
+    instr: "Join the two sentences with because. Write ONE sentence. You may need to change the order of the two sentences. (2 marks each)", ex: { q: "I like art. It is fun.", a: "I like art because it is fun." }, items: [
+    { q: "It is Friday. I am happy.", a: "I am happy because it is Friday.", m: 2, note: BEC2 + " · the reason comes first here: it is Friday" },
     { q: "I go to the library. It is quiet.", a: "I go to the library because it is quiet.", m: 2, note: BEC2 },
-    { q: "I am hungry. I do not eat breakfast.", a: "I am hungry because I do not eat breakfast.", m: 2, note: BEC2 },
-    { q: "We wear coats. It is cold.", a: "We wear coats because it is cold.", m: 2, note: BEC2 }] }] },
-  { sec: "E", title: "Capitals and end marks", outOf: 6, band: B6, groups: [{ kind: "rewrite", lines: 1,
-    instr: "Write the sentence again with capitals and an end mark.", ex: { q: "i have math today", a: "I have math today." }, items: [
-    { q: "we have a quiz on friday", a: "We have a quiz on Friday." }, { q: "do you like your school", a: "Do you like your school?" },
-    { q: "my teacher is mr. reid", a: "My teacher is Mr. Reid." }, { q: "i think homework is good", a: "I think homework is good." },
-    { q: "sofia lives in canada", a: "Sofia lives in Canada." },
-    { q: "what is your opinion", a: "What is your opinion?" }] }] } ] },
+    { q: "I do not eat breakfast. I am hungry.", a: "I am hungry because I do not eat breakfast.", m: 2, note: BEC2 + " · the reason comes first here: I do not eat breakfast" },
+    { q: "It is cold. We wear coats.", a: "We wear coats because it is cold.", m: 2, note: BEC2 + " · the reason comes first here: it is cold" }] }] },
+  { sec: "E", title: "Edit the paragraph", outOf: 8, band: B8,
+    para: "my name is Sofia, and I am in Grade 9. I usually take the bus to school. My first class are math. I never am late for class. I like math because it is fun. On friday, we have a quiz. At lunch, I eat with my friend arman. We go always to the library. I like the library. Because it is quiet. Do you like your school",
+    fixed: "[My] name is Sofia, and I am in Grade 9. I usually take the bus to school. My first class [is] math. I [am never] late for class. I like math because it is fun. On [Friday], we have a quiz. At lunch, I eat with my friend [Arman]. We [always go] to the library. I like the [library because] it is quiet. Do you like your [school?]",
+    paraNote: "Eight mistakes. Careful: “I usually take the bus” and “because it is fun” are already right.",
+    groups: [{ kind: "edit", title: "The eight fixes", fix: true, inPlace: true, instr: "This paragraph has EIGHT mistakes: capitals, end marks, verbs, how-often words and because. Fix each one ON the paragraph: cross it out and write the fix above it. One mark for each mistake you fix. Example: i go to school → cross out i and write I above it.", items: [
+    { q: "my name", a: "My name", note: "the capital" }, { q: "My first class are", a: "My first class is" },
+    { q: "I never am late", a: "I am never late", note: "after am / is / are" }, { q: "On friday", a: "On Friday", note: "the capital" },
+    { q: "my friend arman", a: "my friend Arman", note: "the capital" }, { q: "We go always", a: "We always go", note: "before the main verb" },
+    { q: "library. Because it", a: "library because it", note: "one sentence with because" }, { q: "your school", a: "your school?", note: "the end mark — it is a question" }] }] } ] },
+ // Nov 10 2026 — Sean: same format changes as ELL 1. A gets an unused word; B = find the wrong verb (5 wrong, 3 right) on its own
+ // page; C = put the words in order, one-place words only, one mark per fully right sentence; D keeps ten mistakes with a second
+ // already-right sentence (a correct because-sentence) as a trap.
  "2A": { lvl: "ELL 2", partA: 34, partB: 24, total: 58, sections: [
-  { sec: "A", title: "Words and transitions", outOf: 8, band: B8, groups: [{ kind: "blank", bank: ["topic sentence", "detail", "First", "For example", "In addition", "Finally", "For these reasons", "believe", "reason"],
-    // Nov 6 2026: the five transition sentences are ONE paragraph in order, each transition used once — so only one order works.
-    instr: "Write the right word or transition from the box on the line. Each one is used once. Sentences 1 to 5 are one paragraph, in order.", ex: { q: "The first sentence, which gives your opinion, is the ___.", a: "topic sentence" }, items: [
-    { q: "___, homework helps students practise.", a: "First", note: "the first reason" },
-    { q: "___, I finish my math faster after practice at home.", a: "For example", note: "a detail" },
-    { q: "___, homework teaches students to plan their time.", a: "In addition", note: "another reason" },
-    { q: "___, families can see what students are learning.", a: "Finally", note: "the last reason" },
-    { q: "___, I think homework every day is a good idea.", a: "For these reasons", note: "the closing" }] },
-   { kind: "blank", title: "Words", items: [
+  // Nov 10 2026 (Sean: Part A was unclear): the five transitions are printed as ONE paragraph about homework with an opinion
+  // sentence given first; transitions and words get separate boxes; the worked example moves to the words. Against side, so the
+  // order of the paragraph — not the side — is what students must read. Paragraph order still allows only one answer per blank.
+  { sec: "A", title: "Words and transitions", outOf: 8, band: B8, groups: [{ kind: "parablank", title: "The paragraph", bank: ["First", "For example", "In addition", "Finally", "For these reasons"],
+    instr: "Read this paragraph about homework. Write a transition from the box in each blank. Use each transition once.",
+    lead: "I think students should not have homework every day.", items: [
+    { q: "___, students need time to rest after school.", a: "First", note: "the first reason" },
+    { q: "___, I often feel tired when I get home at four.", a: "For example", note: "a detail" },
+    { q: "___, many students help their families at night.", a: "In addition", note: "another reason" },
+    { q: "___, students can practise in class with the teacher.", a: "Finally", note: "the last reason" },
+    { q: "___, I believe homework every day is too much.", a: "For these reasons", note: "the closing" }] },
+   { kind: "blank", title: "Words", bank: ["topic sentence", "believe", "detail", "reason", "closing"],
+    instr: "Write the right word from the box on the line. One word is not used.", ex: { q: "The first sentence, which gives your opinion, is the ___.", a: "topic sentence" }, items: [
     { q: "I ___ that homework helps most students.", a: "believe" },
     { q: "An example that supports a reason is a ___.", a: "detail" },
     { q: "Why you think something is a ___.", a: "reason" }] }] },
-  { sec: "B", title: "The right form", outOf: 8, band: B8, groups: [{ kind: "blank",
-    instr: "Write the verb in ( ) in the present tense. Watch the s on he, she and it, and the plain verb after does not.", ex: { q: "Sofia ___ her homework at the library. (do)", a: "does" }, items: [
-    { q: "My sister ___ her homework after dinner. (finish)", a: "finishes" }, { q: "We ___ math homework every day. (have)", a: "have" },
-    { q: "He does not ___ his notebook to class. (bring)", a: "bring" }, { q: "The teacher ___ our homework on Monday. (check)", a: "checks" },
-    { q: "Arman ___ his phone in his bag. (keep)", a: "keeps" }, { q: "She does not ___ the answer. (know)", a: "know" },
-    { q: "My friends ___ together after school. (study)", a: "study" }, { q: "It ___ me one hour. (take)", a: "takes" }] }] },
-  { sec: "C", title: "How often", outOf: 8, band: B8, groups: [{ kind: "rewrite", lines: 1,
-    instr: "Write the sentence again with the word or phrase in ( ) in the right place.", ex: { q: "(often) Arman finishes early.", a: "Arman often finishes early." }, items: [
-    // Nov 6 2026: one-place words (always, never, rarely, hardly ever) replace usually/sometimes and the don't + usually items, which
-    // have two right places. The how-often PHRASES are the skill, so they stay — with the front position accepted in the key.
-    { q: "(hardly ever) She is absent.", a: "She is hardly ever absent." }, { q: "(once a week) We have a spelling quiz.", a: "We have a spelling quiz once a week.", note: "also right: Once a week, we have a spelling quiz." },
-    { q: "(rarely) He forgets his homework.", a: "He rarely forgets his homework." }, 
-    { q: "(every day) Sofia reads in English.", a: "Sofia reads in English every day.", note: "also right: Every day, Sofia reads in English." }] },
-   { kind: "rewrite", lines: 1, title: "How often (continued)", items: [
-    { q: "(always) The teacher is on time.", a: "The teacher is always on time." },
-    { q: "(twice a day) I check my schedule.", a: "I check my schedule twice a day.", note: "also right: Twice a day, I check my schedule." },
-    { q: "(never) We are late for gym.", a: "We are never late for gym." }, { q: "(rarely) Our teacher gives homework on Friday.", a: "Our teacher rarely gives homework on Friday." }] }] },
+  { sec: "B", title: "Find the wrong verb", outOf: 8, band: B8, newPage: true, groups: [{ kind: "blank",
+    instr: "Some sentences have the wrong verb. If the verb is right, write ✓ on the line. If it is wrong, write the right form on the line. Watch the s on he, she and it, and the plain verb after does not.", ex: { q: "___   Sofia do her homework at the library.", a: "does" }, items: [
+    { q: "___   My sister finish her homework after dinner.", a: "finishes" }, { q: "___   We have math homework every day.", a: "✓" },
+    { q: "___   He does not brings his notebook to class.", a: "bring", note: "plain verb after does not" }, { q: "___   The teacher check our homework on Monday.", a: "checks" },
+    { q: "___   Arman keeps his phone in his bag.", a: "✓" }, { q: "___   She do not know the answer.", a: "does", note: "she does not" },
+    { q: "___   My friends studies together after school.", a: "study" }, { q: "___   It takes me one hour.", a: "✓" }] }] },
+  { sec: "C", title: "Put the words in order", outOf: 8, band: B8, groups: [{ kind: "rewrite", lines: 1, title: "Put the words in order",
+    instr: "Put the words in order. Write the sentence with a capital and an end mark. One mark for each sentence that is all right.", ex: { q: "early  /  always  /  Arman  /  finishes", a: "Arman always finishes early." }, items: [
+    { q: "absent  /  she  /  hardly ever  /  is", a: "She is hardly ever absent." },
+    { q: "his homework  /  rarely  /  he  /  forgets", a: "He rarely forgets his homework." },
+    { q: "is  /  on time  /  the teacher  /  always", a: "The teacher is always on time." },
+    { q: "never  /  late for gym  /  we  /  are", a: "We are never late for gym." },
+    { q: "homework on Friday  /  our teacher  /  rarely  /  gives", a: "Our teacher rarely gives homework on Friday." }] },
+   { kind: "rewrite", lines: 1, title: "Words in order (continued)", items: [
+    { q: "checks  /  her phone in class  /  never  /  Sofia", a: "Sofia never checks her phone in class." },
+    { q: "my brother  /  the bus  /  hardly ever  /  takes", a: "My brother hardly ever takes the bus." },
+    { q: "his notes in English  /  always  /  writes  /  Arman", a: "Arman always writes his notes in English." }] }] },
   { sec: "D", title: "Edit the paragraph", outOf: 10, band: B10,
-    para: "In my opinion students should have homework every day. First homework help students remember the lesson. for example, my math gets better when I practise at home. In addition, homework teach us to plan our time. Because we must finish it before class. finally, families can see what we are learning. They knows when we need help. For these reasons I believe daily homework is useful",
-    fixed: "In my [opinion, students] should have homework every day. [First, homework helps] students remember the lesson. [For example,] my math gets better when I practise at home. In addition, homework [teaches] us to plan our [time because] we must finish it before class. [Finally,] families can see what we are learning. They [know] when we need help. [For these reasons, I] believe daily homework is [useful.]",
-    paraNote: "Ten mistakes. Careful: “In addition,” is already right.",
+    para: "In my opinion students should have homework every day. First homework help students remember the lesson. for example, my math gets better when I practise at home. I usually do it after dinner because I am busy after school. In addition, homework teach us to plan our time. Because we must finish it before class. finally, families can see what we are learning. They knows when we need help. For these reasons I believe daily homework is useful",
+    fixed: "In my [opinion, students] should have homework every day. [First, homework helps] students remember the lesson. [For example,] my math gets better when I practise at home. I usually do it after dinner because I am busy after school. In addition, homework [teaches] us to plan our [time because] we must finish it before class. [Finally,] families can see what we are learning. They [know] when we need help. [For these reasons, I] believe daily homework is [useful.]",
+    paraNote: "Ten mistakes. Careful: “In addition,” and “I usually do it after dinner because I am busy after school.” are already right.",
     groups: [{ kind: "edit", title: "The ten fixes", fix: true, inPlace: true, instr: "This paragraph has TEN mistakes. Fix each one ON the paragraph: cross it out and write the fix above it. One mark for each mistake you fix.", items: [
     { q: "opinion students", a: "opinion, students", note: "comma after the transition" }, { q: "First homework", a: "First, homework", note: "comma after the transition" },
     { q: "homework help", a: "homework helps" }, { q: "for example,", a: "For example,", note: "the capital" },
@@ -159,9 +175,11 @@ const partB = {
   "2A": { task: "Should students wear school uniforms?", short: "Uniforms", out: 16, crit: ["W3b", "W4b", "W2b", "W7b"], marks: [1, 2, 3, 4], lines: 14, musts: M2,
     good: "In my opinion, students should not have to wear school uniforms. First, clothes are a way for students to show who they are. For example, my friend wears her grandmother's bracelet every day. In addition, uniforms cost money, and many families already pay for school supplies. Finally, students feel more comfortable in their own clothes, so they can focus on learning. For these reasons, I believe students should choose what they wear." } },
  unit: {
-  "1A": { task: "Should students have homework every day?", short: "Homework", out: 20, crit: ["W4a", "W3a", "W5a", "W8a"], marks: [2, 3, 4, 5], zero: true, lines: 12, musts: M1,
-    good: "I think students should have homework every day. First, homework helps me because I practise the lesson again. Second, I remember new words because I use them at home. Also, my parents see my work because I show them my notebook. That is why students should have homework every day." },
-  "2A": { task: "Should students have homework every day?", short: "Homework", out: 24, crit: ["W3b", "W4b", "W2b", "W7b"], marks: [3, 4, 5, 6], zero: true, lines: 14, musts: M2,
-    good: "In my opinion, students should not have homework every day. First, students need time to rest after a long school day. For example, I often feel tired by the time I get home at four. In addition, many students have jobs or help their families, so they cannot finish homework every night. Finally, practice in class with a teacher is more useful, because the teacher can answer questions. For these reasons, I believe homework should be given a few times a week, not every day." } } };
+  // Nov 10 2026 (Sean): Part B moved from homework to school uniforms on BOTH levels — the ELL 2 Section A paragraph is about
+  // homework and students could copy it. Uniforms was the practice-test prompt, which was cut, so no student has written on it.
+  "1A": { task: "Should students wear school uniforms?", short: "Uniforms", out: 20, newPage: true, crit: ["W4a", "W3a", "W5a", "W8a"], marks: [2, 3, 4, 5], zero: true, lines: 12, musts: M1,
+    good: "I think students should wear school uniforms. First, uniforms are easy because I do not choose my clothes. Second, students feel equal because everyone looks the same. Also, the school looks good because the uniforms are neat. That is why students should wear uniforms." },
+  "2A": { task: "Should students wear school uniforms?", short: "Uniforms", out: 24, newPage: true, crit: ["W3b", "W4b", "W2b", "W7b"], marks: [3, 4, 5, 6], zero: true, lines: 14, musts: M2,
+    good: "In my opinion, students should not have to wear school uniforms. First, clothes are a way for students to show who they are. For example, my friend wears her grandmother's bracelet every day. In addition, uniforms cost money, and many families already pay for school supplies. Finally, students feel more comfortable in their own clothes, so they can focus on learning. For these reasons, I believe students should choose what they wear." } } };
 
 module.exports = { practice, unit, RUB, partB };
