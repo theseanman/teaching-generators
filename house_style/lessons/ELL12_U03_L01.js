@@ -176,10 +176,8 @@ module.exports = {
       { text: "My grandma", ans: "was", tail: "in Osaka." },
       { text: "We", ans: "were", tail: "outside at midnight." }],
     how: "Look at who the sentence is about. One person or one thing → was. Two or more, or we, you, they → were. My brother and I is two people, so it takes were." },
-  { key: "1A-D", lvl: "ELL 1", id: "D", title: "A celebration I remember", kind: "lines", lines: 2,
-    instr: "Write three sentences about a celebration YOU remember. Use the frames.",
-    box: { title: "Sentence frames", body: "Use a frame and change the end to make it true for you.",
-      frame: "I remember ______.  ·  It was in ______.  ·  My ______ were there.  ·  We were ______." },
+  { key: "1A-D", lvl: "ELL 1", id: "D", title: "A celebration I remember", kind: "lines", lines: 2,  // v2: frames moved into the instruction (no box) so all of Part D fits on page 3
+    instr: "Write three sentences about a celebration YOU remember. Use the frames: I remember ___.  ·  It was in ___.  ·  My ___ were there.",
     example: { text: "I remember  →", ans: "I remember my tenth birthday." },
     items: [{ text: "Sentence 1: the celebration  →", ans: "I remember my cousin's wedding." },
       { text: "Sentence 2: when or where  →", ans: "It was in Vancouver last summer." },
