@@ -70,7 +70,11 @@ const practice = {
     { q: "In paragraph 7, the writer says “Her hand was not steady.” Why does the writer not just say the mother is worried?", a: "The writer shows the worry instead of explaining it. In paragraph 7, her hand is not steady, so the reader understands the feeling without being told.", m: 3, note: CEE }] }] } ] } };
 
 const unit = {
- "ELL3": { lvl: "ELL 3", partA: 25, partB: 25, total: 50, sections: [
+ // Nov 10 2026 (Sean: same changes as the ELL 1/2 tests): B stays "Name it" (Sean dropped the check-the-label version) on its own page;
+ // C uses taught clichés with their meaning in brackets (students did not know the old ones); D goes 6 → 8 fixes on an
+ // everyday dinner scene with two already-right traps, so it can't be copied into Section F (relief / surprise). /52.
+ // E2/E3 replaced (Sean found the inference questions too hard, "I had trouble myself"): answers now stated in the text.
+ "ELL3": { lvl: "ELL 3", partA: 27, partB: 25, total: 52, sections: [
   { sec: "A", title: "Vocabulary", outOf: 8, band: null, groups: [{ kind: "blank", bank: ["motif", "earn", "comparison", "literal", "decoration", "metaphor", "cliché", "simile", "mixed", "figurative"],
     instr: "Write the right word from the box on the line. Each word is used once. One word is extra.", ex: { q: "Showing how one thing is like another is a ___.", a: "comparison" }, items: [
     { q: "Words that mean exactly what they say are ___.", a: "literal" },
@@ -83,7 +87,7 @@ const unit = {
     { q: "A good comparison must ___ its place by doing a job.", a: "earn" }] }] },
   // Nov 6 2026 — 60-MINUTE STANDING ORDER: writing + Part A peer-marking must fit 60 minutes, so the paper is trimmed to a
   // ~44-minute write: B 8→5, C 4→3, D 8→6, E 4→3, paragraph 5–8 sentences. Test is now /50 (Part A 25 · Part B 25).
-  { sec: "B", title: "Name it", outOf: 5, band: null, groups: [{ kind: "blank", bank: NAMEBANK,
+  { sec: "B", title: "Name it", outOf: 5, band: null, newPage: true, groups: [{ kind: "blank", bank: NAMEBANK,
     instr: "Write LITERAL, SIMILE or METAPHOR on the line.", ex: { q: "___  My stomach was a bag of rocks.", a: "METAPHOR" }, items: [
     { q: "___  My voice shook like a cup on a train table.", a: "SIMILE" },
     { q: "___  I opened the letter and read it twice.", a: "LITERAL" },
@@ -91,32 +95,37 @@ const unit = {
     { q: "___  The relief went through me like warm water.", a: "SIMILE" },
     { q: "___  My worry was a shadow that stayed after dark.", a: "METAPHOR" }] }] },
   { sec: "C", title: "Fix the cliché", outOf: 6, band: null, groups: [{ kind: "rewrite", lines: 2,
-    instr: "Replace each cliché with a fact. 1 mark: no like, no as … as, and no feeling word (happy, scared, nervous…). 1 mark: it says what you did, or what your body did. (2 marks each)",
-    ex: { q: "I was on cloud nine.", a: "I ran the whole way home and forgot my bus pass on the bench." }, items: [
-    { q: "I was scared stiff.", a: "My fingers would not let go of the door handle.", m: 2, note: FACT2 },
-    { q: "My heart skipped a beat.", a: "I stopped halfway up the stairs and held the rail.", m: 2, note: FACT2 },
-    { q: "I was over the moon.", a: "I read the message out loud to everyone at the table.", m: 2, note: FACT2 }] }] },
+    instr: "Replace each cliché with a fact. The meaning is in brackets — do not use it. 1 mark: no like, no as … as, and no feeling word (happy, scared, nervous…). 1 mark: it says what you did, or what your body did. (2 marks each)",
+    ex: { q: "I was on cloud nine. (= very happy)", a: "I ran the whole way home and forgot my bus pass on the bench." }, items: [
+    { q: "I had butterflies in my stomach. (= I was nervous)", a: "I read the same line of my speech five times and still could not remember it.", m: 2, note: FACT2 },
+    { q: "I was scared stiff. (= so scared I could not move)", a: "My fingers would not let go of the door handle.", m: 2, note: FACT2 },
+    { q: "I was over the moon. (= very happy)", a: "I read the message out loud to everyone at the table.", m: 2, note: FACT2 }] }] },
   // Nov 6 2026: Section D is fixed IN PLACE and peer-marked with Part A (single answers, all in the key). Part A 24 → 32, Part B 36 → 28.
-  { sec: "D", title: "Six fixes", outOf: 6, band: null,
-    para: "When I opened the envelope my hands were shaking. I read the first line twice. Because the words did not make sense. Then I see my name at the top of the list I could not believe it. My sister runs into the room. She asked what happened I showed her the paper.",
-    fixed: "When I opened the [envelope, my] hands were shaking. I read the first line [twice because] the words did not make sense. Then I [saw] my name at the top of the [list. I] could not believe it. My sister [ran] into the room. She asked what [happened. I] showed her the paper.",
-    paraNote: "Eight mistakes. Careful: “I read the first line twice” and the last sentence are already right.",
-    groups: [{ kind: "edit", title: "The six fixes", fix: true, inPlace: true, instr: "This paragraph has SIX mistakes. Fix each one ON the paragraph: cross it out and write the fix above it. One mark for each mistake you fix.", items: [
-    { q: "envelope my hands", a: "envelope, my hands", note: "comma after the opening clause" },
-    { q: "twice. Because the words", a: "twice because the words", note: "fragment joined to the sentence before" },
-    { q: "I see", a: "I saw", note: "past tense" },
-    { q: "list I could", a: "list. I could", note: "run-on: a period, or a comma and and" },
-    { q: "My sister runs", a: "My sister ran", note: "past tense" },
-    { q: "happened I showed", a: "happened. I showed", note: "run-on: a period, or a comma and so" }] }] },
+  { sec: "D", title: "Eight fixes", outOf: 8, band: null,
+    para: "When my mother came home from work she started the rice right away. We was all hungry. My father chopped the onions, and his eyes were watering. I set the table. Because it was my turn. Then my little brother come into the kitchen and asked for a snack. My mother told him to wait he did not listen. He opened the fridge and takes out a yogurt. While we were eating my father tell a long story about his first job. After dinner, I washed the dishes.",
+    fixed: "When my mother came home from [work, she] started the rice right away. We [were] all hungry. My father chopped the onions, and his eyes were watering. I set the [table because] it was my turn. Then my little brother [came] into the kitchen and asked for a snack. My mother told him to [wait. He] did not listen. He opened the fridge and [took] out a yogurt. While we were [eating, my] father [told] a long story about his first job. After dinner, I washed the dishes.",
+    paraNote: "Eight mistakes. Careful: “My father chopped the onions, and his eyes were watering.” and “After dinner, I washed the dishes.” are already right.",
+    groups: [{ kind: "edit", title: "The eight fixes", fix: true, inPlace: true, instr: "This paragraph has EIGHT mistakes. Fix each one ON the paragraph: cross it out and write the fix above it. One mark for each mistake you fix.", items: [
+    { q: "work she started", a: "work, she started", note: "comma after the opening clause" },
+    { q: "We was", a: "We were", note: "were with we" },
+    { q: "table. Because it", a: "table because it", note: "fragment joined to the sentence before" },
+    { q: "my little brother come", a: "my little brother came", note: "past tense" },
+    { q: "wait he did", a: "wait. He did", note: "run-on: a period, or a comma and but" },
+    { q: "takes out", a: "took out", note: "past tense" },
+    { q: "eating my father", a: "eating, my father", note: "comma after the opening clause" },
+    { q: "my father tell", a: "my father told", note: "past tense" }] }] },
   // Nov 6 2026: no paragraph numbers in the questions — finding the paragraph IS the evidence mark (one right answer).
   { sec: "E", title: "The Radio in the Garage", outOf: 9, band: null, partB: true, partBHead: "Reading and writing", partBOut: 25,
     text: { title: RADIO.title, paras: RADIO.paras, instr: "Read the story twice. Then answer. Find the paragraph yourself: the paragraph number is part of the mark." },
     groups: [{ kind: "rewrite", lines: 3,
     instr: "Answer in complete sentences. 1 mark: your answer. 1 mark: the right paragraph number with words from it. 1 mark: why. (3 marks each)",
     ex: { q: "Why does the narrator tell us the family is not Portuguese?", a: "It makes the radio strange. In paragraph 2, nobody in the family speaks Portuguese, so the reader wonders why the father plays it." }, items: [
-    { q: "The Portuguese goes on above the father “like weather.” What job is this comparison doing?", a: "It describes the sound. In paragraph 3, the radio is like weather because it is always there in the background and the father does not have to listen to it.", m: 3, note: CEE2(3) },
-    { q: "The father turns the radio off when his daughter speaks Portuguese to him. Why?", a: "The radio only works when he does not understand it. In paragraph 13, he turns it off because the language has become a joke from home, not the sound of a street.", m: 3, note: CEE2("13 (with 12)") },
-    { q: "What does the last sentence of the story tell you about the father?", a: "The radio is private. In paragraph 16, he never turns it up when the family walks in, because it belongs to the life he misses, not to them.", m: 3, note: CEE2(16) }] }] } ] } };
+    { q: "The Portuguese goes on above the father “like weather.” What type of comparison is this, and what does it show about the radio?", a: "It is a simile. In paragraph 3, it goes on above him “like weather,” so the radio is always there in the background and he does not have to listen to it.", m: 3,
+      note: "+1 simile · +1 paragraph 3 with words from it · +1 what it shows. Also right for what it shows: it is always there; it is background sound he does not really listen to; it fills the garage without needing his attention; it is just part of the place, like the weather outside." },
+    { q: "Why does the father keep the radio on all the time?", a: "The radio makes the garage sound like a busy street. In paragraph 10, he lets it “fill the room like people,” because his new street is so quiet.", m: 3,
+      note: CEE2("10 (or 7, 9 or 11)") + ". Also right: it reminds him of the busy street where his shop was (7); his new street is too quiet, with only three voices before dinner (9); it is the sound of a street (11)." },
+    { q: "How did the sister feel when the father turned the radio off, and how do you know?", a: "She felt upset. In paragraph 14, she came inside almost crying because she thought she had done something wrong.", m: 3,
+      note: CEE2(14) + ". Also right for the feeling: sad, hurt, worried, confused, or that she had done something wrong — as long as it comes from paragraph 14." }] }] } ] } };
 
 // Section F — the paragraph, marked on the L05 good-copy rubric (one level per criterion, 1–4 points)
 const MUSTS = ["One small moment: under five minutes, in one place.", "An opening detail a reader can picture.",
@@ -165,6 +174,6 @@ module.exports = { course: "ELL3", levels: ["ELL3"], unitNo: "2", unitTitle: "Sa
   keyHead: "ELL 3 · Unit 2 · Test Answer Key · teacher copy",
   partALabel: "Language", partBLabel: "Reading and writing",
   intro: "Pencil only. Work alone. Read each section and look at the example first. The rubric for Section F is on the last page.",
-  bands: { practice: BAND("13–14", "11–12", "9–10", "0–8"), unit: BAND("22–25", "19–21", "15–18", "0–14") },
+  bands: { practice: BAND("13–14", "11–12", "9–10", "0–8"), unit: BAND("24–27", "20–23", "17–19", "0–16") },
   practice, unit, partB, rubric, BUSPASS, RADIO,
-  markBlocks: (which, parts) => markBlocks(which, parts, { practice: BAND("13–14", "11–12", "9–10", "0–8"), unit: BAND("22–25", "19–21", "15–18", "0–14") }) };
+  markBlocks: (which, parts) => markBlocks(which, parts, { practice: BAND("13–14", "11–12", "9–10", "0–8"), unit: BAND("24–27", "20–23", "17–19", "0–16") }) };

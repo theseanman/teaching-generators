@@ -12,17 +12,17 @@ module.exports = {
  banner: { obj: "Show what you learned in Unit 2, then mark a partner’s Part A together.",
    std: "W3 · W2 · W6 · W12 · W14  ·  reading: comparisons and evidence  —  the outcomes on the unit test", lit: ["COM", "TH", "PS"] },
  plan: {
-  objective: "Students write the Unit 2 test (/50) in 44 minutes, swap and mark Part A (/25, Sections A–D) together, then write the core-competency self-reflection. You mark Part B (E and F).",
+  objective: "Students write the Unit 2 test (/52) in 44 minutes, swap and mark Part A (/27, Sections A–D) together, then write the core-competency self-reflection. You mark Part B (E and F).",
   outcomes: "W3 · W2 · W6 · W12/W14 · reading: what a comparison does, with paragraph evidence",
   schwerpunkt: "every student writes the whole test under test conditions; marking Part A afterward is a bonus, never taken out of writing time.",
   schwerStep: 1,
   materials: "Deck · ELL3_U02_UnitTest, one each plus spares · pencils and erasers · a coloured pen for every student · ELL3_U02_TestKeys for you · core-competency self-reflection sheets (district template), one each · a tray for finished tests",
   timing: "80 minutes",
   steps: [
-   ["2", "How the unit test works", "50 marks, and it counts. Pencil only, work alone, no phones or translators. 44 minutes. Hand out the tests."],
+   ["2", "How the unit test works", "52 marks, and it counts. Pencil only, work alone, no phones or translators. 44 minutes. Hand out the tests."],
    ["44", "Write the Unit 2 test", "Part A, then Part B; they read The Radio in the Garage twice before Section E. Section D is fixed ON the paragraph. Finished students tick the Section F checklist, turn the paper over and read quietly. Circulate; answer questions about instructions only. Call ten and five minutes left."],
    ["2", "Swap papers", "Pencils away, coloured pens out. Swap with a partner. The marker writes “Marked by” and their name at the top, and marks beside the writer’s answers, never over them."],
-   ["12", "Mark Part A together", "Sections A–D, one answer per slide with its mark. Section C is 2 per item, two checks: no like / as … as / feeling word, and something the writer did or their body did. Section D: +1 for each of the six spots fixed on the paragraph, nothing else marked. Circled answers are yours to decide. Part A out of 25 with its level band."],
+   ["12", "Mark Part A together", "Sections A–D, one answer per slide with its mark. Section C is 2 per item, two checks: no like / as … as / feeling word, and something the writer did or their body did. Section D: +1 for each of the eight spots fixed on the paragraph, nothing else marked. Circled answers are yours to decide. Part A out of 25 with its level band."],
    ["2", "Part B: Mr. Reid marks it", "Markers do NOT touch Part B. Show how Sections E and F will be judged; the full Section F rubric is on the last page of their test."],
    ["8", "Core-competency self-reflection", "Tests back to their owners to check the Part A adding, then into the tray. Hand out the self-reflection sheets; students complete them alone. Collect them to copy."],
    ["2", "Agendas", "Next class slide, then agendas."] ],
@@ -35,7 +35,7 @@ module.exports = {
  sequence: [
   { type: "title", label: "Today’s lesson" },
   { type: "rows", label: "How it works", tag: "Unit 2 test", head: "How the unit test works", rows: [
-    ["Two parts", "Part A (language), then Part B (reading and writing)."], ["50 marks", "This test counts."],
+    ["Two parts", "Part A (language), then Part B (reading and writing)."], ["52 marks", "This test counts."],
     ["Alone", "Pencil only. No phones. No translators. Try every question."], ["Time", "44 minutes today."]] },
   { type: "rows", label: "Write now", tag: "Unit 2 test", head: "Write the Unit 2 test now", rows: [
     ["Part A", "Read each box. Look at the example first. Section D: fix the mistakes ON the paragraph."], ["Part B", "Read The Radio in the Garage twice before Section E."],
