@@ -705,15 +705,18 @@ const pageList = () => PV.sheets ? PV.sheets.flatMap(sh => sh.pages.map((f, i) =
 // ---------- expand the lesson sequence into slides ----------
 const slides = [];
 const push = (label, draw, next) => slides.push({ label, draw, next });
-// SIDE-BY-SIDE WARM-UP IS THE DEFAULT for two-level courses (Sean, Sep 26 2026). If either level's panel cannot reach 20 pt,
-// that Part falls back to separate slides per level, and the fallback is noted on the teacher plan slide ("Watch for" box).
+// SIDE-BY-SIDE WARM-UP IS THE DEFAULT for two-level courses (Sean, Sep 26 2026). Oct 5 2026 (Sean): side by side WINS over
+// the 20 pt floor — "the warmups can't be displayed at the same time for levels 1 and 2" was the complaint — so a Part
+// stays side by side at whatever size fits, and the sizes used are noted on the teacher plan slide ("Watch for" box).
+// Only a Part too long to share a slide at any size falls back to separate slides per level.
 { const notes = [];
   L.sequence.forEach(sp => { if (sp.type !== "drill" || !sp.lvls || sp.lvls.length !== 2 || sp.side === false || !CO.levels) return;
-    const lay = drillSideLayout(sp), ok = lay && lay.per.every(p => p.S >= 20);
-    sp.side = !!ok;
-    if (!ok) notes.push(`Warm-up Part ${sp.part} is on separate slides per level: ` + (lay ? lay.per.map((p, i) => `${sp.lvls[i].lvl} ${p.S} pt`).join(", ") + " side by side" : "too long to share a slide") + " (floor 20).");
+    const lay = drillSideLayout(sp);
+    sp.side = !!lay;
+    if (!lay) notes.push(`Warm-up Part ${sp.part} is on separate slides per level: too long to share a slide.`);
+    else if (lay.per.some(p => p.S < 20)) notes.push(`Warm-up Part ${sp.part} side by side at ` + lay.per.map((p, i) => `${sp.lvls[i].lvl} ${p.S} pt`).join(", ") + ".");
   });
-  if (notes.length) { L.plan.watch = "SLIDE NOTE: " + notes.join(" ") + " " + (L.plan.watch || ""); console.log("  side-by-side fallback: " + notes.join(" ")); } }
+  if (notes.length) { L.plan.watch = "SLIDE NOTE: " + notes.join(" ") + " " + (L.plan.watch || ""); console.log("  warm-up sizes: " + notes.join(" ")); } }
 const P = L.plan, st = P.steps, P1 = P.schwerpunkt ? 6 : 7, pages = [st.slice(0, P1)]; for (let i = P1; i < st.length; i += 6) pages.push(st.slice(i, i + 6));
 if (pages.length === 1 || pages[pages.length - 1].length > 5) pages.push([]);
 let first = 0; pages.forEach((pg, k) => { const f = first; push("Lesson plan", () => R.plan({}, null, k + 1, pg, f, pages.length), null); first += pg.length; });
