@@ -154,14 +154,16 @@ function doc(body, headText) {
 fs.mkdirSync(out, { recursive: true });
 const NAME = { practice: "PracticeTest", unit: "UnitTest" }, TITLE = { practice: "Practice Test", unit: "Unit Test" };
 // sanity: every section's printed out-of equals the marks of its items; Part A + Part B = total
-for (const t of ["practice", "unit"]) for (const l of LEVELS) { const T = D[t][l];
+// TESTS (Nov 18 2026): a unit with no practice test leaves D.practice out; only the papers that exist are checked and keyed.
+const TESTS = ["practice", "unit"].filter(t => D[t]);
+for (const t of TESTS) for (const l of LEVELS) { const T = D[t][l];
   T.sections.forEach(s => { if (sum(s) !== s.outOf) throw new Error(`${t} ${l} Section ${s.sec}: items add to ${sum(s)}, printed /${s.outOf}`); });
   const a = T.sections.filter(s => !s.partB).reduce((x, s) => x + s.outOf, 0), b = T.sections.filter(s => s.partB).reduce((x, s) => x + s.outOf, 0) + D.partB[t][l].out;
   if (a !== T.partA || b !== T.partB || a + b !== T.total) throw new Error(`${t} ${l}: totals do not add up (A ${a}, B ${b})`); }
 const jobs = [];
 if (WHICH === "key") {
   const body = [];
-  ["practice", "unit"].forEach((t, ti) => LEVELS.forEach((l, li) => { const T = D[t][l];
+  TESTS.forEach((t, ti) => LEVELS.forEach((l, li) => { const T = D[t][l];
     if (ti + li > 0) body.push(P([], { pageBreakBefore: true }));
     body.push(...paper(T, D.partB[t][l], `${TITLE[t]} — Answer Key`, true)); }));
   jobs.push(Packer.toBuffer(doc(body, KEYHEAD)).then(b => { const f = `${out}/${COURSE}_U0${UNO}_TestKeys_${VER}.docx`; fs.writeFileSync(f, b); console.log("key", path.basename(f)); }));
