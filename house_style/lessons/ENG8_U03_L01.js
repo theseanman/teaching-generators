@@ -1,0 +1,208 @@
+// ENG8 U3 L01 — Whose Story Is It? ALL content here; the renderer holds the design.
+// Unit 3 "First Peoples Voices" (Sean, Nov 19 2026): Option A — My Name Is Seepeetza (Shirley Sterling), compressed to about
+// 8 lessons + unit test before the winter break. No class set in hand yet (Sean checks the bookroom Nov 20); backup if none:
+// a short nonfiction unit on authentic first-person accounts (Phyllis Webstad's story, Legacy of Hope testimony). This lesson
+// needs no book and works for either path. The August U3 plan was never saved: this is a rebuild.
+// CURRICULUM CHECK (standing order Nov 18 2026), BC ELA 8: Comprehend & Connect — "Recognize and appreciate the role of story,
+// narrative, and oral tradition in expressing First Peoples perspectives…"; "Develop an awareness of the protocols and ownership
+// associated with First Peoples texts"; "Recognize and identify the role of personal, social, and cultural contexts, values, and
+// perspectives in texts". Big idea: "People understand text differently depending on their worldviews and perspectives."
+// FACT SOURCES (checked Nov 19 2026): FNESC First Peoples Principles of Learning (fnesc.ca, wording copied); The Canadian
+// Encyclopedia, "Residential Schools in Canada" (figures, dates, conditions); House of Anansi / Groundwood and CBC Books
+// (Sterling, the book); Indigenous Services Canada (IRS Crisis Line); Kids Help Phone (numbers).
+// The background reading "What Were Residential Schools?" is ORIGINAL, written from those sources. It is not a First Peoples text,
+// and the lesson does not invent one (protocols-and-ownership outcome).
+// Taught Fri Nov 20 2026 (F and H). Unit test more than four classes away: no countdown.
+// Build: bash build.sh lessons/ENG8_U03_L01.js v1 v1
+const BG = [
+  "For more than a hundred years, Canada sent First Nations, Inuit and Métis children away from their families to live at schools called residential schools. About 150,000 children attended them.",
+  "The Government of Canada paid for the schools, and churches ran them. The federal system was built from the 1880s, and the last school closed in 1997.",
+  "The goal was to assimilate the children: to make them give up their own languages, beliefs and ways of life. Children were forbidden to speak their own languages, even in letters to their parents.",
+  "Many children did not see their families for years. Parents who kept their children at home could be fined or sent to prison. Brothers and sisters were often separated, because boys and girls were kept apart.",
+  "The food was poor, and there was not enough of it. Sickness spread quickly. Punishment was often harsh, and many children were abused. Thousands of children died at the schools.",
+  "In 2008, Prime Minister Stephen Harper apologized for the schools. In 2015, the Truth and Reconciliation Commission published its final report.",
+  "The records kept by the government and the churches tell the side of the people who ran the schools. The children’s side comes from Survivors: people who attended the schools and lived to tell what happened there. Their first-person accounts are called testimony."];
+const BG_WORDS = [["federal", "belonging to the government of the whole country"],
+  ["forbidden", "not allowed"], ["separated", "kept apart"], ["apologized", "said sorry for something wrong"],
+  ["commission", "a group given the job of finding out the truth about something"]];
+const vocab = [
+  ["perspective", "the place a person sees and tells something from"],
+  ["testimony", "a first-person account by someone who was there"],
+  ["memoir", "a true story a person writes about their own life"],
+  ["identity", "who a person is: name, family, language, culture"],
+  ["First Peoples", "in Canada, First Nations, Inuit and Métis peoples"],
+  ["residential school", "a school far from home that Indigenous children were made to live at"],
+  ["Survivor", "a person who attended a residential school and lived through it"],
+  ["assimilate", "to make a group give up its own culture"],
+  ["protocol", "the respectful rules for how something is shared"],
+  ["diary entry", "one dated piece of writing in a diary"]];
+const FPPL = [
+  ["1", "Learning ultimately supports the well-being of the self, the family, the community, the land, the spirits, and the ancestors."],
+  ["2", "Learning is holistic, reflexive, reflective, experiential, and relational (focused on connectedness, on reciprocal relationships, and a sense of place)."],
+  ["3", "Learning involves recognizing the consequences of one’s actions."],
+  ["4", "Learning involves generational roles and responsibilities."],
+  ["5", "Learning recognizes the role of Indigenous knowledge."],
+  ["6", "Learning is embedded in memory, history, and story."],
+  ["7", "Learning involves patience and time."],
+  ["8", "Learning requires exploration of one’s identity."],
+  ["9", "Learning involves recognizing that some knowledge is sacred and only shared with permission and/or in certain situations."]];
+module.exports = {
+ course: "ENG8",
+ meta: { unit: 3, unitTitle: "First Peoples Voices", lesson: 1, title: "Whose Story Is It?",
+   subtitle: "Perspective, testimony and the First Peoples Principles of Learning", month: "November" },
+ banner: { obj: "Explain how the teller’s perspective shapes a story, and why first-person testimony matters.",
+   std: "Comprehend & Connect: perspectives in texts  ·  First Peoples story and protocols", lit: ["COM", "TH", "PS"] },
+ plan: {
+  objective: "Students explain how the teller’s perspective shapes a story, learn what residential schools were, and explain why first-person testimony matters.",
+  outcomes: "Comprehend & Connect: perspectives in texts · First Peoples story · protocols and ownership",
+  schwerpunkt: "a first-person account is testimony: listen to the teller first, before you judge what happened. Won in Part C question 5.",
+  schwerStep: 9,
+  materials: "Deck · worksheet (reading printed on it), one each plus spares · exercise books. Support lines (verified Nov 19): IRS Crisis Line 1-866-925-4419 (24 h, Survivors and families) · Kids Help Phone 1-800-668-6868 or text CONNECT to 686868.",
+  timing: "80 minutes",
+  steps: [
+   ["8", "Warm-up — two versions", "In the exercise book. Kai and Arjun tell the same lunchroom moment. Which version is true? What does each one leave out? Take three answers. Land on this: both are true from where each person stood, and the person it happened to tells the part the other one leaves out."],
+   ["2", "Goals", "Read the three goals. Name the unit: First Peoples Voices. Say plainly that this unit includes residential schools, and that the slide before the reading says more."],
+   ["8", "Vocabulary — match the word", "Ten words against their meanings from a shuffled bank, revealed one at a time, then the summary slide. Perspective, testimony and Survivor are the three to lock in today. Survivor takes a capital S."],
+   ["5", "Teaching — whose story is it?", "A story changes with who tells it. The teller chooses what to put in and what to leave out. Testimony is a first-person account by someone who was there. Check question: in the warm-up, whose account is testimony about being left out?"],
+   ["5", "Part A — vocabulary", "Six blanks from a nine-word bank, the example done and its word crossed out, two words left over. Reveal one at a time."],
+   ["6", "Part B — whose side is missing?", "Five one-sided accounts. Students name the person whose side is missing, from the bank. Reveal one at a time. Ask after each: what might that person say?"],
+   ["2", "Before we read", "Read the note slide aloud. Some of this is hard to hear. Anyone can talk to you after class, any day. Kids Help Phone is on the slide. Do not ask students to share family connections; let anyone who wants to share do so with you privately."],
+   ["10", "Read “What Were Residential Schools?”", "Students follow on the worksheet while you read aloud, in full, once. Then one question: whose side do the records tell, and where does the children’s side come from? (Paragraph 7.) Keep the tone factual and steady. Check the reading against district-approved materials when you can; every figure is from The Canadian Encyclopedia."],
+   ["10", "Part C — the background reading", "Five answers in complete sentences with a paragraph number. Questions 1 to 4 have one right answer each. ★ Question 5 is where the Schwerpunkt is won: why Survivors’ own accounts matter. Reveal one at a time."],
+   ["8", "The First Peoples Principles of Learning", "Show all nine in FNESC’s wording. Say where they come from: Indigenous Elders, scholars and knowledge keepers, and they are general, not the practice of any one Nation. Then partners choose two that fit a first-person story about a residential school and say why, with the frames."],
+   ["4", "Meet the author", "Shirley Sterling, Nlaka’pamux, and the book: a diary by a 12-year-old in Grade 6, at home called Seepeetza, at school called Martha Stone. If the class set has not come in, say it is the book we hope to read."],
+   ["6", "Part D — before we read", "Two answers of one or two sentences: what the two names suggest, and which principle fits the book. Personal answers: show one good example only."],
+   ["2", "Part E — check your work", "Six tick boxes in two columns. The box to insist on: every Part C answer has a paragraph number."],
+   ["3", "Exit ticket", "Part F: why it matters who tells a story, in one sentence. Students keep the worksheet and bring it next class."],
+   ["1", "Next class and agendas", "Next class: reading a first-person account. Agendas: bring this worksheet."]],
+  diff: "Support: Part C questions 1 to 4 only, with the paragraph to look in said aloud (1, 3, 3, 2). Part B can be done with a partner. Extension: in Part D, explain how principle 9 (some knowledge is shared only with permission) changes how we should read and share a First Peoples story.",
+  assess: "Formative only — nothing is marked today. Listen for Part C question 5 and the exit ticket: can students say why a first-person account matters, without retelling?",
+  homework: "None. Bring this worksheet next class.",
+  watch: "Joking during the warm-up or reading. Classmates asked about their own family or background: redirect to the reading. Anyone who goes quiet or upset: check in privately. Part C answers with no paragraph number. Principles claimed for one Nation: they are common elements, not one Nation’s way." },
+ shape: [["Two versions", "warm-up, in your exercise book"], ["Today’s goals", "reading together"],
+   ["Match the word", "vocabulary game"], ["Whose story is it?", "instruction"],
+   ["Part A — vocabulary", "worksheet"], ["Part B — whose side is missing?", "worksheet"],
+   ["What Were Residential Schools?", "reading together"], ["Part C — the reading", "worksheet"],
+   ["The First Peoples Principles of Learning", "partner talk"], ["Meet the author", "instruction"],
+   ["Part D — before we read", "independent writing"], ["Part E — check your work", "tick boxes"],
+   ["Exit ticket", "quick write"]],
+ sequence: [
+  { type: "title", label: "Today’s lesson" },
+  { type: "warmup", label: "Warm-up", head: "Warm-up — in your exercise book",
+    prompts: ["Kai: “I saved the chair for Liam. The new kid tried to sit there, so I said it was taken. No big deal.”",
+      "Arjun: “It was my first week. One chair had a bag on it. A guy said, ‘Taken.’ I ate lunch in the bathroom.”",
+      "Which version is true? What does each one leave out?"] },
+  { type: "goals", label: "Today’s goals", items: [
+    "Explain how the teller shapes a story.",
+    "Say what residential schools were.",
+    "Explain why first-person testimony matters."] },
+  { type: "match", label: "Match the word", head: "Match the word to its meaning",
+    bank: ["Survivor", "memoir", "protocol", "perspective", "assimilate", "identity", "diary entry", "testimony", "First Peoples", "residential school"],
+    words: vocab },
+  { type: "vocab", label: "Key vocabulary", head: "Key vocabulary", words: vocab },
+  { type: "cards", label: "Whose story is it?", tag: "Teaching", head: "Whose story is it?",
+    icon: "icon-read.png", big: "Who is telling? Who is missing?", cards: [
+    { title: "Perspective", body: "Every teller stands somewhere. Where they stand decides what they see." },
+    { title: "Choices", body: "The teller chooses what to put in and what to leave out." },
+    { title: "Testimony", body: "A first-person account by someone who was there.", tone: "teal" },
+    { title: "Listen first", body: "Hear the person it happened to before you judge what happened.", tone: "teal" }] },
+  { type: "handout", label: "Your worksheet", note: "The background reading is printed on your sheet. Keep this worksheet: we use it again next class.",
+    foot: "Bring this worksheet next class." },
+  { type: "walk", part: "A" },
+  { type: "reveals", part: "A" },
+  { type: "walk", part: "B" },
+  { type: "reveals", part: "B" },
+  { type: "rows", label: "Before we read", tag: "Before we read", head: "Before we read", icon: "icon-hand.png", rows: [
+    ["Today", "We start learning about residential schools. Some of it is hard to hear."],
+    ["Talk to me", "If it brings something up for you, talk to me after class, any day."],
+    ["Any time", "Kids Help Phone: 1-800-668-6868, or text CONNECT to 686868."]] },
+  { type: "wordlist", text: "bg", label: "Words in this reading", note: "Use the list only for a word that stops you while we read." },
+  { type: "text", text: "bg", label: "What Were Residential Schools?", continues: "The reading continues", budget: 300 },
+  { type: "walk", part: "C", note: "One complete sentence for each answer, with the paragraph number." },
+  { type: "reveals", part: "C" },
+  { type: "rows", label: "The First Peoples Principles of Learning", tag: "First Peoples Principles of Learning · 1 of 2",
+    head: "First Peoples Principles of Learning (FNESC)", rows: FPPL.slice(0, 5) },
+  { type: "rows", label: "Principles 6 to 9", tag: "First Peoples Principles of Learning · 2 of 2",
+    head: "First Peoples Principles of Learning (FNESC)", rows: FPPL.slice(5) },
+  { type: "speaking", label: "Two principles", head: "Two principles that fit",
+    icon: "icon-friends.png", big: "Choose two.",
+    prompt: "With a partner, choose two principles that fit a first-person story about a residential school. Say why.",
+    frames: ["Principle ___ fits, because ______.",
+      "A story told by a Survivor teaches ______.",
+      "I agree / I see it differently, because ______."] },
+  { type: "rows", label: "Meet the author", tag: "Our book", head: "Meet the author", icon: "icon-book.png", rows: [
+    ["Author", "Shirley Sterling (1948–2005), Nlaka’pamux, from the Interior of British Columbia."],
+    ["The book", "My Name Is Seepeetza, based on her own childhood at the Kamloops Indian Residential School."],
+    ["The form", "A diary, written by a 12-year-old girl in Grade 6."],
+    ["Two names", "At home she is Seepeetza. At school she is called Martha Stone."]] },
+  { type: "walk", part: "D", note: "One or two sentences each. There is no single right answer." },
+  { type: "reveals", part: "D", good: true },
+  { type: "walk", part: "E", note: "Six boxes on your sheet. Tick one only when it is true." },
+  { type: "exit", label: "Exit ticket", part: "F", note: "Keep your worksheet. Bring it next class." },
+  { type: "nextshape", label: "Next class", head: "Next class: A First-Person Account", items: [
+    ["Whose voice?", "warm-up"], ["Reading a first-person account", "reading together"],
+    ["What the teller shows us", "worksheet"]] },
+  { type: "rows", label: "Agendas", tag: "Before you go", head: "Take out your agenda", icon: "icon-calendar.png", rows: [
+    ["Bring", "This worksheet."],
+    ["Next class", "A first-person account. Wednesday, November 25."]] }],
+ texts: { bg: { title: "What Were Residential Schools?", lines: BG, words: BG_WORDS, unit: "paragraph" } },
+ worksheet: {
+  objective: "Explain how the teller’s perspective shapes a story, and why first-person testimony matters.",
+  outcomes: "Comprehend & Connect: perspectives and contexts in texts  •  the role of story in First Peoples perspectives  •  protocols and ownership of First Peoples texts",
+  text: "bg",
+  parts: [
+   { id: "A", title: "Vocabulary", kind: "cloze", weight: 6, bankCols: 3,
+     instr: "Fill each blank with a word from the word bank. Each word is used once. Two words are extra. Cross out each word as you use it.",
+     bank: ["identity", "Survivor", "memoir", "protocol", "perspective", "assimilate", "testimony", "diary entry", "First Peoples"],
+     crossed: ["perspective"],
+     example: { text: "Where a person tells a story from is their", ans: "perspective", tail: "" },
+     items: [
+      { text: "An account by someone who was there is", ans: "testimony", tail: "" },
+      { text: "Your name and language are part of your", ans: "identity", tail: "" },
+      { text: "A person who lived through the schools is a", ans: "Survivor", tail: "" },
+      { text: "A respectful rule for sharing a story is a", ans: "protocol", tail: "" },
+      { text: "To make a group give up its culture is to", ans: "assimilate", tail: "" },
+      { text: "A true story about the writer’s own life is a", ans: "memoir", tail: "" }],
+     how: "Read the whole sentence before you choose, then cross the word out of the bank. Two words are left over — that is meant to happen." },
+   { id: "B", title: "Whose side is missing?", kind: "lines", weight: 5, lines: 1,
+     instr: "Each account is told by only one side. Write the person or group whose side is missing.",
+     example: { text: "The principal tells the newspaper why the field trip was cancelled.", ans: "The students." },
+     items: [
+      { text: "A store owner tells the police that a teenager stole a chocolate bar.", ans: "The teenager." },
+      { text: "A coach tells reporters why he benched his goalie.", ans: "The goalie." },
+      { text: "A history of a war is written only by the side that won.", ans: "The side that lost." },
+      { text: "A landlord explains why he raised the rent on the family upstairs.", ans: "The family." },
+      { text: "A school’s records explain why children were sent there.", ans: "The children." }],
+     how: "Ask: who else was there, and who did it happen to? That person’s side is the one missing. A few words is enough." },
+   { id: "C", title: "The reading", kind: "lines", weight: 10, lines: 2,
+     instr: "Answer in one complete sentence. Give the paragraph number.",
+     example: { text: "Who paid for the schools, and who ran them?", ans: "The government paid, and churches ran them (paragraph 2)." },
+     items: [
+      { text: "About how many children attended residential schools?", ans: "About 150,000 children attended (paragraph 1)." },
+      { text: "What was the goal of the schools?", ans: "The goal was to make them give up their culture (paragraph 3)." },
+      { text: "What rule did children have to follow about their languages?", ans: "They could not speak their own languages (paragraph 3)." },
+      { text: "When did the last school close?", ans: "The last school closed in 1997 (paragraph 2)." },
+      { text: "Why do Survivors’ own accounts matter?", ans: "Only Survivors can tell the children’s side (paragraph 7)." }],
+     how: "Find the paragraph first, then answer in your own words in one sentence. Put the paragraph number in brackets at the end. Question 5 asks why — use paragraph 7." },
+   { id: "D", title: "Before we read", kind: "lines", weight: 6, lines: 3,
+     instr: "Answer in one or two sentences. There is no single right answer.",
+     example: { text: "Which principle fits a diary? Why?", ans: "Principle 8 fits, because writing a diary is a way to explore who you are." },
+     items: [
+      { text: "At home she is Seepeetza. At school she is called Martha Stone. What do the two names suggest?", ans: "They suggest the school was trying to change who she was, starting with her name." },
+      { text: "Which principle fits a first-person story about a residential school? Why?", ans: "Principle 6 fits, because we learn the history by listening to the story of someone who lived it." }],
+     how: "Use the principles slide or your notes. Give your reason with “because.” Do not copy the example: choose your own principle." },
+   { id: "E", title: "Check your work", kind: "check",
+     instr: "Read your answers back. Tick each box when it is true.",
+     checks: ["I crossed out each word I used in Part A.",
+       "I named the missing side in every Part B account.",
+       "Every Part C answer is one complete sentence.",
+       "Every Part C answer has a paragraph number.",
+       "I gave a reason with “because” in Part D.",
+       "I can say what testimony is."],
+     how: "Tick a box only when it is true. Fix anything you cannot tick before the exit ticket." },
+   { id: "F", title: "Exit ticket", kind: "exit", lines: 2,
+     instr: "Answer in one sentence.",
+     items: [
+      { text: "Why does it matter who tells a story?" }],
+     how: "One sentence. Keep your worksheet and bring it next class." }] }
+};
