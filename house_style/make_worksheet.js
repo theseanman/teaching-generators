@@ -6,6 +6,9 @@ const THEME = require("./theme");
 const M = LESSON.meta, SHEET = process.argv[5] != null ? LESSON.sheets[+process.argv[5]] : null;
 const D = Object.assign({ course: COURSE.code, unit: M.unit, lesson: M.lesson, month: M.month, unitTitle: M.unitTitle, title: M.title },
   SHEET ? Object.assign({}, SHEET, { parts: LESSON.worksheet.parts.filter(p => p.lvl === SHEET.lvl) }) : LESSON.worksheet);
+// A Part flagged ownSheet prints on its OWN collected sheet (built from a companion lesson file), not on the main worksheet;
+// it stays in the lesson data so the deck can still walk and reveal it. ENG8 U3 L02 Part C, Nov 24 2026.
+if (D.parts) D.parts = D.parts.filter(p => !p.ownSheet);
 const LABEL = D.label || D.course;
 const VER = process.argv[4] || "v1";
 const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, ShadingType, BorderStyle,

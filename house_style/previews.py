@@ -29,7 +29,7 @@ for pno,p in enumerate(doc):
     # include check-box table rows / lines
     bottoms[pno]=bot
 for m in man: bottoms[m['page']]=max(bottoms[m['page']],m['rect'][3])
-order=[p['id'] for p in D['parts']]
+order=[p['id'] for p in D['parts'] if not p.get('ownSheet')]   # ownSheet Parts print on a separate sheet (see make_worksheet.js)
 def pos(pp): return pp[0]*10000+pp[1]
 segs={}
 for i,pid in enumerate(order):
@@ -78,7 +78,7 @@ def draw_answer(dr,lines,text):
 def slots(pid):
     return {}
 res={'pages':[os.path.basename(p) for p in pages],'parts':{}}
-for part in D['parts']:
+for part in [q for q in D['parts'] if not q.get('ownSheet')]:
     pid=part['id']; ents=[m for m in man if m['part']==pid]
     def chunk_of(pno,y):
         for ci,(cp,a,b) in enumerate(chunks[pid]):
