@@ -1,4 +1,5 @@
-// ENG8 U3 "First Peoples Voices" — the unit test, as data. ONE source for the printed paper (make_test.js), the answer key
+// ENG8 U3 "First Peoples Voices" — the unit QUIZ (Sean, Nov 25 2026: same paper, called a quiz; split into questions packet,
+// Part A answer sheet and Part B writing sheet per the Nov 22 answer-sheet trial), as data. ONE source for the printed paper (make_test.js), the answer key
 // and the marking deck (ENG8_U03_L06). Shape approved by Sean Nov 20 2026: Part A peer-marked in class (Sections A–C, every
 // item with one right answer); Part B, one paragraph, marked by Mr. Reid on a four-line rubric (1–4 points per line).
 // /50 = Part A 34 · Part B 16. Sean asked for the Unit 2 shape and did not set a total; /50 keeps the write plus peer
@@ -123,7 +124,8 @@ function markBlocks() {
   return out;
 }
 module.exports = { course: "ENG8", levels: ["ENG8"], unitNo: "3", unitTitle: "First Peoples Voices",
-  keyHead: "English 8 · Unit 3 · Test Answer Key · teacher copy",
+  keyHead: "English 8 · Unit 3 · Quiz Answer Key · teacher copy",
+  split: true, paperTitle: "Unit Quiz", paperName: "UnitQuiz",
   partALabel: "Reading and language", partBLabel: "Writing",
-  intro: "Pencil only. Work alone. Read each section and look at the example first. The rubric for Part B is on the last page.",
+  intro: "Pencil only. Work alone. Read each section and look at the example first. The rubric for Part B is on the back of your writing sheet.",
   bands: BANDS, unit, partB, rubric, WHY, markBlocks };

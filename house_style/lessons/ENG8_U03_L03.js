@@ -1,7 +1,7 @@
 // ENG8 U3 L03 — How She Tells It. ALL content here; the renderer holds the design.
 // Unit 3 "First Peoples Voices" (replanned Nov 20 2026): Phyllis Webstad's own account (orangeshirtday.org/phyllis-story/,
 // NOT reprinted: All Rights Reserved) + the Lesson 1 background reading. Unit plan approved by Sean Nov 20 ("perfect. go").
-// Dates (Sean confirmed Nov 20): L3 Fri Nov 27 · L4 Tue Dec 1 · L5 Thu Dec 3 · unit test Mon Dec 7. Three classes to the test.
+// Dates (Sean confirmed Nov 20): L3 Fri Nov 27 · L4 Tue Dec 1 · L5 Thu Dec 3 · unit quiz Mon Dec 7. Three classes to the quiz.
 // Sean, Nov 20: he may print her page himself for students; this lesson works from a printout or the projector.
 // CURRICULUM CHECK, BC ELA 8: Comprehend & Connect — how text structures and literary elements (voice, detail, symbol,
 // point of view) contribute to meaning; the role of story in First Peoples perspectives. Create & Communicate — a paragraph
@@ -22,7 +22,7 @@ module.exports = {
    subtitle: "Voice, detail and the orange shirt as a symbol", month: "November" },
  banner: { obj: "Explain how Phyllis Webstad’s voice and details make her story hit hard.",
    std: "Comprehend & Connect: voice, detail, symbol  ·  Create & Communicate: a paragraph with evidence", lit: ["COM", "TH", "PS"] },
- countdown: "Unit test in three classes",
+ countdown: "Unit quiz in three classes",
  plan: {
   objective: "Students explain how Phyllis Webstad’s plain voice, specific details and the orange shirt as a symbol make her story work, then write one paragraph about a detail.",
   outcomes: "Comprehend & Connect: voice, detail, symbol · Create & Communicate: a paragraph with evidence",
@@ -32,7 +32,7 @@ module.exports = {
   timing: "80 minutes",
   steps: [
    ["7", "Warm-up — your Lesson 2 exit ticket", "Students reread their Lesson 2 exit ticket: one detail they will remember. Take four answers and write the details on the board. Ask which ones are specific (Robinson’s store, bright orange) and which are general."],
-   ["2", "Goals", "Read the three goals. Unit test in three classes."],
+   ["2", "Goals", "Read the three goals. Unit quiz in three classes."],
    ["8", "Vocabulary — match the word", "Eight words, revealed one at a time, then the summary slide. Lock in: specific, symbol, hindsight."],
    ["5", "Reread her story", "Read it aloud once more from the screen or the printout. Students listen for one thing: where she is a child, and where she is an adult looking back."],
    ["6", "Teaching — how she tells it", "Four moves: plain, short sentences; specific details; the child then (paragraphs 1–3); the adult now (paragraphs 4–6). Ask: why might plain sentences hit harder than fancy ones?"],
@@ -42,7 +42,7 @@ module.exports = {
    ["18", "Part D — one detail, one paragraph", "★ Schwerpunkt. Show the worked example (the crying children). Students write one paragraph on the orange shirt: topic sentence, the detail with its paragraph number, what it shows, why it matters. This is paragraph 2 of the Lesson 5 response; they keep it."],
    ["6", "Partner read", "Partners read their Part D paragraphs aloud. The listener names the detail and the paragraph number they heard."],
    ["2", "Part E — check your work", "Six tick boxes. Insist on paragraph numbers in Parts C and D."],
-   ["4", "Exit ticket, next class and agendas", "Part F: what does the orange shirt stand for? One sentence. Next class: planning the response. Agendas: unit test in three classes; keep this worksheet."]],
+   ["4", "Exit ticket, next class and agendas", "Part F: what does the orange shirt stand for? One sentence. Next class: planning the response. Agendas: unit quiz in three classes; keep this worksheet."]],
   diff: "Support: Part D with the four sentence starters on the sheet, and a partner to say the paragraph aloud first. Extension: add a second detail to Part D and say how the two work together.",
   assess: "Formative. Read Part D over shoulders: does the paragraph explain what the shirt stands for, or only retell that it was taken?",
   homework: "Finish Part D if it is not done. Keep this worksheet: you use Part D in Lessons 4 and 5.",
@@ -94,10 +94,10 @@ module.exports = {
   { type: "walk", part: "E", note: "Six boxes on your sheet. Tick one only when it is true." },
   { type: "exit", label: "Exit ticket", part: "F", note: "Keep this worksheet. You need Part D next class." },
   { type: "nextshape", label: "Next class", head: "Next class: Planning Your Response", noCountdown: true, items: [
-    ["Unit test in two classes", "countdown"], ["A model response", "reading together"],
+    ["Unit quiz in two classes", "countdown"], ["A model response", "reading together"],
     ["Plan your three paragraphs", "worksheet"]] },
   { type: "rows", label: "Agendas", tag: "Before you go", head: "Take out your agenda", icon: "icon-calendar.png", rows: [
-    ["Countdown", "Unit test in three classes."],
+    ["Countdown", "Unit quiz in three classes."],
     ["Bring", "All three Unit 3 worksheets."],
     ["Next class", "Planning your response. Tuesday, December 1."]] }],
  worksheet: {

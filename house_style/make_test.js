@@ -143,6 +143,72 @@ function paper(T, pb, title, key) {
   return body;
 }
 
+// SPLIT PAPERS (Nov 25 2026, Sean, the Nov 22 answer-sheet trial): D.split = true makes three documents instead of one paper —
+// a QUESTIONS packet (stapled, nothing written on it), a loose PART A ANSWER SHEET (name, "Marked by", numbered answer lines
+// with the marks down the right edge, the find-and-fix paragraph printed on it to fix in place) and a loose PART B WRITING
+// SHEET (name at the top, lines, rubric on the back). D.paperTitle renames the paper (e.g. "Unit Quiz"). Opt-in only.
+const mkCol = (m) => R(`\t____ / ${m}`, { bold: true, color: NAVY, size: 22 });
+function questionsPacket(T, pb, title) {
+  const body = [P([R(`${T.lvl} · Unit ${UNO} · ${UTITLE}`, { bold: true, color: BLUE, size: 24 })], { spacing: { after: 0 } }),
+    P([R(`${title} — Questions`, { bold: true, color: NAVY, size: 40 })], { spacing: { after: 100 } }),
+    box([P([R("Write nothing on this booklet.", { bold: true, color: NAVY, size: 26 })]),
+      P([R(`Part A answers go on your answer sheet. Your Part B paragraph goes on your writing sheet. Put your name on both.`, { size: 23 })]),
+      P([R(`Part A — ${D.partALabel}  (${T.partA} marks)   ·   Part B — ${D.partBLabel}  (${T.partB} marks)`, { size: 22, color: GREY })])], PALE)];
+  T.sections.forEach(s => { body.push(P([R(`Section ${s.sec} — ${s.title}`, { bold: true, color: BLUE, size: 30 }), R(`\t${s.outOf} marks`, { bold: true, color: NAVY, size: 24 })], { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 320, after: 40 }, keepNext: true }));
+    if (s.text) { if (s.text.instr) body.push(P([R(s.text.instr, { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }));
+      body.push(P([R(s.text.title, { bold: true, color: NAVY, size: 28 })], { spacing: { before: 60, after: 80 }, keepNext: true }));
+      s.text.paras.forEach((t, i) => body.push(P([R(String(i + 1), { bold: true, color: BLUE, size: 22 }), R("\t" + t, { size: 25 })],
+        { indent: { left: IND, hanging: IND }, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { after: 110, line: 290 } }))); }
+    let n = 0;
+    s.groups.forEach(g => {
+      if (s.para) { body.push(P([R(g.instr.replace("ON the paragraph", "ON the paragraph printed on the back of your answer sheet"), { italics: true, color: GREY, size: 24 })], { spacing: { after: 80 } }));
+        if (s.paraNote) body.push(P([R(s.paraNote, { size: 23 })], { spacing: { after: 100 } })); return; }
+      if (g.instr) body.push(P([R(g.instr + " Write your answers on your answer sheet.", { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }));
+      if (g.bank) body.push(box([P([R("Word box:  ", { bold: true, color: NAVY, size: 24 }), R(g.bank.join("   ·   "), { size: 26 })])], PALE), P([], { spacing: { after: 60 }, keepNext: true }));
+      if (g.ex) { const tag = R("(example)  ", { italics: true, color: "0F7B6C", bold: true, size: 22 });
+        body.push(P([R("Ex.\t", { bold: true }), tag, ...(g.kind === "blank" ? blankRuns(g.ex.q, g.ex.a) : [R(g.ex.q)])], { indent: { left: IND, hanging: IND }, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { before: 120, after: 0 }, keepNext: true }));
+        if (g.kind !== "blank") body.push(P([R(g.ex.a, { italics: true, color: BLUE })], { indent: { left: IND }, spacing: { before: 60, after: 0 } })); }
+      g.items.forEach(it => { n++; const mk = (it.m || 1) > 1 ? [R(`   (${it.m} marks)`, { color: GREY, size: 22 })] : [];
+        body.push(P([R(`${n}.\t`, { bold: true }), ...(g.kind === "blank" ? blankRuns(it.q, null) : [R(it.q)]), ...mk], { indent: { left: IND, hanging: IND }, tabStops: [{ type: TabStopType.LEFT, position: IND }], spacing: { before: 180, after: 0 } })); }); }); });
+  body.push(P([R("Part B — Writing", { bold: true, color: NAVY, size: 34 }), R(`\t${pb.out} marks`, { bold: true, color: NAVY, size: 24 })],
+      { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 360, after: 80 }, keepNext: true }),
+    P([R(pb.task, { bold: true, color: BLUE, size: 30 })], { spacing: { after: 80 }, keepNext: true }),
+    P([R(pb.instr + " Write it on your writing sheet.", { italics: true, color: GREY, size: 24 })], { spacing: { after: 100 }, keepNext: true }),
+    box([P([R(pb.mustsLabel || "Your paragraph must have:", { bold: true, color: NAVY, size: 24 })], { spacing: { after: 40 } }),
+      ...pb.musts.map(m => P([R("☐  ", { color: BLUE, size: 28 }), R(m, { size: 24 })], { indent: { left: 380, hanging: 380 }, spacing: { after: 30 } }))]));
+  if (D.rubric) body.push(...rubricPage(D.rubric, pb));
+  return body;
+}
+function answerSheet(T, title) {
+  const body = [...header(T.lvl, `${title} — Part A Answer Sheet`, T.partA),
+    P([R("Marker: tick ✓ or cross ✗ each answer and write the marks in the right-hand column.", { italics: true, color: GREY, size: 21 })], { spacing: { after: 60 } })];
+  const lineTabs = (m) => [{ type: TabStopType.RIGHT, position: W - 1500, leader: LeaderType.UNDERSCORE }, { type: TabStopType.RIGHT, position: W }];
+  T.sections.forEach(s => {
+    body.push(P([R(`Section ${s.sec} — ${s.title}`, { bold: true, color: BLUE, size: 28 }), R(`\t____ / ${s.outOf}`, { bold: true, color: NAVY, size: 24 })],
+      { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 220, after: 20 }, keepNext: true }));
+    let n = 0;
+    s.groups.forEach(g => {
+      if (s.para) { body.push(P([R("Fix each mistake ON this paragraph: cross it out and write the fix above it. There are ten.", { italics: true, color: GREY, size: 22 })], { spacing: { after: 80 } }),
+        box([P([R(s.para, { size: 27 })], { spacing: { line: 900 } })]), P([R(`Section ${s.sec} marks:`, { bold: true, color: NAVY, size: 22 }), R(`\t____ / ${s.outOf}`, { bold: true, color: NAVY, size: 22 })], { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 120 } })); return; }
+      g.items.forEach(it => { n++; const m = it.m || 1, two = g.kind !== "blank";
+        body.push(P([R(`${n}.\t`, { bold: true }), R("\t"), ...(two ? [] : [mkCol(m)])], { indent: { left: IND, hanging: IND }, tabStops: [{ type: TabStopType.LEFT, position: IND }, ...(two ? [{ type: TabStopType.RIGHT, position: W, leader: LeaderType.UNDERSCORE }] : lineTabs(m))],
+          spacing: { before: 240, after: 0, line: 300 }, keepNext: two }));
+        if (two) body.push(P([R("\t"), R("   (paragraph ____)", { size: 22, color: GREY }), mkCol(m)], { indent: { left: IND }, tabStops: [{ type: TabStopType.RIGHT, position: W - 3100, leader: LeaderType.UNDERSCORE }, { type: TabStopType.RIGHT, position: W }],
+          spacing: { before: 260, after: 0, line: 300 } })); }); }); });
+  body.push(box([P([R(`Part A total`, { bold: true, color: NAVY, size: 28 }), R(`\t____ / ${T.partA}`, { bold: true, color: NAVY, size: 28 })], { tabStops: [{ type: TabStopType.RIGHT, position: W - 400 }] }),
+    P([R("Level (from the slide):  ", { bold: true, color: NAVY, size: 22 }), R("Emerging   ·   Developing   ·   Proficient   ·   Extending", { size: 22 })])], PALE));
+  return body;
+}
+function writingSheet(T, pb, title) {
+  const body = [...header(T.lvl, `${title} — Part B Writing Sheet`, pb.out).filter((_, i) => i !== 3),
+    P([R(pb.task, { bold: true, color: BLUE, size: 28 })], { spacing: { after: 60 } }),
+    P([R(pb.instr, { italics: true, color: GREY, size: 22 })], { spacing: { after: 40 } })];
+  for (let i = 0; i < pb.lines; i++) body.push(rule(i === 0, false, 0));
+  body.push(P([R("Mr. Reid only:  Part B", { bold: true, color: NAVY, size: 22 }), R(`\t____ / ${pb.out}`, { bold: true, color: NAVY, size: 24 })], { tabStops: [{ type: TabStopType.RIGHT, position: W }], spacing: { before: 160 } }));
+  if (D.rubric) body.push(...rubricPage(D.rubric, pb));
+  return body;
+}
+
 function doc(body, headText) {
   return new Document({ styles: { default: { document: { run: { font: FONT, size: 26 } } } },
     sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 1000, bottom: 900, left: 1080, right: 1080, header: 500, footer: 450 } } },
@@ -152,7 +218,7 @@ function doc(body, headText) {
 }
 
 fs.mkdirSync(out, { recursive: true });
-const NAME = { practice: "PracticeTest", unit: "UnitTest" }, TITLE = { practice: "Practice Test", unit: "Unit Test" };
+const NAME = { practice: "PracticeTest", unit: D.paperName || "UnitTest" }, TITLE = { practice: "Practice Test", unit: D.paperTitle || "Unit Test" };
 // sanity: every section's printed out-of equals the marks of its items; Part A + Part B = total
 // TESTS (Nov 18 2026): a unit with no practice test leaves D.practice out; only the papers that exist are checked and keyed.
 const TESTS = ["practice", "unit"].filter(t => D[t]);
@@ -167,6 +233,10 @@ if (WHICH === "key") {
     if (ti + li > 0) body.push(P([], { pageBreakBefore: true }));
     body.push(...paper(T, D.partB[t][l], `${TITLE[t]} — Answer Key`, true)); }));
   jobs.push(Packer.toBuffer(doc(body, KEYHEAD)).then(b => { const f = `${out}/${COURSE}_U0${UNO}_TestKeys_${VER}.docx`; fs.writeFileSync(f, b); console.log("key", path.basename(f)); }));
+} else if (D.split) {
+  LEVELS.forEach(l => { const T = D[WHICH][l], pb = D.partB[WHICH][l], hd = `${T.lvl} · Unit ${UNO} · ${TITLE[WHICH]}  ·  Room 148`, base = `${out}/${COURSE}_U0${UNO}_${NAME[WHICH]}`;
+    [["Questions", questionsPacket(T, pb, TITLE[WHICH])], ["AnswerSheet", answerSheet(T, TITLE[WHICH])], ["WritingSheet", writingSheet(T, pb, TITLE[WHICH])]].forEach(([k, body]) =>
+      jobs.push(Packer.toBuffer(doc(body, hd)).then(b => { const f = `${base}_${k}_${VER}.docx`; fs.writeFileSync(f, b); console.log("paper", path.basename(f)); }))); });
 } else {
   LEVELS.forEach(l => { const T = D[WHICH][l];
     jobs.push(Packer.toBuffer(doc(paper(T, D.partB[WHICH][l], TITLE[WHICH], false), `${T.lvl} · Unit ${UNO} · ${TITLE[WHICH]}  ·  Room 148`))

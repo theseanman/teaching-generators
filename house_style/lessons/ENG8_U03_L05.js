@@ -1,5 +1,5 @@
 // ENG8 U3 L05 — Your Good Copy. ALL content here; the renderer holds the design.
-// Unit 3 "First Peoples Voices" (replanned Nov 20 2026). Taught Thu Dec 3 (F and H). Unit test next class (Mon Dec 7).
+// Unit 3 "First Peoples Voices" (replanned Nov 20 2026). Taught Thu Dec 3 (F and H). Unit quiz next class (Mon Dec 7).
 // SUMMATIVE: the three-paragraph response is written in class on the Good Copy sheet and handed in before the bell; Sean
 // marks it with the rubric printed on the back. Four lines (plan approved by Sean Nov 20): what happened, with evidence ·
 // the detail · why her telling matters · paragraphs and conventions. Levels Emerging / Developing / Proficient / Extending.
@@ -17,7 +17,7 @@ module.exports = {
    subtitle: "Write your three-paragraph response and hand it in", month: "December" },
  banner: { obj: "Write your three-paragraph response about Phyllis Webstad’s story, then hand it in.",
    std: "Create & Communicate: multi-paragraph composition · evidence · conventions", lit: ["COM", "TH", "PS"] },
- countdown: "Unit test next class",
+ countdown: "Unit quiz next class",
  plan: {
   objective: "Students write the good copy of their three-paragraph response from their Lesson 4 outline and Lesson 3 Part D paragraph, check it, and hand it in for marks.",
   outcomes: "Create & Communicate: multi-paragraph composition · evidence · conventions",
@@ -27,18 +27,18 @@ module.exports = {
   timing: "80 minutes",
   steps: [
    ["4", "Warm-up — your Lesson 4 outline", "Students reread their Lesson 4 Part C outline and their Lesson 3 Part D paragraph. Each underlines the three topic sentences."],
-   ["1", "Goals", "Read the three goals. The good copy goes in today. Unit test next class."],
+   ["1", "Goals", "Read the three goals. The good copy goes in today. Unit quiz next class."],
    ["6", "How your good copy is marked", "The four rubric lines from the back of the Good Copy sheet, in student words. Point at the tick boxes on the front."],
    ["3", "Three fixes", "A run-on, a fragment and a missing paragraph number, each with its fix. Ask for the fix before you show it."],
-   ["8", "Part A — find it and fix it", "Five sentences with one mistake each. Students write each sentence again, fixed. Reveal one at a time. This is also practice for Section C of the test."],
+   ["8", "Part A — find it and fix it", "Five sentences with one mistake each. Students write each sentence again, fixed. Reveal one at a time. This is also practice for Section C of the quiz."],
    ["3", "The model again", "Show the Kai and Arjun model from Lesson 4 as a reminder of the shape. Remind them not to copy its sentences."],
    ["45", "Write your good copy", "★ Schwerpunkt. In pen, on the Good Copy sheet: three paragraphs, each indented, from the outline and the Lesson 3 paragraph. Every fact with a source and paragraph number. A title is optional. Second sheets at the front. Call 15 and 5 minutes left."],
    ["5", "Part B — check before you hand in", "Six tick boxes against the rubric. Fix anything they cannot tick."],
    ["4", "Exit ticket and hand in", "Part C: the paragraph they are proudest of, and why. Hand in the Good Copy sheet on top, then this worksheet, then the Lesson 4 outline."],
-   ["1", "Next class and agendas", "Next class is the unit test. Study: the unit words, the Lesson 1 reading, fixing sentences, and writing a paragraph with evidence."]],
+   ["1", "Next class and agendas", "Next class is the unit quiz. Study: the unit words, the Lesson 1 reading, fixing sentences, and writing a paragraph with evidence."]],
   diff: "Support: students may write paragraphs 1 and 2 only, plus one sentence for paragraph 3, and say so on the sheet. Extension: add a short quotation from her story, with its paragraph number, in paragraph 2 or 3.",
   assess: "★ SUMMATIVE: collect every Good Copy sheet. Mark it on its own with the rubric on the back, one level per line, by the printed descriptors. Cap (Sean, Nov 20): no overall above Developing when Paragraphs and conventions is Emerging. Overall = the level that comes up most often; on a tie, the middle level.",
-  homework: "None. The good copy is handed in today. Study for the unit test.",
+  homework: "None. The good copy is handed in today. Study for the unit quiz.",
   watch: "Good copies that retell her story with no evidence. Paragraph 3 that only says “it is sad.” Sentences copied from the Kai and Arjun model. One block with no indents. Anyone still writing at the bell: collect it anyway." },
  shape: [["Your Lesson 4 outline", "warm-up"], ["Today’s goals", "reading together"],
    ["How your good copy is marked", "instruction"], ["Three fixes", "examples"],
@@ -83,10 +83,10 @@ module.exports = {
     ["On top", "Your good copy (second sheet stapled behind)."],
     ["Next", "This worksheet."],
     ["Last", "Your Lesson 4 worksheet with the outline."]] },
-  { type: "nextshape", label: "Next class", head: "Next class: Unit 3 Test", noCountdown: true, items: [
-    ["Unit test next class", "countdown"], ["Write the Unit 3 test", "test"], ["Mark Part A together", "peer marking"]] },
+  { type: "nextshape", label: "Next class", head: "Next class: Unit 3 Quiz", noCountdown: true, items: [
+    ["Unit quiz next class", "countdown"], ["Write the Unit 3 quiz", "quiz"], ["Mark Part A together", "peer marking"]] },
   { type: "rows", label: "Agendas", tag: "Before you go", head: "Take out your agenda", icon: "icon-calendar.png", rows: [
-    ["Countdown", "Unit test next class: Monday, December 7."],
+    ["Countdown", "Unit quiz next class: Monday, December 7."],
     ["Study", "The unit words · the Lesson 1 reading · fixing sentences · a paragraph with evidence."],
     ["Bring", "A pencil, an eraser and a coloured pen."]] }],
  texts: { model: MODEL },

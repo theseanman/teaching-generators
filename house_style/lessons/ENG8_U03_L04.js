@@ -1,5 +1,5 @@
 // ENG8 U3 L04 — Planning Your Response. ALL content here; the renderer holds the design.
-// Unit 3 "First Peoples Voices" (replanned Nov 20 2026). Taught Tue Dec 1 (F and H). Unit test in two classes (Mon Dec 7).
+// Unit 3 "First Peoples Voices" (replanned Nov 20 2026). Taught Tue Dec 1 (F and H). Unit quiz in two classes (Mon Dec 7).
 // The response prompt (Sean approved the plan Nov 20): "What does Phyllis Webstad's story show about residential schools,
 // and why does it matter that she tells it herself?" Three paragraphs: 1 what happened (Lesson 1 reading) · 2 how the shirt
 // makes you feel it (the Lesson 3 Part D paragraph) · 3 why her telling matters (testimony).
@@ -27,7 +27,7 @@ module.exports = {
    subtitle: "Three paragraphs, each with its own job", month: "December" },
  banner: { obj: "Plan a three-paragraph response about Phyllis Webstad’s story, with evidence from two sources.",
    std: "Create & Communicate: multi-paragraph composition  ·  planning  ·  evidence", lit: ["COM", "TH", "PS"] },
- countdown: "Unit test in two classes",
+ countdown: "Unit quiz in two classes",
  plan: {
   objective: "Students study a model response, then plan their own three-paragraph response, choosing evidence from Phyllis’s story and the Lesson 1 reading with paragraph numbers.",
   outcomes: "Create & Communicate: multi-paragraph composition · planning · evidence",
@@ -37,7 +37,7 @@ module.exports = {
   timing: "80 minutes",
   steps: [
    ["6", "Warm-up — your Lesson 3 paragraph", "Students reread their Lesson 3 Part D paragraph and underline the topic sentence. Two volunteers read theirs aloud."],
-   ["2", "Goals", "Read the three goals. Unit test in two classes; the good copy is written next class."],
+   ["2", "Goals", "Read the three goals. Unit quiz in two classes; the good copy is written next class."],
    ["8", "Vocabulary — match the word", "Eight words, one at a time, then the summary slide. Lock in: topic sentence, evidence, explain."],
    ["4", "The question", "Show the response question. Name the three jobs: what happened, how the shirt makes you feel it, why her telling matters."],
    ["8", "Read the model", "The model is about Kai and Arjun from Lesson 1, not about Phyllis. Read it aloud. Ask: what job does each paragraph do?"],
@@ -47,7 +47,7 @@ module.exports = {
    ["22", "Part C — your outline", "★ Schwerpunkt. Students plan all three paragraphs. Paragraph 2’s topic sentence comes from their Lesson 3 Part D. Circulate: check every outline has a fact from the Lesson 1 reading and a moment from Phyllis, both with paragraph numbers."],
    ["5", "Partner check", "Partners swap outlines and check one thing: does each topic sentence say a different job?"],
    ["2", "Part D — check your work", "Six tick boxes. Insist on paragraph numbers in Part C."],
-   ["4", "Exit ticket, next class and agendas", "Part E: copy your opening sentence. Next class: the good copy, written in class and handed in. Agendas: unit test in two classes; bring all four worksheets."]],
+   ["4", "Exit ticket, next class and agendas", "Part E: copy your opening sentence. Next class: the good copy, written in class and handed in. Agendas: unit quiz in two classes; bring all four worksheets."]],
   diff: "Support: the sentence starters in Part C; let students lift their Lesson 2 Part B answers as facts. Extension: plan a closing sentence that links all three paragraphs.",
   assess: "Formative. Check Part C before they leave: an outline with no evidence or no paragraph numbers will become a weak good copy.",
   homework: "Finish Part C if it is not done. Bring all four Unit 3 worksheets next class.",
@@ -100,10 +100,10 @@ module.exports = {
   { type: "walk", part: "D", note: "Six boxes on your sheet. Tick one only when it is true." },
   { type: "exit", label: "Exit ticket", part: "E", note: "Bring all four Unit 3 worksheets next class." },
   { type: "nextshape", label: "Next class", head: "Next class: Your Good Copy", noCountdown: true, items: [
-    ["Unit test next class", "countdown"], ["How your good copy is marked", "rubric"],
+    ["Unit quiz next class", "countdown"], ["How your good copy is marked", "rubric"],
     ["Write your good copy", "independent writing"], ["Hand it in", "submit"]] },
   { type: "rows", label: "Agendas", tag: "Before you go", head: "Take out your agenda", icon: "icon-calendar.png", rows: [
-    ["Countdown", "Unit test in two classes."],
+    ["Countdown", "Unit quiz in two classes."],
     ["Bring", "All four Unit 3 worksheets."],
     ["Next class", "Your good copy, written and handed in. Thursday, December 3."]] }],
  texts: { model: { title: "Model Response: Kai, Arjun and the Empty Chair", lines: MODEL, unit: "paragraph" } },
